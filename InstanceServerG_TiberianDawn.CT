@@ -1,0 +1,2439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>24111</ID>
+      <Description>"C&amp;C Tiberian Dawn Remastered"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <Color>6260EC</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"Version|Build: 1.153|732159"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <Color>CED299</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24115</ID>
+      <Description>"-----------------------------------------------------------"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <Color>554E4B</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24116</ID>
+      <Description>"Compact Mode"</Description>
+      <LastState/>
+      <Color>7C7570</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+function cycleFullCompact( sender, force )
+  local state = not( compactmenuitem.Caption == 'Compact View Mode' )
+  if force ~= nil then
+    state = not force
+  end
+  compactmenuitem.Caption = state and 'Compact View Mode' or 'Full View Mode'
+  getMainForm().Splitter1.Visible = state
+  getMainForm().Panel4.Visible = state
+  getMainForm().Panel5.Visible = state
+end
+
+function addCompactMenu()
+  if compactmenualreadyexists then return end
+    local parent = getMainForm().Menu.Items
+    compactmenuitem = createMenuItem( parent )
+    parent.add( compactmenuitem )
+    compactmenuitem.Caption = 'Compact View Mode'
+    compactmenuitem.OnClick = cycleFullCompact
+    compactmenualreadyexists = 'yes'
+end
+
+addCompactMenu()
+cycleFullCompact( nil, true )
+return "assert (true)"
+
+[DISABLE]
+
+cycleFullCompact( nil, false )
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"[ Enable ]"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <Color>5C3A0E</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript Async="1">{$STRICT}
+
+{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+local aob_PlayerPtr = "A1????????85C00F84????????8B80"
+local sl = aobScanEx( aob_PlayerPtr )
+if not sl or sl.Count &lt; 1 then stopExec( "'aob_PlayerPtr' not found." ) end
+local PlayerPtr = tonumber( sl[0], 16 )
+PlayerPtr = readInteger( PlayerPtr + 0x1 )
+unregisterSymbol( "PlayerPtr" )
+registerSymbol( "PlayerPtr", PlayerPtr, true )
+
+[DISABLE]
+
+unregisterSymbol( "PlayerPtr" )
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>24127</ID>
+          <Description>"[ Scripts ]"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>CEC760</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>24143</ID>
+              <Description>"God Mode"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_TakeDamage, TiberianDawn.dll, 0FB7C88B45F02BC1668946??9883 )
+registersymbol( aob_TakeDamage )
+label( aob_TakeDamage_o )
+registersymbol( aob_TakeDamage_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+push edx
+mov edx,[esi+93]
+test [edx+29],2 // House-&gt;IsHuman
+je short @f
+  // if it's us, then..
+  mov ecx,esi
+  mov eax,[ecx]
+  call dword ptr [rax+34] // get max health template ptr
+  mov dx,[eax+16] // get max health
+  mov [esi+26],dx // update current health
+  mov [ebp-10],dx // and the stack with what was already read
+  xor eax,eax // and null the damage dealt to us
+@@:
+pop edx
+aob_TakeDamage_o:
+readmem( aob_TakeDamage, 6 )
+jmp aob_TakeDamage+6
+
+aob_TakeDamage:
+jmp Hook
+nop
+
+[DISABLE]
+
+aob_TakeDamage:
+readmem( aob_TakeDamage_o, 6 )
+
+dealloc( Hook )
+unregistersymbol( aob_TakeDamage_o )
+unregistersymbol( aob_TakeDamage )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24128</ID>
+              <Description>"Unit Costs 0$ To Build"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_PreBuildQueue, TiberianDawn.dll, 8946??8B07FF50??F30F )
+registersymbol( aob_PreBuildQueue )
+label( aob_PreBuildQueue_o )
+registersymbol( aob_PreBuildQueue_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+test [eax+29],2 // is our human player doing this?
+je short @f
+  // if so
+  mov [ecx+28],0 // 0 cost
+aob_PreBuildQueue_o:
+readmem( aob_PreBuildQueue, 5 )
+jmp aob_PreBuildQueue+5
+
+aob_PreBuildQueue:
+jmp Hook
+
+[DISABLE]
+
+aob_PreBuildQueue:
+readmem( aob_PreBuildQueue_o, 5 )
+
+dealloc( Hook )
+unregistersymbol( aob_PreBuildQueue_o )
+unregistersymbol( aob_PreBuildQueue )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24129</ID>
+              <Description>"Instant Build"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_BuildStarted, TiberianDawn.dll, B9????????57E8????????85C078??83F820 )
+registersymbol( aob_BuildStarted )
+label( aob_BuildStarted_o )
+registersymbol( aob_BuildStarted_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+push ebx
+push edx
+mov ebx,[edi+10] // get unit from queue offset
+mov edx,[ebx+93] // get House
+test [edx+29],2 // House-&gt;IsHuman
+pop edx
+pop ebx
+je short @f
+  // if us
+  mov word ptr [edi],6C // instant build
+aob_BuildStarted_o:
+readmem( aob_BuildStarted, 5 )
+jmp aob_BuildStarted+5
+
+aob_BuildStarted:
+jmp Hook
+
+[DISABLE]
+
+aob_BuildStarted:
+readmem( aob_BuildStarted_o, 5 )
+
+dealloc( Hook )
+unregistersymbol( aob_BuildStarted_o )
+unregistersymbol( aob_BuildStarted )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24144</ID>
+              <Description>"Instant Repair"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_RepairRunning, TiberianDawn.dll, 8B87????????66015F??0FB770 )
+registersymbol( aob_RepairRunning )
+label( aob_RepairRunning_o )
+registersymbol( aob_RepairRunning_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+aob_RepairRunning_o:
+readmem( aob_RepairRunning, 6 )
+push edx
+mov edx,[edi+93] // get House
+test [edx+29],2 // House-&gt;IsHuman?
+je short @f
+  // if so..
+  mov dx,[eax+16] // get max health
+  sub dx,bx       // subtract fill health amount in the current step
+  mov bx,dx       // put ax-bx (max minus what the fill step was) in current to be filled with = instant fill to max :)
+@@:
+pop edx
+jmp aob_RepairRunning+6
+
+aob_RepairRunning:
+jmp Hook
+nop
+
+[DISABLE]
+
+aob_RepairRunning:
+readmem( aob_RepairRunning_o, 6 )
+
+dealloc( Hook )
+unregistersymbol( aob_RepairRunning_o )
+unregistersymbol( aob_RepairRunning )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24149</ID>
+              <Description>"Infinite Aircraft Ammo"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_PreAircraftAmmoSub, TiberianDawn.dll, 8B83????????85C07E??4889 )
+registersymbol( aob_PreAircraftAmmoSub )
+label( aob_PreAircraftAmmoSub_o )
+registersymbol( aob_PreAircraftAmmoSub_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+push eax
+mov eax,[ebx+93] // get House
+test [eax+29],2 // House-&gt;IsHuman
+pop eax
+je short @f
+  cmp [ebx+A3],-1 // if not an Aircraft (Tanks have -1|infinite ammo)
+  je short @f
+    mov eax,[ebx+14F]
+    test eax,eax
+    je short @f
+      mov eax,[eax+3B] // get max charges
+      mov [ebx+A3],eax
+      jmp aob_PreAircraftAmmoSub+11
+@@:
+aob_PreAircraftAmmoSub_o:
+readmem( aob_PreAircraftAmmoSub, 6 )
+jmp aob_PreAircraftAmmoSub+6
+
+aob_PreAircraftAmmoSub:
+jmp Hook
+nop
+
+[DISABLE]
+
+aob_PreAircraftAmmoSub:
+readmem( aob_PreAircraftAmmoSub_o, 6 )
+
+dealloc( Hook )
+unregistersymbol( aob_PreAircraftAmmoSub_o )
+unregistersymbol( aob_PreAircraftAmmoSub )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24245</ID>
+              <Description>"Set Ground Speed &amp; Rate Of Fire"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">{$STRICT}
+
+{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+local myGroundspeedBias = 3.0
+local myRateOfFireBias = 0.05
+local Player
+local isHuman
+repeat
+  Player = readInteger( getAddressSafe( "PlayerPtr" ) )
+  if Player == 0x0 then break end
+  isHuman = readInteger( Player + 0x29 ) &amp; 0x2
+until( isHuman == 0x2 )
+if Player ~= 0x0 then
+  writeFloat( Player + 0x08, myGroundspeedBias )
+  writeFloat( Player + 0x14, myRateOfFireBias )
+end
+
+[DISABLE]
+
+
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24219</ID>
+              <Description>"Debug Unlock Buildables"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">{$STRICT}
+
+{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+local Player
+local isHuman
+local isRecalcNeeded
+local debugUnlockBuildables
+repeat
+  Player = readInteger( getAddress( "PlayerPtr" ) )
+  if Player == 0x0 then break end
+  isHuman = readInteger( Player + 0x29 ) &amp; 0x2
+until( isHuman == 0x2 )
+if Player ~= 0x0 then
+  debugUnlockBuildables = Player + 0x714
+  isRecalcNeeded = Player + 0x29
+  -- PlayerPtr-&gt;DebugUnlockBuildables = true;
+  writeBytes( debugUnlockBuildables, 1 )
+  -- PlayerPtr-&gt;IsRecalcNeeded = true;
+  local u = readInteger( isRecalcNeeded )
+  u = u | 0x1000
+  writeInteger( isRecalcNeeded, u )
+end
+return "assert(true)"
+
+[DISABLE]
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Activate</Action>
+                  <Keys>
+                    <Key>104</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24220</ID>
+              <Description>"Superweapon Recharge"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">{$STRICT}
+
+{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+local gameModule = getAddress( "TiberianDawn.dll" )
+local forcedCharge = gameModule + 0x8A2D0
+local Player
+local isHuman
+local IonCannon
+local AirStrike
+local NukeStrike
+repeat
+  Player = readInteger( getAddress( "PlayerPtr" ) )
+  if Player == 0x0 then break end
+  isHuman = readInteger( Player + 0x29 ) &amp; 0x2
+until( isHuman == 0x2 )
+if Player ~= 0x0 then
+  IonCannon = Player + 0x35
+  AirStrike = Player + 0x51
+  NukeStrike = Player + 0x6D
+  -- PlayerPtr-&gt;IonCannon.Forced_Charge(false);
+  executeMethod( 0, nil, forcedCharge, IonCannon, 0 )
+  -- PlayerPtr-&gt;AirStrike.Forced_Charge(false);
+  executeMethod( 0, nil, forcedCharge, AirStrike, 0 )
+  -- PlayerPtr-&gt;NukeStrike.Forced_Charge(false);
+  executeMethod( 0, nil, forcedCharge, NukeStrike, 0 )
+  -- using 0x1 param in the above will attempt to run the VOX associated with READY audio and game crashes
+end
+return "assert(true)"
+
+[DISABLE]
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Activate</Action>
+                  <Keys>
+                    <Key>105</Key>
+                  </Keys>
+                  <ID>0</ID>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24246</ID>
+              <Description>"Disable Anti-Debug"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{$STRICT}
+
+{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+dbk_initialize()
+dbk_useKernelmodeOpenProcess()
+dbk_useKernelmodeProcessMemoryAccess()
+local pid = dbk_getPEProcess( getOpenedProcessID() )
+repeat until( pid ~= 0x0 )
+if pid ~= 0x0 then
+  writeQword( pid + 0x420, 0 )
+end
+
+[DISABLE]
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24138</ID>
+              <Description>"Select Object Pointer"</Description>
+              <Options moHideChildren="1"/>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_OnClick, TiberianDawn.dll, 8B46??893C880FB747??8B )
+registersymbol( aob_OnClick )
+label( aob_OnClick_o )
+registersymbol( aob_OnClick_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+label( pObject )
+registersymbol( pObject )
+
+Hook:
+aob_OnClick_o:
+readmem( aob_OnClick, 6 )
+mov [pObject],edi
+jmp aob_OnClick+6
+
+align 10 CC
+
+pObject:
+dd 0
+
+align 10 CC
+
+aob_OnClick:
+jmp Hook
+nop
+
+[DISABLE]
+
+aob_OnClick:
+readmem( aob_OnClick_o, 6 )
+
+unregistersymbol( pObject )
+dealloc( Hook )
+unregistersymbol( aob_OnClick_o )
+unregistersymbol( aob_OnClick )
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>24139</ID>
+                  <Description>"Object"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pObject</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>24140</ID>
+                      <Description>"Pos X"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>4</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24146</ID>
+                      <Description>"Pos Y"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>6</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24145</ID>
+                      <Description>"Health"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>26</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24148</ID>
+                      <Description>"Vehicle (Air, Ground) Ammo"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>A3</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24141</ID>
+                      <Description>"Max Health Ground Unit (this is a template!)"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>16</Offset>
+                        <Offset>14A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24200</ID>
+                      <Description>"Sight (this is a template!)"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>14A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24147</ID>
+                      <Description>"Max Health Air Unit (this is a template!)"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>16</Offset>
+                        <Offset>14F</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24153</ID>
+                      <Description>"Max Charges Air Unit (this is a template!)"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>3B</Offset>
+                        <Offset>14F</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24142</ID>
+                      <Description>"Max Health Building (this is a template!)"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>16</Offset>
+                        <Offset>107</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24126</ID>
+          <Description>"[ Stats ]"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>8EA5F5</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>24225</ID>
+              <Description>"GetPlayer_Thread"</Description>
+              <Options moHideChildren="1"/>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+alloc( CheatHandlerThread, 0x1000, TiberianDawn.dll )
+registersymbol( CheatHandlerThread )
+CreateThread( CheatHandlerThread )
+label( CheatHandlerOff )
+registersymbol( CheatHandlerOff )
+
+label( IsValid )
+label( Player )
+registersymbol( Player )
+
+CheatHandlerThread:
+push A
+call kernel32.Sleep
+cmp [CheatHandlerOff],1
+jne short @f
+  mov [CheatHandlerOff],2
+  ret
+@@:
+  call short IsValid
+  test eax,eax            // if TiberianDawn.dll isn't loaded, this will return 0x1
+  jne short @f
+    mov eax,[PlayerPtr]   // check for NULL; maybe it's not yet initialized
+    test eax,eax
+    je short @f
+      test [eax+29],2     // House-&gt;IsHuman
+      je short @f
+        mov [Player],eax  // store our Player
+  @@:
+  push C8
+  call kernel32.Sleep
+  jmp short CheatHandlerThread
+
+align 10 CC
+
+IsValid:
+push ebp
+mov ebp,esp
+push 4
+push PlayerPtr
+call IsBadReadPtr
+mov esp,ebp
+pop ebp
+ret
+
+align 10 CC
+
+Player:
+dd 0
+
+align 10 CC
+
+CheatHandlerOff:
+dd 0
+
+[DISABLE]
+
+{$lua}
+
+if( syntaxcheck == false ) then --actual execution
+  local starttime = getTickCount()
+
+if readInteger( "CheatHandlerOff" ) == 0 then --could be 2 already
+  writeInteger( "CheatHandlerOff", 1 ) --tell the thread to kill itself
+end
+
+while( getTickCount() &lt; starttime + 1000 ) and ( readInteger( "CheatHandlerOff" ) ~= 2 ) do --wait till it has finished
+  sleep( 20 )
+end
+
+if( getTickCount() &gt; starttime + 1000 ) then --could happen when the window is shown
+  showMessage( 'Disabling the thread failed!' )
+  error( 'Thread disabling failed!' )
+end
+  sleep( 1 )
+end
+
+{$asm}
+
+unregistersymbol( Player )
+unregistersymbol( CheatHandlerOff )
+unregistersymbol( CheatHandlerThread )
+dealloc( CheatHandlerThread )
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>24125</ID>
+                  <Description>"Player"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>24118</ID>
+                      <Description>"[0000] HouseTypeClass"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                      </Offsets>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>24164</ID>
+                          <Description>"[0000] House"</Description>
+                          <VariableType>Byte</VariableType>
+                          <Address>+0</Address>
+                          <Offsets>
+                            <Offset>0</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>24214</ID>
+                          <Description>"[0001] *IniName"</Description>
+                          <VariableType>String</VariableType>
+                          <Length>100</Length>
+                          <Unicode>0</Unicode>
+                          <CodePage>0</CodePage>
+                          <ZeroTerminate>1</ZeroTerminate>
+                          <Address>+0</Address>
+                          <Offsets>
+                            <Offset>0</Offset>
+                            <Offset>1</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>24215</ID>
+                          <Description>"[0005] FullName"</Description>
+                          <ShowAsHex>1</ShowAsHex>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+0</Address>
+                          <Offsets>
+                            <Offset>5</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>24216</ID>
+                          <Description>"[0009] Suffix[4]"</Description>
+                          <ShowAsHex>1</ShowAsHex>
+                          <VariableType>String</VariableType>
+                          <Length>4</Length>
+                          <Unicode>0</Unicode>
+                          <CodePage>0</CodePage>
+                          <ZeroTerminate>1</ZeroTerminate>
+                          <Address>+0</Address>
+                          <Offsets>
+                            <Offset>9</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24124</ID>
+                      <Description>"[0004] FirepowerBias"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>4</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24163</ID>
+                      <Description>"[0008] GroundspeedBias"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24162</ID>
+                      <Description>"[000C] AirspeedBias"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24165</ID>
+                      <Description>"[0010] ArmorBias"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24161</ID>
+                      <Description>"[0014] RateOfFireBias"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24166</ID>
+                      <Description>"[0018] CostBias"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24167</ID>
+                      <Description>"[001C] BuildSpeedBias"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24169</ID>
+                      <Description>"[0020] RepairDelay"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24168</ID>
+                      <Description>"[0024] BuildDelay"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24170</ID>
+                      <Description>"[0028] ActLike"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">-1:None
+0:Global Defense Initiative
+1:Brotherhood of Nod
+2:Civilians
+3:Disaster Containment Team
+4:Multi-Player house #1
+5:Multi-Player house #2
+6:Multi-Player house #3
+7:Multi-Player house #4
+8:Multi-Player house #5
+9:Multi-Player house #6
+</DropDownList>
+                      <VariableType>Byte</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24218</ID>
+                      <Description>"[0029] IsRecalcNeeded (etc.)"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>29</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24221</ID>
+                      <Description>"[00E2] CreditsSpent"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>E2</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24173</ID>
+                      <Description>"[00E6] HarvestedCredits"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>E6</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24174</ID>
+                      <Description>"[00EA] CurUnits"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>EA</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24175</ID>
+                      <Description>"[00EE] CurBuildings"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>EE</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24176</ID>
+                      <Description>"[00F2] CurInfantry"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>F2</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24177</ID>
+                      <Description>"[00F6] CurAircraft"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>F6</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24179</ID>
+                      <Description>"[00FA] MaxUnit"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>FA</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24178</ID>
+                      <Description>"[00FE] MaxBuilding"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>FE</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24181</ID>
+                      <Description>"[0102] MaxInfantry"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>102</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24180</ID>
+                      <Description>"[0106] MaxAircraft"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>106</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24172</ID>
+                      <Description>"[010A] Tiberium"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>10A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24122</ID>
+                      <Description>"[010E] Credits"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>10E</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24182</ID>
+                      <Description>"[0112] InitialCredits"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>112</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24123</ID>
+                      <Description>"[0116] Capacity"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>116</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24183</ID>
+                      <Description>"[011E] *AircraftTotals"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>11E</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24186</ID>
+                      <Description>"[0122] *InfantryTotals"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>122</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24188</ID>
+                      <Description>"[0126] *UnitTotals"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>126</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24195</ID>
+                      <Description>"[012A] *BuildingTotals"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>12A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24187</ID>
+                      <Description>"[012E] *DestroyedAircraft"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>12E</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24192</ID>
+                      <Description>"[0132] *DestroyedInfantry"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>132</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24191</ID>
+                      <Description>"[0136] *DestroyedUnits"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>136</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24190</ID>
+                      <Description>"[013A] *DestroyedBuildings"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>13A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24189</ID>
+                      <Description>"[013E] *CapturedBuildings"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>13E</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24193</ID>
+                      <Description>"[0142] *TotalCrates"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>142</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24194</ID>
+                      <Description>"[0146] AircraftFactories"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>146</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24199</ID>
+                      <Description>"[014A] InfantryFactories"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>14A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24198</ID>
+                      <Description>"[014E] UnitFactories"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>14E</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24197</ID>
+                      <Description>"[0152] BuildingFactories"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>152</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24196</ID>
+                      <Description>"[0156] SpecialFactories"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>156</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24121</ID>
+                      <Description>"[015A] Power"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>15A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24120</ID>
+                      <Description>"[015E] Drain"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>15E</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24201</ID>
+                      <Description>"[0162] Edge"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:SOURCE_NORTH
+1:SOURCE_EAST
+2:SOURCE_SOUTH
+3:SOURCE_WEST
+4:SOURCE_SHIPPING
+5:SOURCE_BEACH
+6:SOURCE_AIR
+7:SOURCE_VISIBLE
+8:SOURCE_ENEMYBASE
+9:SOURCE_HOMEBASE
+A:SOURCE_OCEAN
+</DropDownList>
+                      <VariableType>Byte</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>162</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24202</ID>
+                      <Description>"[0163] AircraftFactory"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>163</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24206</ID>
+                      <Description>"[0167] InfantryFactory"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>167</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24205</ID>
+                      <Description>"[016B] UnitFactory"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>16B</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24204</ID>
+                      <Description>"[016F] BuildingFactory"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>16F</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24203</ID>
+                      <Description>"[0173] SpecialFactory"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>173</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24207</ID>
+                      <Description>"[0177] Radar"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:RADAR_NONE
+1:RADAR_OFF
+2:RADAR_ON
+</DropDownList>
+                      <VariableType>Byte</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>177</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24208</ID>
+                      <Description>"[0181] Name"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:RADAR_NONE
+1:RADAR_OFF
+2:RADAR_ON
+</DropDownList>
+                      <VariableType>String</VariableType>
+                      <Length>12</Length>
+                      <Unicode>0</Unicode>
+                      <CodePage>0</CodePage>
+                      <ZeroTerminate>1</ZeroTerminate>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>181</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24209</ID>
+                      <Description>"[018D] UnitsKilled"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>18D</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24212</ID>
+                      <Description>"[0191] UnitsLost"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>191</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24211</ID>
+                      <Description>"[0195] BuildingsKilled"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>195</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24210</ID>
+                      <Description>"[0199] BuildingsLost"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>199</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24213</ID>
+                      <Description>"[0199] BuildingsLost"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>199</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24119</ID>
+                      <Description>"[0708] VisibleCredits"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>708</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24217</ID>
+                      <Description>"[0714] DebugUnlockBuildables"</Description>
+                      <VariableType>Byte</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>714</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24107</ID>
+      <Description>"[ Debug ]"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <Color>D0D1C7</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>24155</ID>
+          <Description>"Test_CreateThread"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+alloc( CheatHandlerThread, 0x1000, TiberianDawn.dll )
+registersymbol( CheatHandlerThread )
+CreateThread( CheatHandlerThread )
+label( CheatHandlerOff )
+registersymbol( CheatHandlerOff )
+
+label( Testing )
+label( Testing_exit )
+
+label( @L00000001 )
+label( @L00000002 )
+label( @L00000003 )
+
+CheatHandlerThread:
+push A
+call kernel32.Sleep
+cmp [CheatHandlerOff],1
+jne short @f
+  mov [CheatHandlerOff],2
+  ret
+@@:
+push 60 // VK_NUMPAD0
+call GetAsyncKeyState
+test ax,ax
+je short @f
+
+  call short Testing
+  push C8
+  call kernel32.Sleep
+
+@@:
+jmp short CheatHandlerThread
+
+align 10 CC
+
+Testing:
+    mov byte ptr [TiberianDawn.dll+124AB9],1
+	mov ecx,[TiberianDawn.dll+1279C4]
+	je Testing_exit
+	call TiberianDawn.dll+9D210
+	test eax,eax
+	je short @L00000002
+    mov eax,[TiberianDawn.dll+1279C4]
+    cmp eax,TiberianDawn.dll+1279A8
+	je short @L00000001
+	push [TiberianDawn.dll+1279B0]
+	mov ecx,TiberianDawn.dll+1279A8
+	push [TiberianDawn.dll+1279AC]
+	push [TiberianDawn.dll+1279BC]
+	push [TiberianDawn.dll+1279B8]
+	push eax
+	call TiberianDawn.dll+9CF90
+
+@L00000001:
+	push 0
+	push TiberianDawn.dll+1279A8
+	call TiberianDawn.dll+9B5E0
+	add esp,8
+
+@L00000002:
+	mov ecx,[TiberianDawn.dll+1279C4]
+	call TiberianDawn.dll+9D2F0
+	test eax,eax
+	je short @L00000003
+	mov ecx,[TiberianDawn.dll+1279C4]
+	cmp ecx,TiberianDawn.dll+1279A8
+	je short @L00000003
+	cmp dword ptr [TiberianDawn.dll+1279C8],0
+	je short @L00000003
+	mov eax,[TiberianDawn.dll+1279A8]
+	xor edx,edx
+	cmp [ecx+24],edx
+	cmove eax,edx
+	mov [TiberianDawn.dll+1279A8],eax
+
+@L00000003:
+	push 1
+	mov ecx,TiberianDawn.dll+17AD08
+	call TiberianDawn.dll+47820
+	mov ecx,TiberianDawn.dll+17AD08
+	call TiberianDawn.dll+479C0
+
+Testing_exit:
+    ret
+
+align 10 CC
+
+CheatHandlerOff:
+dd 0
+
+[DISABLE]
+
+{$lua}
+
+if( syntaxcheck == false ) then --actual execution
+  local starttime = getTickCount()
+
+if readInteger( "CheatHandlerOff" ) == 0 then --could be 2 already
+  writeInteger( "CheatHandlerOff", 1 ) --tell the thread to kill itself
+end
+
+while( getTickCount() &lt; starttime + 1000 ) and ( readInteger( "CheatHandlerOff" ) ~= 2 ) do --wait till it has finished
+  sleep( 20 )
+end
+
+if( getTickCount() &gt; starttime + 1000 ) then --could happen when the window is shown
+  showMessage( 'Disabling the thread failed!' )
+  error( 'Thread disabling failed!' )
+end
+  sleep( 1 )
+end
+
+{$asm}
+
+unregistersymbol( CheatHandlerOff )
+unregistersymbol( CheatHandlerThread )
+dealloc( CheatHandlerThread )
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24223</ID>
+          <Description>"Test_IsBadReadPtr"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+alloc( CheatHandlerThread, 0x1000, TiberianDawn.dll )
+registersymbol( CheatHandlerThread )
+CreateThread( CheatHandlerThread )
+label( CheatHandlerOff )
+registersymbol( CheatHandlerOff )
+
+label( IsValid )
+label( Player )
+registersymbol( Player )
+
+CheatHandlerThread:
+push A
+call kernel32.Sleep
+cmp [CheatHandlerOff],1
+jne short @f
+  mov [CheatHandlerOff],2
+  ret
+@@:
+  call short IsValid
+  test eax,eax            // if TiberianDawn.dll isn't loaded, this will return 0x1
+  jne short @f
+    mov eax,[PlayerPtr]   // check for NULL; maybe it's not yet initialized
+    test eax,eax
+    je short @f
+      test [eax+29],2     // House-&gt;IsHuman
+      je short @f
+        mov [Player],eax  // store our Player
+  @@:
+  push C8
+  call kernel32.Sleep
+  jmp short CheatHandlerThread
+
+align 10 CC
+
+IsValid:
+push ebp
+mov ebp,esp
+push 4
+push PlayerPtr
+call IsBadReadPtr
+mov esp,ebp
+pop ebp
+ret
+
+align 10 CC
+
+Player:
+dd 0
+
+align 10 CC
+
+CheatHandlerOff:
+dd 0
+
+[DISABLE]
+
+{$lua}
+
+if( syntaxcheck == false ) then --actual execution
+  local starttime = getTickCount()
+
+if readInteger( "CheatHandlerOff" ) == 0 then --could be 2 already
+  writeInteger( "CheatHandlerOff", 1 ) --tell the thread to kill itself
+end
+
+while( getTickCount() &lt; starttime + 1000 ) and ( readInteger( "CheatHandlerOff" ) ~= 2 ) do --wait till it has finished
+  sleep( 20 )
+end
+
+if( getTickCount() &gt; starttime + 1000 ) then --could happen when the window is shown
+  showMessage( 'Disabling the thread failed!' )
+  error( 'Thread disabling failed!' )
+end
+  sleep( 1 )
+end
+
+{$asm}
+
+unregistersymbol( Player )
+unregistersymbol( CheatHandlerOff )
+unregistersymbol( CheatHandlerThread )
+dealloc( CheatHandlerThread )
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24156</ID>
+          <Description>"Test_KeyboardProcess"</Description>
+          <Options moHideChildren="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+alloc( CheatHandlerThread, 0x1000, TiberianDawn.dll )
+registersymbol( CheatHandlerThread )
+CreateThread( CheatHandlerThread )
+label( CheatHandlerOff )
+registersymbol( CheatHandlerOff )
+
+label( Testing )
+label( keyInput )
+registersymbol( keyInput )
+
+CheatHandlerThread:
+push A
+call kernel32.Sleep
+cmp [CheatHandlerOff],1
+jne short @f
+  mov [CheatHandlerOff],2
+  ret
+@@:
+push 60 // VK_NUMPAD0
+call GetAsyncKeyState
+test ax,ax
+je short @f
+
+  call short Testing
+  push C8
+  call kernel32.Sleep
+
+@@:
+jmp short CheatHandlerThread
+
+align 10 CC
+
+Testing:
+mov byte ptr [TiberianDawn.dll+124AB3],1 // Debug_Flag
+push keyInput
+//call TiberianDawn.dll+294D0
+call TiberianDawn.dll+274B0
+add esp,4
+ret
+
+align 10 CC
+
+keyInput:
+dd 1073 // VK_F4
+
+align 10 CC
+
+CheatHandlerOff:
+dd 0
+
+[DISABLE]
+
+{$lua}
+
+if( syntaxcheck == false ) then --actual execution
+  local starttime = getTickCount()
+
+if readInteger( "CheatHandlerOff" ) == 0 then --could be 2 already
+  writeInteger( "CheatHandlerOff", 1 ) --tell the thread to kill itself
+end
+
+while( getTickCount() &lt; starttime + 1000 ) and ( readInteger( "CheatHandlerOff" ) ~= 2 ) do --wait till it has finished
+  sleep( 20 )
+end
+
+if( getTickCount() &gt; starttime + 1000 ) then --could happen when the window is shown
+  showMessage( 'Disabling the thread failed!' )
+  error( 'Thread disabling failed!' )
+end
+  sleep( 1 )
+end
+
+{$asm}
+
+unregistersymbol( keyInput )
+unregistersymbol( CheatHandlerOff )
+unregistersymbol( CheatHandlerThread )
+dealloc( CheatHandlerThread )
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>24160</ID>
+              <Description>"keyInput"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <VariableType>4 Bytes</VariableType>
+              <Address>keyInput</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24157</ID>
+              <Description>"Debug_Flag"</Description>
+              <LastState Value="0" RealAddress="10124AB3"/>
+              <VariableType>Byte</VariableType>
+              <Address>10124AB3</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24158</ID>
+              <Description>"GameToPlay"</Description>
+              <LastState Value="0" RealAddress="10126076"/>
+              <VariableType>Byte</VariableType>
+              <Address>10126076</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24159</ID>
+              <Description>"Debug_Unshroud"</Description>
+              <LastState Value="0" RealAddress="10124AB9"/>
+              <VariableType>Byte</VariableType>
+              <Address>10124AB9</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24222</ID>
+          <Description>"Test_SuperweaponRecharge"</Description>
+          <Options moHideChildren="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+alloc( CheatHandlerThread, 0x1000, TiberianDawn.dll )
+registersymbol( CheatHandlerThread )
+CreateThread( CheatHandlerThread )
+label( CheatHandlerOff )
+registersymbol( CheatHandlerOff )
+
+label( Testing )
+label( keyInput )
+registersymbol( keyInput )
+
+CheatHandlerThread:
+push A
+call kernel32.Sleep
+cmp [CheatHandlerOff],1
+jne short @f
+  mov [CheatHandlerOff],2
+  ret
+@@:
+push 60 // VK_NUMPAD0
+call GetAsyncKeyState
+test ax,ax
+je short @f
+
+  call short Testing
+  push C8
+  call kernel32.Sleep
+
+@@:
+jmp short CheatHandlerThread
+
+align 10 CC
+
+Testing:
+push 1
+mov ecx,[TiberianDawn.dll+1275A8]
+lea ecx,[ecx+35]
+call TiberianDawn.dll+8A2D0
+push 1
+mov ecx,[TiberianDawn.dll+1275A8]
+lea ecx,[ecx+6D]
+call TiberianDawn.dll+8A2D0
+push 1
+mov ecx,[TiberianDawn.dll+1275A8]
+lea ecx,[ecx+51]
+call TiberianDawn.dll+8A2D0
+ret
+
+align 10 CC
+
+keyInput:
+dd 1073 // VK_F4
+
+align 10 CC
+
+CheatHandlerOff:
+dd 0
+
+[DISABLE]
+
+{$lua}
+
+if( syntaxcheck == false ) then --actual execution
+  local starttime = getTickCount()
+
+if readInteger( "CheatHandlerOff" ) == 0 then --could be 2 already
+  writeInteger( "CheatHandlerOff", 1 ) --tell the thread to kill itself
+end
+
+while( getTickCount() &lt; starttime + 1000 ) and ( readInteger( "CheatHandlerOff" ) ~= 2 ) do --wait till it has finished
+  sleep( 20 )
+end
+
+if( getTickCount() &gt; starttime + 1000 ) then --could happen when the window is shown
+  showMessage( 'Disabling the thread failed!' )
+  error( 'Thread disabling failed!' )
+end
+  sleep( 1 )
+end
+
+{$asm}
+
+unregistersymbol( keyInput )
+unregistersymbol( CheatHandlerOff )
+unregistersymbol( CheatHandlerThread )
+dealloc( CheatHandlerThread )
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24226</ID>
+          <Description>"[ Scripts ] - PlayerPtr-logic"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>CEC760</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>24227</ID>
+              <Description>"God Mode"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_DoDamage, TiberianDawn.dll, 0FB7C88B45F02BC1668946??9883 )
+registersymbol( aob_DoDamage )
+label( aob_DoDamage_o )
+registersymbol( aob_DoDamage_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+push edx
+mov edx,[Player]
+cmp [esi+93],edx // is the damaged target ours?
+jne short @f
+  // if it is, then..
+  mov ecx,esi
+  mov eax,[ecx]
+  call dword ptr [rax+34] // get max health template ptr
+  mov dx, [eax+16] // get max health
+  mov [esi+26],dx  // update current health
+  mov [ebp-10],dx  // and the stack with what was already read
+  xor eax,eax // and null the damage dealt to us
+@@:
+pop edx
+aob_DoDamage_o:
+readmem( aob_DoDamage, 6 )
+jmp aob_DoDamage+6
+
+aob_DoDamage:
+jmp Hook
+nop
+
+[DISABLE]
+
+aob_DoDamage:
+readmem( aob_DoDamage_o, 6 )
+
+dealloc( Hook )
+unregistersymbol( aob_DoDamage_o )
+unregistersymbol( aob_DoDamage )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24228</ID>
+              <Description>"Unit Costs 0$ To Build"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_PreBuildQueue, TiberianDawn.dll, 8946??8B07FF50??F30F )
+registersymbol( aob_PreBuildQueue )
+label( aob_PreBuildQueue_o )
+registersymbol( aob_PreBuildQueue_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+push edx
+mov edx,[Player]
+cmp eax,edx // is our player doing this?
+pop edx
+jne short @f
+  // if so
+  mov [ecx+28],0 // 0 cost
+aob_PreBuildQueue_o:
+readmem( aob_PreBuildQueue, 5 )
+jmp aob_PreBuildQueue+5
+
+aob_PreBuildQueue:
+jmp Hook
+
+[DISABLE]
+
+aob_PreBuildQueue:
+readmem( aob_PreBuildQueue_o, 5 )
+
+dealloc( Hook )
+unregistersymbol( aob_PreBuildQueue_o )
+unregistersymbol( aob_PreBuildQueue )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24229</ID>
+              <Description>"Instant Build"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_BuildStarted, TiberianDawn.dll, B9????????57E8????????85C078??83F820 )
+registersymbol( aob_BuildStarted )
+label( aob_BuildStarted_o )
+registersymbol( aob_BuildStarted_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+push ebx
+push edx
+mov ebx,[Player] // get our Player
+mov edx,[edi+10]   // get unit from queue offset
+cmp [edx+93],ebx   // check if it's ours
+pop edx
+pop ebx
+jne short @f
+  // if so
+  mov word ptr [edi],6C // instant build
+aob_BuildStarted_o:
+readmem( aob_BuildStarted, 5 )
+jmp aob_BuildStarted+5
+
+aob_BuildStarted:
+jmp Hook
+
+[DISABLE]
+
+aob_BuildStarted:
+readmem( aob_BuildStarted_o, 5 )
+
+dealloc( Hook )
+unregistersymbol( aob_BuildStarted_o )
+unregistersymbol( aob_BuildStarted )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24230</ID>
+              <Description>"Instant Repair"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_RepairRunning, TiberianDawn.dll, 8B87????????66015F??0FB770 )
+registersymbol( aob_RepairRunning )
+label( aob_RepairRunning_o )
+registersymbol( aob_RepairRunning_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+aob_RepairRunning_o:
+readmem( aob_RepairRunning, 6 )
+push edx
+mov edx,[Player] // get our player pointer
+cmp [edi+93],edx   // check if it's us doing the repairs
+jne short @f
+  // if so..
+  mov dx,[eax+16] // get max health
+  sub dx,bx       // subtract fill health amount in the current step
+  mov bx,dx       // put ax-bx (max minus what the fill step was) in current to be filled with = instant fill to max :)
+@@:
+pop edx
+jmp aob_RepairRunning+6
+
+aob_RepairRunning:
+jmp Hook
+nop
+
+[DISABLE]
+
+aob_RepairRunning:
+readmem( aob_RepairRunning_o, 6 )
+
+dealloc( Hook )
+unregistersymbol( aob_RepairRunning_o )
+unregistersymbol( aob_RepairRunning )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24231</ID>
+              <Description>"Infinite Aircraft Ammo"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_PreAircraftAmmoSub, TiberianDawn.dll, 8B83????????85C07E??4889 )
+registersymbol( aob_PreAircraftAmmoSub )
+label( aob_PreAircraftAmmoSub_o )
+registersymbol( aob_PreAircraftAmmoSub_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+Hook:
+push eax
+mov eax,[Player]  // get our player pointer
+cmp [ebx+93],eax    // check if the unit is ours
+pop eax
+jne short @f
+  cmp [ebx+A3],-1   // if not an Aircraft (Tanks have -1|infinite ammo)
+  je short @f
+    mov eax,[ebx+14F]
+    test eax,eax
+    je short @f
+      mov eax,[eax+3B] // get max charges
+      mov [ebx+A3],eax
+      jmp aob_PreAircraftAmmoSub+11
+@@:
+aob_PreAircraftAmmoSub_o:
+readmem( aob_PreAircraftAmmoSub, 6 )
+jmp aob_PreAircraftAmmoSub+6
+
+aob_PreAircraftAmmoSub:
+jmp Hook
+nop
+
+[DISABLE]
+
+aob_PreAircraftAmmoSub:
+readmem( aob_PreAircraftAmmoSub_o, 6 )
+
+dealloc( Hook )
+unregistersymbol( aob_PreAircraftAmmoSub_o )
+unregistersymbol( aob_PreAircraftAmmoSub )
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>103</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                  <DeactivateSound>Deactivate</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24232</ID>
+              <Description>"Debug Unlock Buildables"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">{$STRICT}
+
+{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+local Player = readInteger( getAddress( "Player" ) )
+local DebugUnlockBuildables = Player + 0x714
+local IsRecalcNeeded = Player + 0x29
+
+-- PlayerPtr-&gt;DebugUnlockBuildables = true;
+writeBytes( DebugUnlockBuildables, 1 )
+
+-- PlayerPtr-&gt;IsRecalcNeeded = true;
+local u = readInteger( IsRecalcNeeded )
+u = u | 0x1000
+writeInteger( IsRecalcNeeded, u )
+
+return "assert(true)"
+
+[DISABLE]
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Activate</Action>
+                  <Keys>
+                    <Key>104</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound>Activate</ActivateSound>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24233</ID>
+              <Description>"Superweapon Recharge"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">{$STRICT}
+
+{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+local gameModule = getAddress( "TiberianDawn.dll" )
+local forcedCharge = gameModule + 0x8A2D0
+
+local Player = readInteger( getAddress( "Player" ) )
+local IonCannon = Player + 0x35
+local AirStrike = Player + 0x51
+local NukeStrike = Player + 0x6D
+
+-- PlayerPtr-&gt;IonCannon.Forced_Charge(false);
+executeMethod( 0, nil, forcedCharge, IonCannon, 0 )
+-- PlayerPtr-&gt;AirStrike.Forced_Charge(false);
+executeMethod( 0, nil, forcedCharge, AirStrike, 0 )
+-- PlayerPtr-&gt;NukeStrike.Forced_Charge(false);
+executeMethod( 0, nil, forcedCharge, NukeStrike, 0 )
+-- using 0x1 param in the above will attempt to run the VOX associated with READY audio and game crashes
+
+return "assert(true)"
+
+[DISABLE]
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Activate</Action>
+                  <Keys>
+                    <Key>105</Key>
+                  </Keys>
+                  <ID>0</ID>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24234</ID>
+              <Description>"Select Object Pointer"</Description>
+              <Options moHideChildren="1"/>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript Async="1">[ENABLE]
+
+aobscanmodule( aob_OnClick, TiberianDawn.dll, 8B46??893C880FB747??8B )
+registersymbol( aob_OnClick )
+label( aob_OnClick_o )
+registersymbol( aob_OnClick_o )
+
+alloc( Hook, 0x1000, TiberianDawn.dll )
+
+label( pObject )
+registersymbol( pObject )
+
+Hook:
+aob_OnClick_o:
+readmem( aob_OnClick, 6 )
+mov [pObject],edi
+jmp aob_OnClick+6
+
+align 10 CC
+
+pObject:
+dd 0
+
+align 10 CC
+
+aob_OnClick:
+jmp Hook
+nop
+
+[DISABLE]
+
+aob_OnClick:
+readmem( aob_OnClick_o, 6 )
+
+unregistersymbol( pObject )
+dealloc( Hook )
+unregistersymbol( aob_OnClick_o )
+unregistersymbol( aob_OnClick )
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>24235</ID>
+                  <Description>"Object"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pObject</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>24236</ID>
+                      <Description>"Pos X"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>4</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24237</ID>
+                      <Description>"Pos Y"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>6</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24238</ID>
+                      <Description>"Health"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>26</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24239</ID>
+                      <Description>"Vehicle (Air, Ground) Ammo"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>A3</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24240</ID>
+                      <Description>"Max Health Ground Unit (this is a template!)"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>16</Offset>
+                        <Offset>14A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24241</ID>
+                      <Description>"Sight (this is a template!)"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>14A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24242</ID>
+                      <Description>"Max Health Air Unit (this is a template!)"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>16</Offset>
+                        <Offset>14F</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24243</ID>
+                      <Description>"Max Charges Air Unit (this is a template!)"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>3B</Offset>
+                        <Offset>14F</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>24244</ID>
+                      <Description>"Max Health Building (this is a template!)"</Description>
+                      <VariableType>2 Bytes</VariableType>
+                      <Address>pObject</Address>
+                      <Offsets>
+                        <Offset>16</Offset>
+                        <Offset>107</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24117</ID>
+      <Description>"-----------------------------------------------------------"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <Color>554E4B</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>51</ID>
+      <Description>"Think I deserve a cookie? ツ"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <Color>7C7570</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>52</ID>
+      <Description>"https://www.paypal.me/sadjuk"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <Color>7C7570</Color>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>function aobScanEx( aob )
+  -- thanks panraven for this function!
+  -- https://forum.cheatengine.org/viewtopic.php?t=577536
+  local moduleBase = getAddressSafe( "TiberianDawn.dll" )
+  local moduleSize = getModuleSize( "TiberianDawn.dll" )
+  local p, a, n, s, e = nil or '*X*W', nil or fsmNotAligned, nil or '0', ( moduleBase + 0x1000 ) or 0x0, ( moduleBase + moduleSize - 0x1000 ) or 0xffffffffffffffff
+  local ms = pb and createMemScan( pb ) or createMemScan()
+  local fl = createFoundList( ms )
+  ms.firstScan( soExactValue, vtByteArray, nil, aob, nil, s, e, p, a, n, true, false, false, false )
+  ms.waitTillDone()
+  fl.initialize()
+  local result = nil
+  if fl ~= nil and fl.getCount() &gt; 0 then
+    result = createStringlist()
+    for i = 1, fl.getCount() do result.add( fl.getAddress( i - 1 ) ) end
+  end
+  fl.destroy()
+  ms.destroy()
+  return result
+end
+
+function stopExec( s )
+  error( string.format( "\r\n&gt;&gt; %s &lt;&lt;", s ) )
+end
+
+game_exe = 'InstanceServerG.exe'
+
+local autoAttachTimerInterval = 100
+local autoAttachTimerTicks = 0
+local autoAttachTimerTickMax = 5000
+local autoAttachTimer = nil
+local function autoAttachTimer_tick(timer)
+    if autoAttachTimerTickMax &gt; 0 and autoAttachTimerTicks &gt;= autoAttachTimerTickMax then
+        timer.destroy()
+    end
+    if getProcessIDFromProcessName(game_exe) ~= nil then
+        timer.destroy()
+        openProcess(game_exe)
+    end
+    autoAttachTimerTicks = autoAttachTimerTicks + 1
+end
+autoAttachTimer = createTimer(MainForm)
+autoAttachTimer.Interval = autoAttachTimerInterval
+autoAttachTimer.OnTimer = autoAttachTimer_tick
+</LuaScript>
+  <Signature>
+    <SignedHash HashSize="132">0A?WIR3/tgkNS)9p%pOu)%{C5cpgzkVZ[hKH4F=!/$Qsrdo5u-vS9ALqJp1SS%FFW#R!G)upx@:Ac(wpVm1Mf0NPDa^Fl#IAU%.+MGejnV!Sao7gzWy/.q.2,#,Qx1#-{{QUr83A!?tcE5L}m.Z6jP.NLhe5J=!.rvel_</SignedHash>
+    <PublicKey Size="3019">5dZ*HQ*y;zWn;@=c[34DZbD@YZHxc]07XMnH9]OY004,YdAcuzstQ.NhpCaQg6AIpKI?^QXluZR?y1@F5,b8P_8TaZPM}UYAu^tzILzkaeRya)Q_$+F-OiKgDNRcNHE^..L2(s2e#y#x)It_%SOsCw-_,ww=o.JqtVdFTsjG#Rp;qE#U{+d2.i5@Lc/Fbs[q5_W1MTu/vLRr=.^{-t004/lPDc$28VUda01Zh/L^b0%03ZMW03Zkk0001UdV2H#000JJOGiWi^^a60_De66lK:n!32.bRa^vGf6951U69E94oEQKA00)qQO,@Rc1R4/[FZfxb0000ACP[p:R9M5UmwR.8*s?FT:l9ON$t93WAYiZrfnY+NpcsS(7Ing-5+RJ(xFod-K1NnsA213!OtGTXL07HdgX!;S3)i:qhL:Ev89^KSMKlsh7C^9Z0)sw=]}3ax?0_JL?)[j9S,hKA^nl@oz0ZEEy{xVkv+E8CZ[DkMm8s9]ZT}.,4PC@GeR*B5$Gv/j$KP;BAArPfYVbc/d7huzG[NH3^NVBDXm_UAL_,.s0NnZ=6!UGJ[-kWIBQI25e}wPCpC_x2o}fAKx?5!xfb^B0aZcX-^HVI+s;%WX7u)u5Qoi+L/nj0LKl/f*UhuvHN8HZX#=-${=E^dBrECDzqyCPx]VoLNZmI#0+zo/Z,Z_t#Gw/V5@Uvz^RDienHsP*+$J.UYB7fo:;E80ULjV3BRPwh_F!CJCnePD5?mS@djEdLT^R$?NW,u/:N!GY0^D)0VW=!+Nw}Z#Ne_Tg3P_H!xG8?Co4pjnp?758mUndGyqS9}QZrZcn?V?HL[$rZHT]iOy(P{Ylu^]I[=fU[uFO4!oKmNp1PO8xTvkg_.2QsaJp}!TY3QY)=-aIen/Ho-HXSX2-dt71_Kx,MsdFIr0J%Ea;sJh;t@}S62TQh{q@E;LY835;hwse^o:b]XjQ{3YU#h$jsLqC+*%H.btRzQ)IM(Y+?#2S21kXvD)5Af+xFAb?IH8za}o(A/I7sOUyJ34W,eXCPkTpoI0SNqp{eItO[s*@+z,e6!.tN$Ro/SYtYq-$X22+fUv^ikEBYU$:@I*!6tC=M%dN@OUE^qwoDC;J?:$MZ92rb3.v)2M:meSg,.cYNIpf[0lN4j{X1-)%dc5@v3L%*6S-3+0RehP1!c-t0E)/P24]9{wJf[!y-DhbM^)8D]mhmUIz7Nx/UMWQwOwx6(L;vuSJz]NJX6pb[_/huz/p*[cL;cLCD%b:bA+vOYFWxpWDXnqYS/=b[wJ;G7Gp4h[c;%sF_I1LZ@cv?@x;o){kKg3?6,08LFk*/.1Wgu*E!Wl.6$QQjPMC6#3Xv^7kv-H7ykYGYp@%Dk,7rF)DQ5VCIF*g:Jb-Uq_6gL}]TE,y$5[+[P!H,hltTua*V^Ltsd^l^qe=g)ldPBL[Uif13w2$%v.:PMca6bqh}biEd2ZTSES^(bkV*mJfaqJ{3t=6CHNo);*JGSON*-;DBh*UXmjcw6USPX7%6=LQy6RJLTE%ybGej#PQ4OmX#(BQ%a4#+Bs(^NpyCnz0b,1_hzlHRzQOn=IDSn(t3H:;RGY9[5Q$OX/]z%1jwT8:S@0aB2z]H_(f(*koyb,phGde%Fu%-/s*K^+OP^wQzR7h@hRkkw0qUg@xR@3Ojt;nW1E9jJj!pXcQbf]=,q]c[:R%Kq3JZg9XhYkLXSd#{w?QI7OAp5uu45/myj]pJ-g8l*]V]jy-A7g-(R=hh,TKv39ticjJ,,G)W5UjPY-Fk]7DO1l#$Cxf./Pur2t^^TeU-3s[b+kbim)8k.ms10p?J[/oJo(32sOlJReLv1H[D968_/aLl0Ea*TXPA[)5IJL?;{?v9f7?_B8TOdp:7R619wNI.D)%TbU1#8D}_P;}Y;rMd(@v4/QreTt=0j){2.fErnDsujxvD$^:UP9(h[KVYkyCI@*4%uy/ut8N_/QtDTuR)(1thEaJxN,}V2qPi-1re}ga)z]F@D}VDXKzqXH]iUm#R2Fd2C[FOXptDO6iz_eHH-2qV*DPl];;W1,+H6%S=tl.IfFhj]DswzDw^:ljsc@LQP9O8nfl:2TG34(M?=+a(zai1=U#q#s6xj*Qh.sm!67qZL[]XLdU!y0Yur0{e^#lt*aOD+WDYL-L%?ZW!iu[(zDZheLsZgFk7{5dhYfdn)6/[BW,T:Cez^a!RqiWUYrN(.KL;HhGx(h6fWf)U]qjG{J-fcRb2fD5/3?^%u84#MFYEp*SdkmVt0NqgM];h@Cm=h$@zCSs9%Y}?,TmWHubp/NE*j}SX-xLLTeZ9-cF3DiWq/+VUcNAvNGI*F]@ezO.Qs+-e;IIIYG3P#b.BJ#h7i][.F}Bf6+)F*;vd5eeAqWOHq(L)ABUP7{hUrW^-40H7Tc5eQ/GxY7]Te5-mS,,=-9N.]J5HlJlEn^8^]-K(w3(+VXIKm#BuTr1J@K]gj!0H67Yyw06G.o=]$2wM*Q1/x[An]w$Bnn?v[,Fz.oJ{7)G{x$9@B]jZA5osPXBFo:0831Isc4Y.B]y%JgKZUQ=woOIFs;NSbUuQJ8im-]{8i/XgUmS=FvJOD,dXR20^BNNqC6P[^nKjoc/0$O]}9lNvgnCT1E)=K%*26pD%c#aUp;Fc5QYRsC@F:#2fbCoNS48h[Lq.k#eqb,Y/Gf*QRp87$}.1#?ICB4DYVC?LfeuEDJ(aP0KbTVF.$)/x%(iBC7KpL]WkvUf[u_W-n*?mTPa6QHpZH!pbQf^jPrfs,LO,qdj$lTDR?rgr],;y*D2^IHur0B+h{Hg$Ezk[}GpuK]RTgSQ:Juko?Z{1kYPV3:dhPQi[}n9ebRMhVf/Ll#+-2q@(Jq@@/:63N-(/[U-5IdouefS}FgViR)?XOMT%UHp#7q^OfdlQ:;f3W;4V_w50^i8EA7.xz3DogS*TDA-JqByZe/eIM;7%8lh?_j0.q_j#c11E,%blNv/4)Z2buN#rACXt?-uk#[?_r;%+@k!comiNK1MQ)hNalvxZa)*7LO]g^BEm.7diuhm0YydKu)SmPl73%nYi^M)ZOF6,YWEGP1lv@m=R0UGi1zH=AeI:6f1I:g)i=V3p*uQ{_5N)7=d[dv#meg[f.xaF_ZsOo:hfASo0nLt$4L/lO^Lk%0iD?*5c@7Agsk;$hZ79{ID^bJ;Xby(h;$N}udf$@6E):w(}_edh.dX6?_12yvTiUp7jF7k#1tPA_MlWsW$=tV^{-6bM]3H5m#C:5S9aPoUWn=?$11Si(oO=wIA*+P2#sy$29qJ$Z}73bt6cY)90[y($vm9%0S:eWMV!Nr3R8PgKWG(t25otTL{HZ)wo%.E;]PU1PUVB!$si2[rY;wVXnGZeGdA?0exj6C$H20IRm%%WS)7?BJkNf3+96X=3)+e+J1)n[W!*c;g8kt(2+!lu^flK}KK7*COo/JbYu?g0kZP^?b/o%Ci_gvuNny%:(Q!:f{YR=8)}RSo8l_%}ETti,g?mb:@6-^ZzJ(Jug;Zb7t{IR^-1%lLf%DfcjvD6MOaAS;M]j:*YIz03=4]gZy(mMY8Biqwl$tj?(Xe?U1xaHqX8!KXWj/CCmK[i?u?r=}{6sx2F76]}M3VK!Mw9)+!^P0000/MNUMnLSTY}00001XZi^(F#=O7]eM)7uRBu%n]bT=vOZV1$D.[G6uNS!4t$sN=:117^ai4HQvZM(kYLB]Ys8SuD.VIgPmfTD1pvGokqOhgjAgO*Y#0E1?:$y5^EJx7Gxdyyt[}hApw9;jcA{^5=3e{GlwM!%@D:iDnVkgGP7rDABB?5$ww(b</PublicKey>
+  </Signature>
+</CheatTable>
