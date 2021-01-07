@@ -1,0 +1,2690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>228</ID>
+      <Description>"Global"</Description>
+      <Options moHideChildren="1" moManualExpandCollapse="1" moAllowManualCollapseAndExpand="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>227</ID>
+          <Description>"Current Player"</Description>
+          <DropDownList>700:OriginalCharacter1
+</DropDownList>
+          <VariableType>2 Bytes</VariableType>
+          <Address>San13PK_en.exe+204F420</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>0</ID>
+          <Description>"Funds"</Description>
+          <Color>0080FF</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>San13PK_en.exe+204F424</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>"Hearsay"</Description>
+          <Color>000000</Color>
+          <VariableType>2 Bytes</VariableType>
+          <Address>San13PK_en.exe+2054CF8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"Trade Strength"</Description>
+          <Color>008000</Color>
+          <VariableType>2 Bytes</VariableType>
+          <Address>San13PK_en.exe+2054CB8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Supplies"</Description>
+          <Color>004080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>San13PK_en.exe+20547C0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104</ID>
+          <Description>"Max Comrades (0=4,1=5,2=6 and so on)"</Description>
+          <Color>800000</Color>
+          <VariableType>Byte</VariableType>
+          <Address>San13PK_en.exe+205483C</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"Private Troops (modify your private troops)"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>400080</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1</ID>
+              <Description>"Current Private Troops"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>San13PK_en.exe+20547C4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>4</ID>
+              <Description>"Max Private Troops"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>San13PK_en.exe+20547C8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>3</ID>
+              <Description>"Wounded"</Description>
+              <VariableType>2 Bytes</VariableType>
+              <Address>San13PK_en.exe+2054800</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>6</ID>
+              <Description>"Spear Skill"</Description>
+              <VariableType>2 Bytes</VariableType>
+              <Address>San13PK_en.exe+2054836</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>7</ID>
+              <Description>"Horse Skill"</Description>
+              <VariableType>2 Bytes</VariableType>
+              <Address>San13PK_en.exe+2054838</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>8</ID>
+              <Description>"Bow Skill"</Description>
+              <VariableType>2 Bytes</VariableType>
+              <Address>San13PK_en.exe+205483A</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>133</ID>
+          <Description>"Prestige Unlock (1=unlocked/0=locked) set 1 here to unlock all"</Description>
+          <Options moHideChildren="1" moRecursiveSetValue="1" moManualExpandCollapse="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>0000FF</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>142</ID>
+              <Description>"Lone Wolf"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548B7</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>132</ID>
+              <Description>"Citizen"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548B8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>134</ID>
+              <Description>"Patriot"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548B9</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>135</ID>
+              <Description>"Paragon"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548BA</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>136</ID>
+              <Description>"Knight Errant"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548BB</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>137</ID>
+              <Description>"Bandit"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548BC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>138</ID>
+              <Description>"Bandit Chief"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548BD</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>139</ID>
+              <Description>"Bandit Lord"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548BE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>140</ID>
+              <Description>"Executioner"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548BF</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>141</ID>
+              <Description>"Lord of Death"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548C0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>144</ID>
+              <Description>"Fighter"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548C7</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>148</ID>
+              <Description>"Warrior"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548CB</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>145</ID>
+              <Description>"Elite Warrior"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548C8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>146</ID>
+              <Description>"Unparralleled Warrior"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548C9</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>147</ID>
+              <Description>"Warrior Master"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548CA</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>155</ID>
+              <Description>"Fierce Warrior"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548D2</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>149</ID>
+              <Description>"Relentless Warrior"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548CC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>150</ID>
+              <Description>"Gallant"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548CD</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>151</ID>
+              <Description>"Daring Officer"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548CE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>152</ID>
+              <Description>"War Demon"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548Cf</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>153</ID>
+              <Description>"Hero"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548D0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>154</ID>
+              <Description>"Paladin"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548D1</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>156</ID>
+              <Description>"Official"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548D5</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>157</ID>
+              <Description>"Civil Servant"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548D6</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>158</ID>
+              <Description>"Minister"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548D7</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>159</ID>
+              <Description>"Prime Minister"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548D8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>160</ID>
+              <Description>"Bureaucrat"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548D9</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>161</ID>
+              <Description>"Consul"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548Da</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>162</ID>
+              <Description>"Kingmaker"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548DB</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>163</ID>
+              <Description>"Envoy"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548DC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>164</ID>
+              <Description>"Diplomat"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548DD</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>165</ID>
+              <Description>"Ambassador"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548DE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>166</ID>
+              <Description>"Provocateur"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548DF</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>167</ID>
+              <Description>"Firebrand"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548E0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>168</ID>
+              <Description>"Leader"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548E4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>169</ID>
+              <Description>"General"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548E5</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>170</ID>
+              <Description>"Veteran General"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548E6</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>171</ID>
+              <Description>"Flying General"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548E7</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>172</ID>
+              <Description>"Dutiful General"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548E8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>173</ID>
+              <Description>"Peerless General"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548E9</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>180</ID>
+              <Description>"Eminent General"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548F0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>174</ID>
+              <Description>"Illustrious General"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548EA</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>175</ID>
+              <Description>"Commander"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548EB</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>176</ID>
+              <Description>"Skilled Commander"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548EC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>177</ID>
+              <Description>"Erudite Commander"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548ED</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>178</ID>
+              <Description>"Guardian"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548EE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>179</ID>
+              <Description>"Adamant Guardian"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548EF</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>181</ID>
+              <Description>"Orator"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548F3</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>182</ID>
+              <Description>"Planner"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548F4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>183</ID>
+              <Description>"Strategic Adviser"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548F5</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>184</ID>
+              <Description>"Strategy Master"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548F6</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>185</ID>
+              <Description>"Cunning Leader"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548F7</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>186</ID>
+              <Description>"Crafty Sage"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548F8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>187</ID>
+              <Description>"Savant"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548F9</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>188</ID>
+              <Description>"Luminary"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548Fa</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>189</ID>
+              <Description>"Celebrity"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548Fb</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>190</ID>
+              <Description>"Loyal Partisan"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548Fc</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>191</ID>
+              <Description>"Mastermind"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20548Fd</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>192</ID>
+              <Description>"Trader"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054902</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>193</ID>
+              <Description>"Merchat"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054903</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>194</ID>
+              <Description>"Grand Merchant"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054904</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>195</ID>
+              <Description>"White Dragon"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054905</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>196</ID>
+              <Description>"Black Dragon"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054908</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"Renown (renown in each city, max=100) set value here will effects all city"</Description>
+          <Options moHideChildren="1" moRecursiveSetValue="1" moManualExpandCollapse="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>8080FF</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>71</ID>
+              <Description>"Xiangping"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C40</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>70</ID>
+              <Description>"Beiping"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C41</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>69</ID>
+              <Description>"Ji"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C42</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>68</ID>
+              <Description>"Nanpi"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C43</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>67</ID>
+              <Description>"Zhongshan"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C44</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>66</ID>
+              <Description>"Julu"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C45</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>65</ID>
+              <Description>"Ganling"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C46</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>64</ID>
+              <Description>"Yie"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C47</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>63</ID>
+              <Description>"Jinyang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C48</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>62</ID>
+              <Description>"Shandang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C49</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13</ID>
+              <Description>"Pingyuan"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C4A</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>14</ID>
+              <Description>"Beihai"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C4B</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>15</ID>
+              <Description>"Langye"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C4C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>16</ID>
+              <Description>"Xiapi"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C4D</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17</ID>
+              <Description>"Guangling"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C4E</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>10</ID>
+              <Description>"Jibei"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C4F</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18</ID>
+              <Description>"Puyang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C50</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19</ID>
+              <Description>"Chenliu"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C51</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>20</ID>
+              <Description>"Xiaopei"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C52</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>21</ID>
+              <Description>"Qiao"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C53</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>22</ID>
+              <Description>"Xuchange"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C54</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>23</ID>
+              <Description>"Runan"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C55</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24</ID>
+              <Description>"Henei"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C56</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>25</ID>
+              <Description>"Luoyang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C57</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26</ID>
+              <Description>"Hongnong"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C58</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>27</ID>
+              <Description>"Changan"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C59</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>28</ID>
+              <Description>"Anding"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C5a</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>29</ID>
+              <Description>"Tianshui"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C5B</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>30</ID>
+              <Description>"Wuwei"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C5C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>31</ID>
+              <Description>"Jincheng"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C5D</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>32</ID>
+              <Description>"Wudon"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C5E</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>33</ID>
+              <Description>"Hanzhong"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C5F</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>34</ID>
+              <Description>"Yongan"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C60</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>35</ID>
+              <Description>"Zitong"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C61</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>36</ID>
+              <Description>"Chengdu"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C62</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>37</ID>
+              <Description>"Jiangzhou"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C63</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>38</ID>
+              <Description>"Zangke"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C64</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>39</ID>
+              <Description>"Yuisui"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C65</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>40</ID>
+              <Description>"Jianning"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C66</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>41</ID>
+              <Description>"Yongchang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C67</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>42</ID>
+              <Description>"Wan"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C68</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>43</ID>
+              <Description>"Xinye"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C69</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>44</ID>
+              <Description>"Xiangyang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C6A</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>45</ID>
+              <Description>"Jiangxia"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C6B</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>46</ID>
+              <Description>"Shangyong"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C6C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>47</ID>
+              <Description>"Jiangling"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C6D</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>48</ID>
+              <Description>"Changsha"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C6E</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>49</ID>
+              <Description>"Wuling"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C6F</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>50</ID>
+              <Description>"Guiyang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C70</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>51</ID>
+              <Description>"Lingling"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C71</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>52</ID>
+              <Description>"Shouchun"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C72</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>53</ID>
+              <Description>"Lujiang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C73</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>54</ID>
+              <Description>"Jiangye"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C74</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>55</ID>
+              <Description>"Wu"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C75</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>56</ID>
+              <Description>"Huiji"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C76</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>57</ID>
+              <Description>"Yuzhang"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C77</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>58</ID>
+              <Description>"Jianan"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C78</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>59</ID>
+              <Description>"Nanhai"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C79</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>60</ID>
+              <Description>"Hepu"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C7A</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>61</ID>
+              <Description>"Jiaozhi"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054C7B</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>76</ID>
+          <Description>"Record (useful for unlock prestige)"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>008080</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>107</ID>
+              <Description>"enemy unit destroyed"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20545B0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>103</ID>
+              <Description>"times duel"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546Dd</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105</ID>
+              <Description>"times duel win"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546DE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>94</ID>
+              <Description>"debate win"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546E2</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>73</ID>
+              <Description>"participated battle"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546E5</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>74</ID>
+              <Description>"battle win"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546E6</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>77</ID>
+              <Description>"become 1st place in deed"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546E7</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>78</ID>
+              <Description>"accumulate deed"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>San13PK_en.exe+20546E8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>82</ID>
+              <Description>"conduct city training"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546EC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>84</ID>
+              <Description>"stronghold durability building"</Description>
+              <VariableType>2 Bytes</VariableType>
+              <Address>San13PK_en.exe+20546EE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>86</ID>
+              <Description>"killing an officer"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>87</ID>
+              <Description>"completed misdeed renown quest"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F1</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>88</ID>
+              <Description>"completed good renown quest"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F2</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>90</ID>
+              <Description>"enter battle with private troops"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>91</ID>
+              <Description>"succeed at investigate"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F5</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>92</ID>
+              <Description>"succeed at cajole"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F6</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>99</ID>
+              <Description>"succeed at scheme"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F7</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>95</ID>
+              <Description>"completed mission"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>100</ID>
+              <Description>"merit reports"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546F9</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>101</ID>
+              <Description>"carry out audiences"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546FA</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>98</ID>
+              <Description>"succeed at broker mission"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546FB</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>97</ID>
+              <Description>"succeed at alliance mission"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546FC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>96</ID>
+              <Description>"succeed at trade mission"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546FD</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>102</ID>
+              <Description>"succeed at venture mission"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+20546FE</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>109</ID>
+          <Description>"Tactic Exp (max=99)"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>FF80FF</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>119</ID>
+              <Description>"Protection Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BA7</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>122</ID>
+              <Description>"Firm Protection Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BA8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>120</ID>
+              <Description>"Spear Ambuse Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BBC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>121</ID>
+              <Description>"Falling Rock Trap Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BCE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>123</ID>
+              <Description>"Steel Spear Ambuse Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BBE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108</ID>
+              <Description>"Bow Ambuse Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BBF</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>110</ID>
+              <Description>"Strongbow Ambuse Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BC0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112</ID>
+              <Description>"Steelbow Ambuse Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BC1</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117</ID>
+              <Description>"Earnest Prayer Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BA6</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>118</ID>
+              <Description>"Speedy Movement Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BAB</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111</ID>
+              <Description>"Archer's Trap Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BCC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116</ID>
+              <Description>"Stone Soldiers Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BB0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>113</ID>
+              <Description>"Burrow Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BC3</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>114</ID>
+              <Description>"Tunnel Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BC4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115</ID>
+              <Description>"Poison Trap Tactic Exp"</Description>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2054BCA</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>229</ID>
+      <Description>"Original Character 1 Only"</Description>
+      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>131</ID>
+          <Description>"Current Prestige"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">255:None
+0:Lone Wolf
+1:Citizen
+2:Patriot
+3:Paragon
+4:Knight Errant
+5:Bandit
+6:Bandit Chief
+7:Bandit Lord
+8:Executioner
+9:Lord of Death
+16:Fighter
+17:Elite Warrior
+18:Unparralleled Warrior
+19:Warrior Master
+20:Warrior
+21:Relentless Warrior
+22:Gallant
+23:Daring Officer
+24:War Demon
+25:Hero
+26:Paladin
+27:Fierce Warrior
+30:Official
+31:Civil Servant
+32:Minister
+33:Prime Minister
+34:Bureaucrat
+35:Consul
+36:Kingmaker
+37:Envoy
+38:Diplomat
+39:Ambassador
+40:Provocateur
+41:Firebrand
+45:Leader
+46:General
+47:Veteran General
+48:Flying General
+49:Dutiful General
+50:Peerless General
+51:Illustrious General
+52:Commander
+53:Skilled Commander
+54:Erudite Commander
+55:Guardian
+56:Adamant Guardian
+57:Eminent General
+60:Orator
+61:Planner
+62:Strategic Adviser
+63:Strategy Master
+64:Cunning Leader
+65:Crafty Sage
+66:Savant
+67:Luminary
+68:Celebrity
+69:Loyal Partisan
+70:Mastermind
+75:Trader
+76:Merchant
+77:Grand Merchant
+78:White Dragon
+81:Black Dragon
+</DropDownList>
+          <Color>FF0000</Color>
+          <VariableType>Byte</VariableType>
+          <Address>San13PK_en.exe+2398AFE</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>234</ID>
+          <Description>"Gender (0=male/1=female)"</Description>
+          <Color>FF8080</Color>
+          <VariableType>Byte</VariableType>
+          <Address>San13PK_en.exe+2397857</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>226</ID>
+          <Description>"Model"</Description>
+          <DropDownList>16:Diao Chan
+255:None
+</DropDownList>
+          <Color>FF00FF</Color>
+          <VariableType>Byte</VariableType>
+          <Address>San13PK_en.exe+239785A</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>233</ID>
+          <Description>"Face ID"</Description>
+          <DropDownList>1071:Girl1
+1072:Girl2
+1074:Lady1
+1076:Lady2
+1100:Beauty
+</DropDownList>
+          <Color>008080</Color>
+          <VariableType>2 Bytes</VariableType>
+          <Address>San13PK_en.exe+2397858</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>246</ID>
+          <Description>"Voice"</Description>
+          <DropDownList>10:Normal Woman
+11:Wise Woman
+12:Daring Woman
+13:Alluring Woman
+</DropDownList>
+          <VariableType>Byte</VariableType>
+          <Address>San13PK_en.exe+239785D</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>230</ID>
+          <Description>"Birth"</Description>
+          <DropDownList>16:Diao Chan
+255:None
+</DropDownList>
+          <Color>FF00FF</Color>
+          <VariableType>2 Bytes</VariableType>
+          <Address>San13PK_en.exe+239785e</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>247</ID>
+          <Description>"Ideal Pretige"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>San13PK_en.exe+2398AFF</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>231</ID>
+          <Description>"Comes of Age"</Description>
+          <DropDownList>16:Diao Chan
+255:None
+</DropDownList>
+          <Color>008000</Color>
+          <VariableType>2 Bytes</VariableType>
+          <Address>San13PK_en.exe+2397860</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>232</ID>
+          <Description>"Dead"</Description>
+          <DropDownList>16:Diao Chan
+255:None
+</DropDownList>
+          <Color>000000</Color>
+          <VariableType>2 Bytes</VariableType>
+          <Address>San13PK_en.exe+2397862</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>245</ID>
+          <Description>"Personality"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <Color>40FF00</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>235</ID>
+              <Description>"Personality"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+239789E</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>240</ID>
+              <Description>"Armor"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+23978A0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>241</ID>
+              <Description>"Tomes"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+23978A1</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>242</ID>
+              <Description>"Treasure"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+23978A2</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>243</ID>
+              <Description>"Alcohol"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+23978A3</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>244</ID>
+              <Description>"Greed"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+23978A4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>236</ID>
+              <Description>"Duty"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+23978A5</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>237</ID>
+              <Description>"Bravery"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+23978A6</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>238</ID>
+              <Description>"Aptitude"</Description>
+              <Color>008080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+23978A7</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>224</ID>
+          <Description>"Status"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <Color>008080</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>124</ID>
+              <Description>"Status (max=110)"</Description>
+              <Options moHideChildren="1" moRecursiveSetValue="1" moManualExpandCollapse="1"/>
+              <LastState Value="" Activated="1" RealAddress="00000000"/>
+              <Color>000080</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>125</ID>
+                  <Description>"LEA"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397869</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>126</ID>
+                  <Description>"WAR"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239786A</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>127</ID>
+                  <Description>"INT"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239786B</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>128</ID>
+                  <Description>"GOV"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239786C</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>198</ID>
+              <Description>"Ability (max=9)"</Description>
+              <Options moHideChildren="1" moRecursiveSetValue="1" moManualExpandCollapse="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>197</ID>
+                  <Description>"Commerce"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397876</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>199</ID>
+                  <Description>"Farming"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397877</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>200</ID>
+                  <Description>"Culture"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397878</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>201</ID>
+                  <Description>"Training"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397879</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>202</ID>
+                  <Description>"Patrol"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239787A</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>203</ID>
+                  <Description>"Coax"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239787B</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>204</ID>
+                  <Description>"Negotiate"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239787C</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>205</ID>
+                  <Description>"Orator"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239787D</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>206</ID>
+                  <Description>"Virtue"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239787E</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>207</ID>
+                  <Description>"Overawe"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+239787F</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>208</ID>
+                  <Description>"Speed"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397880</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>209</ID>
+                  <Description>"Arouse"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397881</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>210</ID>
+                  <Description>"Endurance"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397882</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>211</ID>
+                  <Description>"Siege"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397883</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>212</ID>
+                  <Description>"Weapons"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397884</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>213</ID>
+                  <Description>"Defense"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397885</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>214</ID>
+                  <Description>"Naval"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397886</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>215</ID>
+                  <Description>"Dueling"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397887</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>216</ID>
+                  <Description>"Heroism"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397888</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>217</ID>
+                  <Description>"Strategy"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397889</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>225</ID>
+              <Description>"Troop Type (0-3)"</Description>
+              <Options moHideChildren="1" moRecursiveSetValue="1" moManualExpandCollapse="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>0000FF</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>220</ID>
+                  <Description>"Spearman"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397871</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>221</ID>
+                  <Description>"Horseman"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397872</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>222</ID>
+                  <Description>"Bowman"</Description>
+                  <VariableType>Byte</VariableType>
+                  <Address>San13PK_en.exe+2397873</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>223</ID>
+              <Description>"Strategy (custom one start at 250)"</Description>
+              <Color>808080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+2397874</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>218</ID>
+              <Description>"Forte (change value to change forte)"</Description>
+              <Color>808080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+239788a</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>219</ID>
+              <Description>"Expertise (change value to change it)"</Description>
+              <Color>808080</Color>
+              <VariableType>Byte</VariableType>
+              <Address>San13PK_en.exe+239788b</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>119103</ID>
+      <Description>"Activity"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <Color>800000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+registersymbol(activitystats_basepointer)
+registersymbol(activitystats_update_enable)
+registersymbol(activitystats_set_enable)
+
+alloc(activitystats_basepointer, 4)
+alloc(activitystats_update_enable, 4)
+alloc(activitystats_set_enable, 4)
+
+
+[DISABLE]
+unregistersymbol(activitystats_basepointer)
+unregistersymbol(activitystats_update_enable)
+unregistersymbol(activitystats_set_enable)
+
+dealloc(activitystats_basepointer)
+dealloc(activitystats_update_enable)
+dealloc(activitystats_set_enable)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>119104</ID>
+          <Description>"Activity Stats Base Address Scan (To Update: Play Game)"</Description>
+          <LastState/>
+          <Color>804000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+label(activitystats_savedAOB)
+label(activitystats_returnhere)
+label(activitystats_originalcode)
+label(activitystats_exit)
+
+label(activitystats_update_exit)
+label(activitystats_set_exit)
+
+registersymbol(activitystats_savedAOB)
+
+aobscan(activitystats_searchedAOB, 0F B7 52 0A 33 FF 85 C0)
+
+alloc(activitystats_newmem, 2048, activitystats_searchedAOB)
+alloc(activitystats_temp1, 4, activitystats_searchedAOB)
+
+
+activitystats_newmem:
+mov [activitystats_temp1], edi
+
+cmp dword ptr [activitystats_update_enable], #0
+je activitystats_update_exit
+mov [activitystats_basepointer], edx
+activitystats_update_exit:
+
+cmp dword ptr [activitystats_set_enable], #0
+je activitystats_set_exit
+mov word ptr [edx+a], #0
+activitystats_set_exit:
+
+mov edi, [activitystats_temp1]
+
+
+activitystats_originalcode:
+db 0F B7 52 0A 33 FF 85 C0
+
+activitystats_exit:
+jmp activitystats_returnhere
+
+
+activitystats_searchedAOB:
+activitystats_savedAOB:
+jmp activitystats_newmem
+nop
+activitystats_returnhere:
+
+
+[DISABLE]
+activitystats_savedAOB:
+db 0F B7 52 0A 33 FF 85 C0
+
+unregistersymbol(activitystats_savedAOB)
+
+dealloc(activitystats_newmem)
+dealloc(activitystats_temp1)
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>119105</ID>
+          <Description>"Activity Completion Set to 1 Day?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>activitystats_set_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>119106</ID>
+          <Description>"Activity Stats Update Base Address?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>activitystats_update_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>119107</ID>
+          <Description>"Activity Stats"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>119108</ID>
+              <Description>"Base Address"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>activitystats_basepointer</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119110</ID>
+              <Description>"Activity Start Day"</Description>
+              <VariableType>2 Bytes</VariableType>
+              <Address>activitystats_basepointer</Address>
+              <Offsets>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119109</ID>
+              <Description>"Activity End Day"</Description>
+              <VariableType>2 Bytes</VariableType>
+              <Address>activitystats_basepointer</Address>
+              <Offsets>
+                <Offset>A</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>103391</ID>
+      <Description>"Officer Stats Uncap"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <Color>804000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+function SelectAobScan(labelAOB, searchAOB, numberAOB)
+  local resultsAOB = AOBScan(searchAOB)
+
+  if (resultsAOB ~= nil) then
+    local countAOB = stringlist_getCount(resultsAOB)
+    local positionAOB = numberAOB - 1
+
+    if (numberAOB == 0 or numberAOB &gt; countAOB) then
+      positionAOB = countAOB - 1
+    end
+
+    local selectedAOB = stringlist_getString(resultsAOB, positionAOB)
+
+    local script = 'label(' .. labelAOB .. ')\nregistersymbol(' .. labelAOB .. ')\n' .. selectedAOB .. ':\n' .. labelAOB .. ':'
+    autoAssemble(script)
+
+    object_destroy(resultsAOB)
+    resultsAOB = nil
+  end
+end
+{$asm}
+
+
+[ENABLE]
+label(officerstatslimiter_savedAOB1)
+label(officerstatslimiter_savedAOB2)
+label(officerstatslimiter_savedAOB3)
+label(officerstatslimiter_savedAOB4)
+label(officerstatslimiter_savedAOB5)
+label(officerstatslimiter_savedAOB6)
+label(officerstatslimiter_savedAOB7)
+label(officerstatslimiter_savedAOB8)
+label(officerstatslimiter_savedAOB9)
+label(officerstatslimiter_savedAOB10)
+label(officerstatslimiter_savedAOB11)
+label(officerstatslimiter_savedAOB12)
+label(officerstatslimiter_savedAOB13)
+label(officerstatslimiter_savedAOB14)
+label(officerstatslimiter_savedAOB15)
+label(officerstatslimiter_savedAOB16)
+label(officerstatslimiter_savedAOB17)
+
+registersymbol(officerstatslimiter_savedAOB1)
+registersymbol(officerstatslimiter_savedAOB2)
+registersymbol(officerstatslimiter_savedAOB3)
+registersymbol(officerstatslimiter_savedAOB4)
+registersymbol(officerstatslimiter_savedAOB5)
+registersymbol(officerstatslimiter_savedAOB6)
+registersymbol(officerstatslimiter_savedAOB7)
+registersymbol(officerstatslimiter_savedAOB8)
+registersymbol(officerstatslimiter_savedAOB9)
+registersymbol(officerstatslimiter_savedAOB10)
+registersymbol(officerstatslimiter_savedAOB11)
+registersymbol(officerstatslimiter_savedAOB12)
+registersymbol(officerstatslimiter_savedAOB13)
+registersymbol(officerstatslimiter_savedAOB14)
+registersymbol(officerstatslimiter_savedAOB15)
+registersymbol(officerstatslimiter_savedAOB16)
+registersymbol(officerstatslimiter_savedAOB17)
+
+aobscan(officerstatslimiter_searchedAOB1, 0F 4F D3 EB 02 8B D0)
+
+aobscan(officerstatslimiter_searchedAOB2, 0F 4F C3 5B 5D C3)
+
+aobscan(officerstatslimiter_searchedAOB3, 0F 4F C1 8B 4D F4)
+
+aobscan(officerstatslimiter_searchedAOB4, 0F 4F C1 5B 5D C3)
+
+aobscan(officerstatslimiter_searchedAOB5, B9 8C 00 00 00 3B C1 0F 4F C1)
+
+aobscan(officerstatslimiter_searchedAOB6, 0F 4F F8 0F BE)
+
+aobscan(officerstatslimiter_searchedAOB7, 0F 4F F0 33 D2)
+
+LuaCall(SelectAobScan("officerstatslimiter_searchedAOB8", "0F 4F C1 5B 8B", 1))
+
+aobscan(officerstatslimiter_searchedAOB9, 1A 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 0F 4F F8 0F BE 83 90 12 00 00)
+
+aobscan(officerstatslimiter_searchedAOB10, 0F 4F F0 E8 E9)
+
+LuaCall(SelectAobScan("officerstatslimiter_searchedAOB11", "0F 4F C1 5B 8B", 2))
+
+aobscan(officerstatslimiter_searchedAOB12, 1B 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 0F 4F F8 0F BE 83 90 12 00 00)
+
+aobscan(officerstatslimiter_searchedAOB13, 0F 4F F0 E8 48)
+
+aobscan(officerstatslimiter_searchedAOB14, 0F 4F C1 5B 8B E5 5D C3 55 8B EC 51)
+
+aobscan(officerstatslimiter_searchedAOB15, 1C 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 0F 4F F8 0F BE 83 90 12 00 00)
+
+aobscan(officerstatslimiter_searchedAOB16, 0F 4F F0 E8 A8)
+
+aobscan(officerstatslimiter_searchedAOB17, 0F 4F C1 5B 8B E5 5D C3 55 8B EC 6A)
+
+officerstatslimiter_searchedAOB1:
+officerstatslimiter_savedAOB1:
+db 90 90 90
+
+officerstatslimiter_searchedAOB2:
+officerstatslimiter_savedAOB2:
+db 90 90 90
+
+officerstatslimiter_searchedAOB3:
+officerstatslimiter_savedAOB3:
+db 90 90 90
+
+officerstatslimiter_searchedAOB4:
+officerstatslimiter_savedAOB4:
+db 90 90 90
+
+officerstatslimiter_searchedAOB5:
+officerstatslimiter_savedAOB5:
+db B9 8C 00 00 00 3B C1 90 90 90
+
+officerstatslimiter_searchedAOB6:
+officerstatslimiter_savedAOB6:
+db 90 90 90
+
+officerstatslimiter_searchedAOB7:
+officerstatslimiter_savedAOB7:
+db 90 90 90
+
+officerstatslimiter_searchedAOB8:
+officerstatslimiter_savedAOB8:
+db 90 90 90
+
+officerstatslimiter_searchedAOB9:
+officerstatslimiter_savedAOB9:
+db 1A 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 90 90 90 0F BE 83 90 12 00 00
+
+officerstatslimiter_searchedAOB10:
+officerstatslimiter_savedAOB10:
+db 90 90 90
+
+officerstatslimiter_searchedAOB11:
+officerstatslimiter_savedAOB11:
+db 90 90 90
+
+officerstatslimiter_searchedAOB12:
+officerstatslimiter_savedAOB12:
+db 1B 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 90 90 90 0F BE 83 90 12 00 00
+
+officerstatslimiter_searchedAOB13:
+officerstatslimiter_savedAOB13:
+db 90 90 90
+
+officerstatslimiter_searchedAOB14:
+officerstatslimiter_savedAOB14:
+db 90 90 90
+
+officerstatslimiter_searchedAOB15:
+officerstatslimiter_savedAOB15:
+db 1C 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 90 90 90 0F BE 83 90 12 00 00
+
+officerstatslimiter_searchedAOB16:
+officerstatslimiter_savedAOB16:
+db 90 90 90
+
+officerstatslimiter_searchedAOB17:
+officerstatslimiter_savedAOB17:
+db 90 90 90
+
+[DISABLE]
+officerstatslimiter_savedAOB1:
+db 0F 4F D3
+
+officerstatslimiter_savedAOB2:
+db 0F 4F C3
+
+officerstatslimiter_savedAOB3:
+db 0F 4F C1
+
+officerstatslimiter_savedAOB4:
+db 0F 4F C1
+
+officerstatslimiter_savedAOB5:
+db B9 8C 00 00 00 3B C1 0F 4F C1
+
+officerstatslimiter_savedAOB6:
+db 0F 4F F8
+
+officerstatslimiter_savedAOB7:
+db 0F 4F F0
+
+officerstatslimiter_savedAOB8:
+db 0F 4F C1
+
+officerstatslimiter_savedAOB9:
+db 1A 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 0F 4F F8 0F BE 83 90 12 00 00
+
+officerstatslimiter_savedAOB10:
+db 0F 4F F0
+
+officerstatslimiter_savedAOB11:
+db 0F 4F C1
+
+officerstatslimiter_savedAOB12:
+db 1B 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 0F 4F F8 0F BE 83 90 12 00 00
+
+officerstatslimiter_savedAOB13:
+db 0F 4F F0
+
+officerstatslimiter_savedAOB14:
+db 0F 4F C1
+
+officerstatslimiter_savedAOB15:
+db 1C 3B F8 0F 4C F9 B8 6E 00 00 00 3B F8 0F 4F F8 0F BE 83 90 12 00 00
+
+officerstatslimiter_savedAOB16:
+db 0F 4F F0
+
+officerstatslimiter_savedAOB17:
+db 0F 4F C1
+
+unregistersymbol(officerstatslimiter_savedAOB1)
+unregistersymbol(officerstatslimiter_savedAOB2)
+unregistersymbol(officerstatslimiter_savedAOB3)
+unregistersymbol(officerstatslimiter_savedAOB4)
+unregistersymbol(officerstatslimiter_savedAOB5)
+unregistersymbol(officerstatslimiter_savedAOB6)
+unregistersymbol(officerstatslimiter_savedAOB7)
+unregistersymbol(officerstatslimiter_savedAOB8)
+unregistersymbol(officerstatslimiter_savedAOB9)
+unregistersymbol(officerstatslimiter_savedAOB10)
+unregistersymbol(officerstatslimiter_savedAOB11)
+unregistersymbol(officerstatslimiter_savedAOB12)
+unregistersymbol(officerstatslimiter_savedAOB13)
+unregistersymbol(officerstatslimiter_savedAOB14)
+unregistersymbol(officerstatslimiter_savedAOB15)
+unregistersymbol(officerstatslimiter_savedAOB16)
+unregistersymbol(officerstatslimiter_savedAOB17)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>119195</ID>
+          <Description>"Stats Increase"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <Color>800000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+registersymbol(LeaPointer)
+registersymbol(LeaUpdate)
+registersymbol(LeaSetEnable)
+registersymbol(LeaSetValue)
+registersymbol(WarPointer)
+registersymbol(WarUpdate)
+registersymbol(WarSetEnable)
+registersymbol(WarSetValue)
+registersymbol(IntPointer)
+registersymbol(IntUpdate)
+registersymbol(IntSetEnable)
+registersymbol(IntSetValue)
+registersymbol(PolPointer)
+registersymbol(PolUpdate)
+registersymbol(PolSetEnable)
+registersymbol(PolSetValue)
+
+alloc(LeaPointer, 4)
+alloc(LeaUpdate, 4)
+alloc(LeaSetEnable, 4)
+alloc(LeaSetValue, 4)
+alloc(WarPointer, 4)
+alloc(WarUpdate, 4)
+alloc(WarSetEnable, 4)
+alloc(WarSetValue, 4)
+alloc(IntPointer, 4)
+alloc(IntUpdate, 4)
+alloc(IntSetEnable, 4)
+alloc(IntSetValue, 4)
+alloc(PolPointer, 4)
+alloc(PolUpdate, 4)
+alloc(PolSetEnable, 4)
+alloc(PolSetValue, 4)
+
+LeaSetValue:
+dd #1000000
+WarSetValue:
+dd #1000000
+IntSetValue:
+dd #1000000
+PolSetValue:
+dd #1000000
+
+
+[DISABLE]
+unregistersymbol(LeaPointer)
+unregistersymbol(LeaUpdate)
+unregistersymbol(LeaSetEnable)
+unregistersymbol(LeaSetValue)
+unregistersymbol(WarPointer)
+unregistersymbol(WarUpdate)
+unregistersymbol(WarSetEnable)
+unregistersymbol(WarSetValue)
+unregistersymbol(IntPointer)
+unregistersymbol(IntUpdate)
+unregistersymbol(IntSetEnable)
+unregistersymbol(IntSetValue)
+unregistersymbol(PolPointer)
+unregistersymbol(PolUpdate)
+unregistersymbol(PolSetEnable)
+unregistersymbol(PolSetValue)
+
+dealloc(LeaPointer)
+dealloc(LeaUpdate)
+dealloc(LeaSetEnable)
+dealloc(LeaSetValue)
+dealloc(WarPointer)
+dealloc(WarPointer)
+dealloc(WarSetEnable)
+dealloc(WarSetValue)
+dealloc(IntPointer)
+dealloc(IntUpdate)
+dealloc(IntSetEnable)
+dealloc(IntSetValue)
+dealloc(PolPointer)
+dealloc(PolPointer)
+dealloc(PolSetEnable)
+dealloc(PolSetValue)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>119208</ID>
+              <Description>"LEA Script"</Description>
+              <LastState Activated="1"/>
+              <Color>804000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+label(LeaAob)
+label(LeaReturn)
+label(LeaOriginalCode)
+label(LeaExit)
+
+label(LeaUpdateExit)
+label(LeaSetExit)
+
+registersymbol(LeaAob)
+
+aobscan(LeaSearch, 3B F8 0F 4C F9 B8 6E)
+
+alloc(LeaMem, 2048, LeaSearch)
+alloc(LeaLimit, 4, LeaSearch)
+
+
+LeaMem:
+mov [LeaLimit], ebx
+
+cmp dword ptr [LeaUpdate], #0
+je LeaUpdateExit
+LeaUpdateExit:
+
+cmp dword ptr [LeaSetEnable], #0
+je LeaSetExit
+cmp edi, #200
+jl LeaSetExit
+add edi, [LeaSetValue]
+LeaSetExit:
+
+mov ebx, [LeaLimit]
+
+LeaOriginalCode:
+db 3B F8 0F 4C F9
+
+LeaExit:
+jmp LeaReturn
+
+LeaSearch:
+LeaAob:
+jmp LeaMem
+
+LeaReturn:
+[DISABLE]
+LeaAob:
+db 3B F8 0F 4C F9
+
+unregistersymbol(LeaAob)
+
+dealloc(LeaMem)
+dealloc(LeaLimit)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119224</ID>
+              <Description>"WAR Script"</Description>
+              <LastState Activated="1"/>
+              <Color>804000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+label(WarAob)
+label(WarReturn)
+label(WarOriginalCode)
+label(WarExit)
+
+label(WarUpdateExit)
+label(WarSetExit)
+
+registersymbol(WarAob)
+
+aobscan(WarSearch, 3B F8 0F 4C F9 B8 6E)
+
+alloc(WarMem, 2048, WarSearch)
+alloc(WarLimit, 4, WarSearch)
+
+
+WarMem:
+mov [WarLimit], ebx
+
+cmp dword ptr [WarUpdate], #0
+je WarUpdateExit
+WarUpdateExit:
+
+cmp dword ptr [WarSetEnable], #0
+je WarSetExit
+cmp edi, #200
+jl WarSetExit
+add edi, [WarSetValue]
+WarSetExit:
+
+mov ebx, [WarLimit]
+
+WarOriginalCode:
+db 3B F8 0F 4C F9
+
+WarExit:
+jmp WarReturn
+
+WarSearch:
+WarAob:
+jmp WarMem
+
+WarReturn:
+[DISABLE]
+WarAob:
+db 3B F8 0F 4C F9
+
+unregistersymbol(WarAob)
+
+dealloc(WarMem)
+dealloc(WarLimit)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119225</ID>
+              <Description>"INT Script"</Description>
+              <LastState Activated="1"/>
+              <Color>804000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+label(IntAob)
+label(IntReturn)
+label(IntOriginalCode)
+label(IntExit)
+
+label(IntUpdateExit)
+label(IntSetExit)
+
+registersymbol(IntAob)
+
+aobscan(IntSearch, 3B F8 0F 4C F9 B8 6E)
+
+alloc(IntMem, 2048, IntSearch)
+alloc(IntLimit, 4, IntSearch)
+
+
+IntMem:
+mov [IntLimit], ebx
+
+cmp dword ptr [IntUpdate], #0
+je IntUpdateExit
+IntUpdateExit:
+
+cmp dword ptr [IntSetEnable], #0
+je IntSetExit
+cmp edi, #200
+jl IntSetExit
+add edi, [IntSetValue]
+IntSetExit:
+
+mov ebx, [IntLimit]
+
+IntOriginalCode:
+db 3B F8 0F 4C F9
+
+IntExit:
+jmp IntReturn
+
+IntSearch:
+IntAob:
+jmp IntMem
+
+IntReturn:
+[DISABLE]
+IntAob:
+db 3B F8 0F 4C F9
+
+unregistersymbol(IntAob)
+
+dealloc(IntMem)
+dealloc(IntLimit)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119226</ID>
+              <Description>"POL Script"</Description>
+              <LastState Activated="1"/>
+              <Color>804000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+label(PolAob)
+label(PolReturn)
+label(PolOriginalCode)
+label(PolExit)
+
+label(PolUpdateExit)
+label(PolSetExit)
+
+registersymbol(PolAob)
+
+aobscan(PolSearch, 3B F8 0F 4C F9 B8 6E)
+
+alloc(PolMem, 2048, PolSearch)
+alloc(PolLimit, 4, PolSearch)
+
+
+PolMem:
+mov [PolLimit], ebx
+
+cmp dword ptr [PolUpdate], #0
+je PolUpdateExit
+PolUpdateExit:
+
+cmp dword ptr [PolSetEnable], #0
+je PolSetExit
+cmp edi, #200
+jl PolSetExit
+add edi, [PolSetValue]
+PolSetExit:
+
+mov ebx, [PolLimit]
+
+PolOriginalCode:
+db 3B F8 0F 4C F9
+
+PolExit:
+jmp PolReturn
+
+PolSearch:
+PolAob:
+jmp PolMem
+
+PolReturn:
+[DISABLE]
+PolAob:
+db 3B F8 0F 4C F9
+
+unregistersymbol(PolAob)
+
+dealloc(PolMem)
+dealloc(PolLimit)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119217</ID>
+              <Description>"Update? then Increase? 1:Yes, 0:No"</Description>
+              <Options moHideChildren="1" moRecursiveSetValue="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>119212</ID>
+                  <Description>"LEA Update?"</Description>
+                  <Options moRecursiveSetValue="1"/>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <Color>FF8000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>leaupdate</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>119197</ID>
+                      <Description>"LEA 255, Increase?"</Description>
+                      <Options moRecursiveSetValue="1"/>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <Color>FF8000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>leasetenable</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>119200</ID>
+                  <Description>"WAR Update"</Description>
+                  <Options moRecursiveSetValue="1"/>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <Color>FF8000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>warupdate</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>119210</ID>
+                      <Description>"WAR 255, Increase?"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <Color>FF8000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>warsetenable</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>119223</ID>
+                  <Description>"INT Update"</Description>
+                  <Options moRecursiveSetValue="1"/>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <Color>FF8000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>intupdate</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>119215</ID>
+                      <Description>"INT 255, Increase?"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <Color>FF8000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>intsetenable</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>119222</ID>
+                  <Description>"POL Update"</Description>
+                  <Options moRecursiveSetValue="1"/>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <Color>FF8000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>polupdate</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>119216</ID>
+                      <Description>"POL 255, Increase?"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <Color>FF8000</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>polsetenable</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119218</ID>
+              <Description>"Bonus Value for Increased Stats"</Description>
+              <Options moHideChildren="1" moRecursiveSetValue="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>119211</ID>
+                  <Description>"LEA Value"</Description>
+                  <Color>FF8000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>leasetvalue</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>119198</ID>
+                  <Description>"WAR Value"</Description>
+                  <Color>FF8000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>warsetvalue</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>119221</ID>
+                  <Description>"INT Value"</Description>
+                  <Color>FF8000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>intsetvalue</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>119220</ID>
+                  <Description>"WAR Value"</Description>
+                  <Color>FF8000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>polsetvalue</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>119231</ID>
+          <Description>"Effect Increase"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <Color>800000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+registersymbol(EffectPointer)
+registersymbol(EffectUpdate)
+registersymbol(EffectSetEnable)
+registersymbol(EffectSetValue)
+
+alloc(EffectPointer, 4)
+alloc(EffectUpdate, 4)
+alloc(EffectSetEnable, 4)
+alloc(EffectSetValue, 4)
+
+EffectSetValue:
+dd #1000000
+
+
+[DISABLE]
+unregistersymbol(EffectPointer)
+unregistersymbol(EffectUpdate)
+unregistersymbol(EffectSetEnable)
+unregistersymbol(EffectSetValue)
+
+dealloc(EffectPointer)
+dealloc(EffectUpdate)
+dealloc(EffectSetEnable)
+dealloc(EffectSetValue)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>119232</ID>
+              <Description>"Effect Script"</Description>
+              <LastState Activated="1"/>
+              <Color>804000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+label(EffectAob)
+label(EffectReturn)
+label(EffectOriginalCode)
+label(EffectExit)
+
+label(EffectUpdateExit)
+label(EffectSetExit)
+
+registersymbol(EffectAob)
+
+aobscan(EffectSearch, 3B D0 0F 4C D7 3B D3)
+
+alloc(EffectMem, 2048, EffectSearch)
+alloc(EffectLimit, 4, EffectSearch)
+
+
+EffectMem:
+mov [EffectLimit], ecx
+
+cmp dword ptr [EffectUpdate], #0
+je EffectUpdateExit
+EffectUpdateExit:
+
+cmp dword ptr [EffectSetEnable], #0
+je EffectSetExit
+cmp edx, #200
+jl EffectSetExit
+add edx, [EffectSetValue]
+EffectSetExit:
+
+mov ecx, [EffectLimit]
+
+EffectOriginalCode:
+db 3B D0 0F 4C D7
+
+EffectExit:
+jmp EffectReturn
+
+EffectSearch:
+EffectAob:
+jmp EffectMem
+
+EffectReturn:
+[DISABLE]
+EffectAob:
+db 3B D0 0F 4C D7
+
+unregistersymbol(EffectAob)
+
+dealloc(EffectMem)
+dealloc(EffectLimit)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119247</ID>
+              <Description>"Effect Base Update?"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <Color>FF8000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>effectupdate</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119237</ID>
+              <Description>"Effect Increase?"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <Color>FF8000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>effectsetenable</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119242</ID>
+              <Description>"Max Limit Bonus Value for Effect"</Description>
+              <Color>FF8000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>effectsetvalue</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>121825</ID>
+      <Description>"Unit Stats Uncap"</Description>
+      <LastState Activated="1"/>
+      <Color>804000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+function SelectAobScan(labelAOB, searchAOB, numberAOB)
+  local resultsAOB = AOBScan(searchAOB)
+
+  if (resultsAOB ~= nil) then
+    local countAOB = stringlist_getCount(resultsAOB)
+    local positionAOB = numberAOB - 1
+
+    if (numberAOB == 0 or numberAOB &gt; countAOB) then
+      positionAOB = countAOB - 1
+    end
+
+    local selectedAOB = stringlist_getString(resultsAOB, positionAOB)
+
+    local script = 'label(' .. labelAOB .. ')\nregistersymbol(' .. labelAOB .. ')\n' .. selectedAOB .. ':\n' .. labelAOB .. ':'
+    autoAssemble(script)
+
+    object_destroy(resultsAOB)
+    resultsAOB = nil
+  end
+end
+{$asm}
+
+[ENABLE]
+label(unitstatslimiter_savedAOB1)
+label(unitstatslimiter_savedAOB2)
+label(unitstatslimiter_savedAOB3)
+label(unitstatslimiter_savedAOB4)
+label(unitstatslimiter_savedAOB5)
+label(unitstatslimiter_savedAOB6)
+label(unitstatslimiter_savedAOB7)
+label(unitstatslimiter_savedAOB8)
+label(unitstatslimiter_savedAOB9)
+
+registersymbol(unitstatslimiter_savedAOB1)
+registersymbol(unitstatslimiter_savedAOB2)
+registersymbol(unitstatslimiter_savedAOB3)
+registersymbol(unitstatslimiter_savedAOB4)
+registersymbol(unitstatslimiter_savedAOB5)
+registersymbol(unitstatslimiter_savedAOB6)
+registersymbol(unitstatslimiter_savedAOB7)
+registersymbol(unitstatslimiter_savedAOB8)
+registersymbol(unitstatslimiter_savedAOB9)
+
+aobscan(unitstatslimiter_searchedAOB1, 0F 4F F8 8B C7 5F 8B E5 5D C3 CC CC CC)
+aobscan(unitstatslimiter_searchedAOB2, 0F 4F F8 8B C7 5F 8B E5 5D C3 CC CC 55 8B EC 83)
+aobscan(unitstatslimiter_searchedAOB3, 0F 4F F8 8B C7 5F 8B E5 5D C3 CC CC 55 8B EC 6A)
+aobscan(unitstatslimiter_searchedAOB4, 3B C8 0F 4F C8 8B C1 8B 4D F4 64 89 0D)
+aobscan(unitstatslimiter_searchedAOB5, E7 03 00 00 3B D0 0F 4F D0)
+luacall(SelectAobScan("unitstatslimiter_searchedAOB6", "B9 E7 03 00 00 3B C1 0F 4F C1", 1))
+luacall(SelectAobScan("unitstatslimiter_searchedAOB7", "B9 E7 03 00 00 3B C1 0F 4F C1", 2))
+luacall(SelectAobScan("unitstatslimiter_searchedAOB8", "B9 E7 03 00 00 3B C1 0F 4F C1", 3))
+luacall(SelectAobScan("unitstatslimiter_searchedAOB9", "B9 E7 03 00 00 3B C1 0F 4F C1", 4))
+
+unitstatslimiter_searchedAOB1:
+unitstatslimiter_savedAOB1:
+db 90 90 90
+
+unitstatslimiter_searchedAOB2:
+unitstatslimiter_savedAOB2:
+db 90 90 90
+
+unitstatslimiter_searchedAOB3:
+unitstatslimiter_savedAOB3:
+db 90 90 90
+
+unitstatslimiter_searchedAOB4:
+unitstatslimiter_savedAOB4:
+db 3B C8 90 90 90 90 90 8B 4D F4 64 89 0D
+
+unitstatslimiter_searchedAOB5:
+unitstatslimiter_savedAOB5:
+db E7 03 00 00 3B D0 90 90 90
+
+unitstatslimiter_searchedAOB6:
+unitstatslimiter_savedAOB6:
+db B9 E7 03 00 00 3B C1 90 90 90
+
+unitstatslimiter_searchedAOB7:
+unitstatslimiter_savedAOB7:
+db B9 E7 03 00 00 3B C1 90 90 90
+
+unitstatslimiter_searchedAOB8:
+unitstatslimiter_savedAOB8:
+db B9 E7 03 00 00 3B C1 90 90 90
+
+unitstatslimiter_searchedAOB9:
+unitstatslimiter_savedAOB9:
+db B9 E7 03 00 00 3B C1 90 90 90
+
+
+[DISABLE]
+unitstatslimiter_savedAOB1:
+db 0F 4F F8
+
+unitstatslimiter_savedAOB2:
+db 0F 4F F8
+
+unitstatslimiter_savedAOB3:
+db 0F 4F F8
+
+unitstatslimiter_savedAOB4:
+db 3B C8 0F 4F C8 8B C1 8B 4D F4 64 89 0D
+
+unitstatslimiter_savedAOB5:
+db E7 03 00 00 3B D0 0F 4F D0
+
+unitstatslimiter_savedAOB6:
+db B9 E7 03 00 00 3B C1 0F 4F C1
+
+unitstatslimiter_savedAOB7:
+db B9 E7 03 00 00 3B C1 0F 4F C1
+
+unitstatslimiter_savedAOB8:
+db B9 E7 03 00 00 3B C1 0F 4F C1
+
+unitstatslimiter_savedAOB9:
+db B9 E7 03 00 00 3B C1 0F 4F C1
+
+unregistersymbol(unitstatslimiter_savedAOB1)
+unregistersymbol(unitstatslimiter_savedAOB2)
+unregistersymbol(unitstatslimiter_savedAOB3)
+unregistersymbol(unitstatslimiter_savedAOB4)
+unregistersymbol(unitstatslimiter_savedAOB5)
+unregistersymbol(unitstatslimiter_savedAOB6)
+unregistersymbol(unitstatslimiter_savedAOB7)
+unregistersymbol(unitstatslimiter_savedAOB8)
+unregistersymbol(unitstatslimiter_savedAOB9)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
