@@ -1,0 +1,5249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>13010</ID>
+      <Description>"enable .4"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+aobscanmodule(totalGameTimeWriteAOB,RE3.exe,E8 ? ? ? ? EB 08 48 8D 04 2A 48 89 41 18 48 8B 43 50 48 39 70 18 0F 85 ? ? ? ? 40 38 77 50)
+registersymbol(totalGameTimeWriteAOB)
+
+///*******************************************///
+//current ammo clip read on fine aim / on reload / after rload until next exit fine aim
+aobscanmodule(ammoClipReadOnAimReloadAOB,RE3.exe,48 ** ** A0 00 00 00 48 ** ** 74 ** 48 ** ** ** 48 ** ** 74 ** 48 ** ** ** 48 ** ** 74 ** 8B ** 20 48 ** ** ** ** 48 ** ** ** 5F C3)
+registersymbol(ammoClipReadOnAimReloadAOB)
+
+label(aControllerHotkeyPressed)
+registersymbol(aControllerHotkeyPressed)
+label(pAmmo)
+registersymbol(pAmmo)
+label(dAmmoClipMax)
+registersymbol(dAmmoClipMax)
+
+alloc(newmem,2048,ammoClipReadOnAimReloadAOB+1e) //"RE3.exe"+13C3DB09)
+label(returnhere)
+label(originalcode_ammoClipReadOnAimReloadAOB)
+registersymbol(originalcode_ammoClipReadOnAimReloadAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rcx
+mov rcx,pAmmo
+mov [rcx],rax
+mov byte ptr [rcx+8],1
+cmp byte ptr [rcx+c],0
+je end
+//mov byte ptr [rcx+c],0
+mov rbx,dAmmoClipMax
+mov ebx,[rbx]
+test ebx,ebx
+jg @f
+mov ebx,2
+@@:
+cmp [rax+20],ebx
+jge end
+cmp dword ptr [rax+14],9 //SLS 60
+jne @f
+//mov ebx,5
+//mov edi,[rax+18]
+//shr edi,1
+//test dil,dil             //Quick Loader
+mov edi,[rax+18]
+and edi,2
+cmp edi,2                  //Quick Loader
+jne doinc
+@@:
+//cmp dword ptr [rax+14],4 //Quickdraw Army
+//je doinc
+cmp dword ptr [rax+14],2a
+je doinc
+@@:
+cmp dword ptr [rax+14],b //Shotgun M3
+jne @f
+//dec [rax+20]
+mov edi,[rax+18]
+and edi,1
+cmp edi,1
+jne doinc
+inc [rax+20]
+jmp doinc
+@@:
+jmp customammoclipassign
+
+doinc:
+cmp byte ptr [rcx+c],1
+jne end
+inc [rax+20]
+cmp [rax+20],ebx
+jle end
+
+customammoclipassign:
+mov [rax+20],ebx
+
+end:
+mov byte ptr [rcx+c],0
+pop rcx
+
+originalcode_ammoClipReadOnAimReloadAOB:
+readmem(ammoClipReadOnAimReloadAOB+1e,8)
+//mov eax,[rax+20]
+//mov rbx,[rsp+30]
+
+exit:
+jmp returnhere
+
+///
+aControllerHotkeyPressed:
+dd 0 //A button
+dd 0 //B button
+dd 0 //X button
+dd 0 //Y button
+dd 0 //Left trigger
+dd 0 //Right trigger
+dd 0 //Left shoulder button
+dd 0 //Right shoulder button
+dd 0 //Left thumb stick down
+dd 0 //Right thumb stick down
+dd 0 //nothing
+pAmmo:
+dq 0
+dq 0
+dAmmoClipMax:
+dq 1
+dq 0
+dq 0
+///
+
+ammoClipReadOnAimReloadAOB+1e: //"RE3.exe"+13C3DB09:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+///*******************************************///
+//current ammo clip chk max
+aobscanmodule(ammoClipMaxCChkAOB,RE3.exe,74 0C 48 ** ** 10 48 ** ** 74 03 8B ** ** ** ** 48 ** ** ** ** 0F 9E)
+registersymbol(ammoClipMaxCChkAOB)
+
+alloc(newmem2,2048,ammoClipMaxCChkAOB+e) //"RE3.exe"+181F92E9)
+label(returnhere2)
+label(originalcode2_ammoClipMaxCChkAOB)
+registersymbol(originalcode2_ammoClipMaxCChkAOB)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rsi,dAmmoClipMax
+mov [rsi],edx
+
+originalcode2_ammoClipMaxCChkAOB:
+readmem(ammoClipMaxCChkAOB+e,7)
+//cmp edx,ebx
+//mov rbx,[rsp+30]
+
+exit2:
+jmp returnhere2
+
+///
+
+ammoClipMaxCChkAOB+e: //"RE3.exe"+181F92E9:
+jmp newmem2
+nop
+nop
+returnhere2:
+
+///*******************************************///
+//player health read 4 bytes, start: 1200
+aobscanmodule(playerHealthCReadAOB,RE3.exe,8B ** ** 48 ** ** ** ** 48 ** ** ** 5F C3 48 ** ** ** ** B8 01)
+registersymbol(playerHealthCReadAOB)
+
+///
+//aobscanmodule(playerHealthChkOnConnectHitDamageAOB,RE3.exe,48 ** ** ** 4C ** ** ** 4D ** ** 0F 85 ** ** ** ** 41 ** ** 7C)
+//registersymbol(playerHealthChkOnConnectHitDamageAOB)
+aobscanmodule(playerHealthChkOnConnectHitDamageAOB,RE3.exe,48 ** ** 50 ** ** ** ** ** ** ** 0F 85 ** ** ** ** ** ** ** 7C ** ** ** 74)
+registersymbol(playerHealthChkOnConnectHitDamageAOB)
+///
+
+label(dMinHealth)
+registersymbol(dMinHealth)
+label(pPlayer)
+registersymbol(pPlayer)
+label(pPlayerBase)
+registersymbol(pPlayerBase)
+
+alloc(newmem6,2048,playerHealthCReadAOB) //"RE3.exe"+CDB1433)
+label(returnhere6)
+label(originalcode6_playerHealthCReadAOB)
+registersymbol(originalcode6_playerHealthCReadAOB)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rbx,pPlayer
+mov [rbx],rax
+mov [rbx+8],rdi
+mov rbx,playerHealthChkOnConnectHitDamageAOB //"RE3.exe"+DD20015
+cmp [rsp+28],rbx
+jne @f
+mov rdi,dMinHealth
+readmem(playerHealthCReadAOB,1)
+db 58
+readmem(playerHealthCReadAOB+2,1)
+//mov ebx,[rax+58]
+sub ebx,r12d
+cmp ebx,[rdi]
+jge @f
+mov ebx,[rdi]
+add ebx,r12d
+db 89 58
+readmem(playerHealthCReadAOB+2,1)
+//mov [rax+58],ebx
+
+originalcode6_playerHealthCReadAOB:
+readmem(playerHealthCReadAOB,8)
+//mov eax,[rax+58]
+//mov rbx,[rsp+30]
+
+exit6:
+jmp returnhere6
+
+///
+dMinHealth:
+dd 0
+pPlayer:
+dq 0
+pPlayerBase:
+dq 0
+///
+
+playerHealthCReadAOB: //"RE3.exe"+CDB1433:
+jmp newmem6
+nop
+nop
+nop
+returnhere6:
+
+///*******************************************///
+label(pSomeGameStatus)
+registersymbol(pSomeGameStatus)
+
+alloc(newmem8,2048,totalGameTimeWriteAOB+1d) //"RE3.exe"+150A6E2E)
+label(returnhere8)
+label(originalcode8_totalGameTimeWriteAOB)
+registersymbol(originalcode8_totalGameTimeWriteAOB)
+label(exit8)
+
+newmem8: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rax
+mov rax,pSomeGameStatus
+mov [rax],rdi
+pop rax
+
+//mov [pSomeGameStatus],rdi
+
+readmem(totalGameTimeWriteAOB+1d,4)
+reassemble(totalGameTimeWriteAOB+21)
+jmp exit8
+
+originalcode8_totalGameTimeWriteAOB:
+readmem(totalGameTimeWriteAOB+1d,10)
+//cmp [rdi+53],r14l
+//RE3.exe+150A6ED1
+
+exit8:
+jmp returnhere8
+
+///
+pSomeGameStatus:
+///
+
+totalGameTimeWriteAOB+1d: //"RE3.exe"+150A6E2E:
+jmp newmem8
+nop
+nop
+nop
+nop
+nop
+returnhere8:
+
+///*******************************************///
+aobscanmodule(readiedWeaponChkAOB,RE3.exe,44 ** ** ** ** ** ** 75 ** 44 ** ** ** ** ** ** 75 ** 40)
+registersymbol(readiedWeaponChkAOB)
+
+label(pReadiedWeapon)
+registersymbol(pReadiedWeapon)
+
+alloc(newmem9,2048,readiedWeaponChkAOB+9) //"RE3.exe"+187122DA)
+label(returnhere9)
+label(originalcode9_readiedWeaponChkAOB)
+registersymbol(originalcode9_readiedWeaponChkAOB)
+label(exit9)
+
+newmem9: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rdx,pReadiedWeapon
+db 48 8D 8F
+readmem(readiedWeaponChkAOB+c,4)
+//lea rcx,[rdi+1d0]
+mov [rdx],rcx
+mov [rdx+8],rdi
+
+originalcode9_readiedWeaponChkAOB:
+readmem(readiedWeaponChkAOB+9,7)
+//cmp [rdi+000001D0],r12d
+
+exit9:
+jmp returnhere9
+
+///
+pReadiedWeapon:
+dq 0
+///
+
+readiedWeaponChkAOB+9: //"RE3.exe"+187122DA:
+jmp newmem9
+nop 2
+returnhere9:
+
+///*******************************************///
+aobscanmodule(counterTimerChkZeroAOB,RE3.exe,0F ** ** ** ** 00 00 48 ** ** 0F 83 ** ** ** ** 48)
+registersymbol(counterTimerChkZeroAOB)
+
+label(pCounterInfo)
+registersymbol(pCounterInfo)
+
+alloc(newmem10,2048,counterTimerChkZeroAOB) //"RE3.exe"+142D2C0C)
+label(returnhere10)
+label(originalcode10_counterTimerChkZeroAOB)
+registersymbol(originalcode10_counterTimerChkZeroAOB)
+label(exit10)
+
+newmem10: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rbx,pCounterInfo
+mov [rbx],rdx
+push rcx
+db 48 8D 8A
+readmem(counterTimerChkZeroAOB+3,4)
+//lea rcx,[rdx+160]
+mov [rbx+8],rcx
+pop rcx
+
+originalcode10_counterTimerChkZeroAOB:
+readmem(counterTimerChkZeroAOB,7)
+//comiss xmm7,[rdx+00000160]
+
+exit10:
+jmp returnhere10
+
+///
+pCounterInfo:
+///
+
+counterTimerChkZeroAOB: //"RE3.exe"+142D2C0C:
+jmp newmem10
+nop 2
+returnhere10:
+
+///*******************************************///
+{$lua}
+local function hotkeyLuaThread(thread)
+	local addrC = getAddressSafe('aControllerHotkeyPressed')
+	while RunHotkeyLuaThread do
+        sleep(300)
+		if addrC then
+			local xcs = getXBox360ControllerState()
+            if xcs~=nil then
+                if xcs.GAMEPAD_A then writeBytes(addrC, 1) else writeBytes(addrC, 0) end
+                if xcs.GAMEPAD_B then writeBytes(addrC+0x4, 1) else writeBytes(addrC+0x4, 0) end
+                if xcs.GAMEPAD_X then writeBytes(addrC+0x8, 1) else writeBytes(addrC+0x8, 0) end
+                if xcs.GAMEPAD_Y then writeBytes(addrC+0xc, 1) else writeBytes(addrC+0xc, 0) end
+			    writeBytes(addrC+0x10, xcs.LeftTrigger)
+			    writeBytes(addrC+0x14, xcs.RightTrigger)
+                if xcs.GAMEPAD_LEFT_SHOULDER then writeBytes(addrC+0x18, 1) else writeBytes(addrC+0x18, 0) end
+                if xcs.GAMEPAD_RIGHT_SHOULDER then writeBytes(addrC+0x1c, 1) else writeBytes(addrC+0x1c, 0) end
+                if xcs.GAMEPAD_LEFT_THUMB then writeBytes(addrC+0x20, 1) else writeBytes(addrC+0x20, 0) end
+                if xcs.GAMEPAD_RIGHT_THUMB then writeBytes(addrC+0x24, 1) else writeBytes(addrC+0x24, 0) end
+            end
+		else
+			addrC = getAddressSafe('aControllerHotkeyPressed')
+		end
+	end
+	thread.terminate()
+end
+----------------------------------
+if syntaxcheck then return end
+RunHotkeyLuaThread = true
+createThread(hotkeyLuaThread)
+
+{$asm}
+
+///*******************************************///
+
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+{$lua}
+if syntaxcheck then return end
+RunHotkeyLuaThread = false
+{$asm}
+
+///*******************************************///
+dealloc(newmem)
+ammoClipReadOnAimReloadAOB+1e: //"RE3.exe"+13C3DB09:
+readmem(originalcode_ammoClipReadOnAimReloadAOB,8)
+//db 8B 40 20 48 8B 5C 24 30
+//Alt: mov eax,[rax+20]
+//Alt: mov rbx,[rsp+30]
+unregistersymbol(originalcode_ammoClipReadOnAimReloadAOB)
+
+unregistersymbol(aControllerHotkeyPressed)
+unregistersymbol(pAmmo)
+unregistersymbol(dAmmoClipMax)
+
+///*******************************************///
+dealloc(newmem2)
+ammoClipMaxCChkAOB+e: //"RE3.exe"+181F92E9:
+readmem(originalcode2_ammoClipMaxCChkAOB,7)
+//db 39 DA 48 8B 5C 24 30
+//Alt: cmp edx,ebx
+//Alt: mov rbx,[rsp+30]
+unregistersymbol(originalcode2_ammoClipMaxCChkAOB)
+
+///*******************************************///
+dealloc(newmem6)
+playerHealthCReadAOB: //"RE3.exe"+CDB1433:
+readmem(originalcode6_playerHealthCReadAOB,8)
+//db 8B 40 58 48 8B 5C 24 30
+//Alt: mov eax,[rax+58]
+//Alt: mov rbx,[rsp+30]
+unregistersymbol(originalcode6_playerHealthCReadAOB)
+
+unregistersymbol(dMinHealth)
+unregistersymbol(pPlayer)
+unregistersymbol(pPlayerBase)
+
+///*******************************************///
+dealloc(newmem8)
+totalGameTimeWriteAOB+1d: //"RE3.exe"+150A6E2E:
+readmem(originalcode8_totalGameTimeWriteAOB,10)
+//db 44 38 77 53 0F 85 99 00 00 00
+//Alt: cmp [rdi+53],r14l
+//Alt: jne RE3.exe+150A6ED1
+unregistersymbol(originalcode8_totalGameTimeWriteAOB)
+
+unregistersymbol(pSomeGameStatus)
+
+///*******************************************///
+dealloc(newmem9)
+readiedWeaponChkAOB+9: //"RE3.exe"+187122DA:
+readmem(originalcode9_readiedWeaponChkAOB,7)
+//db 44 39 A7 D0 01 00 00
+//Alt: cmp [rdi+000001D0],r12d
+unregistersymbol(originalcode9_readiedWeaponChkAOB)
+
+unregistersymbol(pReadiedWeapon)
+
+///*******************************************///
+dealloc(newmem10)
+counterTimerChkZeroAOB: //"RE3.exe"+142D2C0C:
+readmem(originalcode10_counterTimerChkZeroAOB,7)
+//db 0F 2F BA 60 01 00 00
+//Alt: comiss xmm7,[rdx+00000160]
+unregistersymbol(originalcode10_counterTimerChkZeroAOB)
+
+unregistersymbol(pCounterInfo)
+
+///*******************************************///
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Activate</Action>
+          <Keys>
+            <Key>20</Key>
+            <Key>219</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>17849</ID>
+          <Description>"undead"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+dMinHealth:
+dd #1000
+
+///************************************///
+aobscanmodule(healthChkAtLeastOneLeftOnDamageAOB,RE3.exe,** ** 89 ** ** ** 48 ** ** ** ** 48 ** ** ** ** 48 0F ** ** 8B ** 89 ** ** ** 00 00)
+registersymbol(healthChkAtLeastOneLeftOnDamageAOB)
+
+alloc(newmem,2048,healthChkAtLeastOneLeftOnDamageAOB+10) //"RE3.exe"+15BDE77D)
+label(returnhere)
+label(originalcode_healthChkAtLeastOneLeftOnDamageAOB)
+registersymbol(originalcode_healthChkAtLeastOneLeftOnDamageAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+pushfq
+push rcx
+mov rcx,pPlayer
+cmp [rcx+8],rdi
+cmove rax,rdx
+
+end:
+pop rcx
+popfq
+
+originalcode_healthChkAtLeastOneLeftOnDamageAOB:
+readmem(healthChkAtLeastOneLeftOnDamageAOB+10,6)
+//cmovge rax,rdx
+//mov eax,[rax]
+
+exit:
+jmp returnhere
+
+///
+
+healthChkAtLeastOneLeftOnDamageAOB+10: //"RE3.exe"+15BDE77D:
+jmp newmem
+nop
+returnhere:
+
+///************************************///
+//aobscanmodule(healthCalOnDamageAOB,RE3.exe,41 ** ** ** 44 ** ** 99 31 ** 29 ** 29 ** 85 ** 0F ** ** C3)
+aobscanmodule(healthCalOnDamageAOB,RE3.exe,41 ** ** 58 ** ** ** 99 ** ** ** ** ** ** 85 ** 0F ** ** C3)
+registersymbol(healthCalOnDamageAOB)
+
+alloc(newmem2,2048,healthCalOnDamageAOB+e) //"RE3.exe"+E9BBD47)
+label(returnhere2)
+label(originalcode2_healthCalOnDamageAOB)
+registersymbol(originalcode2_healthCalOnDamageAOB)
+label(exit2)
+//41 8B 49 58
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rdi
+mov rdi,pPlayer
+cmp [rdi],r9
+jne end2
+mov rdi,dMinHealth
+//cmp ecx,[rdi]
+//jge @f
+mov ecx, 0
+readmem(healthCalOnDamageAOB,1)
+db 89
+readmem(healthCalOnDamageAOB+2,2)
+//mov [r9+58],ecx
+readmem(healthCalOnDamageAOB,1)
+db 01 41
+readmem(healthCalOnDamageAOB+3,1)
+//add [r9+58],eax
+
+end2:
+pop rdi
+
+originalcode2_healthCalOnDamageAOB:
+readmem(healthCalOnDamageAOB+e,5)
+//test ecx,ecx
+//setle al
+
+exit2:
+jmp returnhere2
+
+///
+
+healthCalOnDamageAOB+e: //"RE3.exe"+E9BBD47:
+jmp newmem2
+returnhere2:
+
+///************************************///
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dMinHealth:
+dd 0
+
+///************************************///
+dealloc(newmem)
+healthChkAtLeastOneLeftOnDamageAOB+10: //"RE3.exe"+15BDE77D:
+readmem(originalcode_healthChkAtLeastOneLeftOnDamageAOB,6)
+//db 48 0F 4D C2 8B 00
+//Alt: cmovge rax,rdx
+//Alt: mov eax,[rax]
+unregistersymbol(originalcode_healthChkAtLeastOneLeftOnDamageAOB)
+
+///************************************///
+dealloc(newmem2)
+healthCalOnDamageAOB+e: //"RE3.exe"+E9BBD47:
+readmem(originalcode2_healthCalOnDamageAOB,5)
+//db 85 C9 0F 9E D0
+//Alt: test ecx,ecx
+//Alt: setle al
+unregistersymbol(originalcode2_healthCalOnDamageAOB)
+
+///************************************///
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>17850</ID>
+              <Description>"min health"</Description>
+              <Color>008000</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>dMinHealth</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13011</ID>
+          <Description>"no reload + inf. grenades"</Description>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+//ammo clip read on fire 1
+aobscanmodule(ammoClipReadOnFire1AOB,RE3.exe,74 0C 48 ** ** ** 48 ** ** 74 03 8B ** ** 48 ** ** 48 ** ** E8)
+registersymbol(ammoClipReadOnFire1AOB)
+
+alloc(newmem,2048,ammoClipReadOnFire1AOB+e) //"RE3.exe"+1295574E)
+label(returnhere)
+label(originalcode_ammoClipReadOnFire1AOB)
+registersymbol(originalcode_ammoClipReadOnFire1AOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp dword ptr [rcx+14],41
+je @f
+cmp dword ptr [rcx+14],42
+je @f
+jmp ammpcllipchk
+@@:
+cmp dword ptr [rcx+20],1
+jne @f
+inc [rcx+20]
+@@:
+jmp end
+
+ammpcllipchk:
+mov rdx,pAmmo
+cmp [rdx],rcx
+jne @f
+cmp byte ptr [rdx+8],1
+jne @f
+inc byte ptr [rdx+8]
+test esi,esi
+jg @f
+mov esi,1
+//mov [rcx+20],esi
+
+end:
+
+originalcode_ammoClipReadOnFire1AOB:
+readmem(ammoClipReadOnFire1AOB+e,6)
+//mov rdx,rdi
+//mov rcx,rbx
+
+exit:
+jmp returnhere
+
+///
+
+ammoClipReadOnFire1AOB+e: //"RE3.exe"+1295574E:
+jmp newmem
+nop
+returnhere:
+
+///****************************************///
+//ammo clip const read 1 (chk zero), accessed twice after "ammo clip read on fire 1"
+aobscanmodule(ammoClipZeroCChkAOB,RE3.exe,74 0C 48 ** ** ** 48 ** ** 74 03 8B ** ** 85 DB 48)
+registersymbol(ammoClipZeroCChkAOB)
+
+label(bHideEmptyClipAppearance)
+registersymbol(bHideEmptyClipAppearance)
+
+alloc(newmem2,2048,ammoClipZeroCChkAOB+e) //"RE3.exe"+181F86CF)
+label(returnhere2)
+label(originalcode2_ammoClipZeroCChkAOB)
+registersymbol(originalcode2_ammoClipZeroCChkAOB)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rsi,pAmmo
+cmp [rsi],rcx
+jne end2
+cmp byte ptr [rsi+8],2
+je @f
+cmp byte ptr [rsi+8],3
+je @f
+
+mov rsi,bHideEmptyClipAppearance
+cmp byte ptr [rsi],1
+je fakenoemptyclip2
+jmp end2
+
+@@:
+inc byte ptr [rsi+8]
+
+fakenoemptyclip2:
+test ebx,ebx //
+jg @f        //
+mov ebx,1    //
+
+end2:
+
+originalcode2_ammoClipZeroCChkAOB:
+readmem(ammoClipZeroCChkAOB+e,7)
+//test ebx,ebx
+//mov rbx,[rsp+30]
+
+exit2:
+jmp returnhere2
+
+///
+bHideEmptyClipAppearance:
+dd 1
+///
+
+ammoClipZeroCChkAOB+e: //"RE3.exe"+181F86CF:
+jmp newmem2
+nop
+nop
+returnhere2:
+
+///****************************************///
+aobscanmodule(lastClipChkOnFireAOB,RE3.exe,74 0B 83 FE 01 0F 94 ** E8 ** ** ** ** 48)
+registersymbol(lastClipChkOnFireAOB)
+
+label(bMuteEmptyClipSound)
+registersymbol(bMuteEmptyClipSound)
+
+alloc(newmem6,2048,lastClipChkOnFireAOB+2) //"RE3.exe"+12955810)
+label(returnhere6)
+label(originalcode6_lastClipChkOnFireAOB)
+registersymbol(originalcode6_lastClipChkOnFireAOB)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+readmem(lastClipChkOnFireAOB+2,6)
+//cmp esi,01
+//sete dl
+mov rax,bMuteEmptyClipSound
+mov al,[rax]
+test al,al
+jz @f
+xor dl,dl
+@@:
+jmp exit6
+
+originalcode6_lastClipChkOnFireAOB:
+readmem(lastClipChkOnFireAOB+2,6)
+//cmp esi,01
+//sete dl
+
+exit6:
+jmp returnhere6
+
+///
+bMuteEmptyClipSound:
+dd 1
+///
+
+lastClipChkOnFireAOB+2: //"RE3.exe"+12955810:
+jmp newmem6
+nop
+returnhere6:
+
+///****************************************///
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+ammoClipReadOnFire1AOB+e: //"RE3.exe"+1295574E:
+readmem(originalcode_ammoClipReadOnFire1AOB,6)
+//db 48 89 FA 48 89 D9
+//Alt: mov rdx,rdi
+//Alt: mov rcx,rbx
+unregistersymbol(originalcode_ammoClipReadOnFire1AOB)
+
+///****************************************///
+dealloc(newmem2)
+ammoClipZeroCChkAOB+e: //"RE3.exe"+181F86CF:
+readmem(originalcode2_ammoClipZeroCChkAOB,7)
+//db 85 DB 48 8B 5C 24 30
+//Alt: test ebx,ebx
+//Alt: mov rbx,[rsp+30]
+unregistersymbol(originalcode2_ammoClipZeroCChkAOB)
+
+unregistersymbol(bHideEmptyClipAppearance)
+
+///****************************************///
+dealloc(newmem6)
+lastClipChkOnFireAOB+2: //"RE3.exe"+12955810:
+db 83 FE 01 0F 94 D2
+//Alt: cmp esi,01
+//Alt: sete dl
+unregistersymbol(originalcode6_lastClipChkOnFireAOB)
+
+unregistersymbol(bMuteEmptyClipSound)
+
+///****************************************///
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13012</ID>
+          <Description>"ignore ammo pouch"</Description>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+//have ammo pouch to reload flag fetchED, const
+aobscanmodule(ammoPouchReadCallerForReloadFlagFetchCAOB,RE3.exe,74 ** 8B ** ** EB ** E8 ** ** ** ** 0F B6 C8 48 ** ** 50 48 ** ** ** 75)
+registersymbol(ammoPouchReadCallerForReloadFlagFetchCAOB)
+
+alloc(newmem,2048,ammoPouchReadCallerForReloadFlagFetchCAOB+c) //"re3.exe"+1DFA9C1)
+label(returnhere)
+label(originalcode_ammoPouchReadCallerForReloadFlagFetchCAOB)
+registersymbol(originalcode_ammoPouchReadCallerForReloadFlagFetchCAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov al,1
+
+originalcode_ammoPouchReadCallerForReloadFlagFetchCAOB:
+readmem(ammoPouchReadCallerForReloadFlagFetchCAOB+c,7)
+//movzx ecx,al
+//mov rax,[rbx+50]
+
+exit:
+jmp returnhere
+
+///
+
+ammoPouchReadCallerForReloadFlagFetchCAOB+c: //"re3.exe"+1DFA9C1:
+jmp newmem
+nop 2
+returnhere:
+
+///**************************************///
+//cjmp1 to skip ammo/ammopouch chk on ammo/ammopouch cal after reload, before 1st ammopouch read after reload
+//aobscanmodule(haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB,re2.exe,F2 ** ** ** ** ** 0F 11 ** ** ** E8 ** ** ** ** 0F B6 D0 48 ** ** ** 48 ** ** ** 48 ** ** 0F 85 ** ** ** ** 49 BC FF FF FF FF FF FF FF 7F 85 ** 0F 84)
+aobscanmodule(haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB,RE3.exe,F2 0F 11 4C 24 ? 0F 11 44 24 ? E8 ? ? ? ? 0F B6 D0 48 8B 43 50 48 8B 48 18 48 85 C9 0F 85 ? ? ? ? 49 BC ? ? ? ? ? ? ? ? 0F 1F 40 00)
+registersymbol(haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB)
+
+alloc(newmem2,2048,haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB+24) //"RE3.exe"+1324C35B)
+label(returnhere2)
+label(originalcode2_haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB)
+registersymbol(originalcode2_haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rbx
+mov rbx,pAmmo
+mov byte ptr [rbx+c],1
+test edx,edx
+jnz @f
+mov edx,1
+//inc byte ptr [rbx+c]
+@@:
+pop rbx
+
+originalcode2_haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB:
+readmem(haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB+24,10)
+//mov r12,7FFFFFFFFFFFFFFF
+
+exit2:
+jmp returnhere2
+
+///
+
+haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB+24: //"RE3.exe"+1324C35B:
+jmp newmem2
+nop
+nop
+nop
+nop
+nop
+returnhere2:
+
+///**************************************///
+aobscanmodule(itemIDsReadForAltAmmoPresenceAOB,RE3.exe,8B ** ** EB 02 ** C0 48 ** ** 75 ** 41 ** ** 18 0F 94)
+//aobscanmodule(itemIDsReadForAltAmmoPresenceAOB,RE3.exe,8B ** ** EB 02 ** C0 48 ** ** 75 ** 41 ** ** 10 0F 94)
+registersymbol(itemIDsReadForAltAmmoPresenceAOB)
+
+itemIDsReadForAltAmmoPresenceAOB+10: //"RE3.exe"+1350F4E2:
+db 90 B0 01
+
+///**************************************///
+aobscanmodule(cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB,RE3.exe,48 ** ** ** 75 ** 48 ** ** 74 ** 39 ** ** 0F 84)
+registersymbol(cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB)
+
+alloc(originalcode6_cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB,8,cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB+e)
+registersymbol(originalcode6_cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB)
+
+originalcode6_cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB:
+readmem(cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB+e,6)
+
+///
+
+cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB+e: //"RE3.exe"+1325532A:
+db 90 90 90 90 90 90
+
+///**************************************///
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+ammoPouchReadCallerForReloadFlagFetchCAOB+c: //"re3.exe"+1DFA9C1:
+readmem(originalcode_ammoPouchReadCallerForReloadFlagFetchCAOB,7)
+//db 0F B6 C8 48 8B 43 50
+//Alt: movzx ecx,al
+//Alt: mov rax,[rbx+50]
+unregistersymbol(originalcode_ammoPouchReadCallerForReloadFlagFetchCAOB)
+
+///**************************************///
+dealloc(newmem2)
+haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB+24: //"RE3.exe"+1324C35B:
+readmem(originalcode2_haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB,10)
+//db 49 BC FF FF FF FF FF FF FF 7F
+//Alt: mov r12,7FFFFFFFFFFFFFFF
+unregistersymbol(originalcode2_haveAmmoPouchChkBeforeAmmoAPouchCallAfterReloadAOB)
+
+///**************************************///
+itemIDsReadForAltAmmoPresenceAOB+10: //"RE3.exe"+1350F4E2:
+db 0F 94 D0
+//Alt: sete al
+
+///**************************************///
+cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB+e: //"RE3.exe"+1325532A:
+readmem(originalcode6_cJmpIfNoAltAmmoPouchForChangeAfterAlrAmmoChangeAOB,6)
+//db 0F 84 FC 01 00 00
+//Alt: je RE3.exe+1325552C
+
+///**************************************///
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13050</ID>
+          <Description>"max pouch slots (gir489)"</Description>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">{ Game   : re2.exe
+  Version: 1.2
+  Date   : 2019-02-26
+  Author : gir489
+
+  Max pouch slots.
+}
+
+[ENABLE]
+
+aobscanmodule(INJECT,re3.exe,39 B2 90 00 00 00 7E) // should be unique
+alloc(newmem,$1000,"re3.exe"+9DAE273)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rdx+00000090],#20
+  cmp [rdx+00000090],esi
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 39 B2 90 00 00 00
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "re2.exe"+9DAE273
+
+"re2.exe"+9DAE252: 48 85 D2              -  test rdx,rdx
+"re2.exe"+9DAE255: 75 16                 -  jne re2.exe+9DAE26D
+"re2.exe"+9DAE257: 45 31 C0              -  xor r8d,r8d
+"re2.exe"+9DAE25A: 48 89 D9              -  mov rcx,rbx
+"re2.exe"+9DAE25D: 41 8D 50 38           -  lea edx,[r8+38]
+"re2.exe"+9DAE261: E8 6A 48 02 F8        -  call re2.exe+1DD2AD0
+"re2.exe"+9DAE266: 30 C9                 -  xor cl,cl
+"re2.exe"+9DAE268: E9 81 00 00 00        -  jmp re2.exe+9DAE2EE
+"re2.exe"+9DAE26D: 40 F6 C6 03           -  test sil,03
+"re2.exe"+9DAE271: 74 6B                 -  je re2.exe+9DAE2DE
+// ---------- INJECTING HERE ----------
+"re2.exe"+9DAE273: 39 B2 90 00 00 00     -  cmp [rdx+00000090],esi
+// ---------- DONE INJECTING  ----------
+"re2.exe"+9DAE279: 7E 63                 -  jle re2.exe+9DAE2DE
+"re2.exe"+9DAE27B: 44 8D 46 FF           -  lea r8d,[rsi-01]
+"re2.exe"+9DAE27F: 48 89 D9              -  mov rcx,rbx
+"re2.exe"+9DAE282: E8 F9 FC A6 F7        -  call re2.exe+181DF80
+"re2.exe"+9DAE287: 48 8B 4B 50           -  mov rcx,[rbx+50]
+"re2.exe"+9DAE28B: 48 8B 49 18           -  mov rcx,[rcx+18]
+"re2.exe"+9DAE28F: 48 85 C9              -  test rcx,rcx
+"re2.exe"+9DAE292: 74 04                 -  je re2.exe+9DAE298
+"re2.exe"+9DAE294: 30 C0                 -  xor al,al
+"re2.exe"+9DAE296: EB 3A                 -  jmp re2.exe+9DAE2D2
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1337092247</ID>
+          <Description>"Always Have Coin"</Description>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : re3.exe
+  Version: 
+  Date   : 2020-04-06
+  Author : Marcus101RR
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(gDefenseCoin,re3.exe,41 B8 2D 01 00 00 48 8B CB E8 ?? ?? ?? ?? 0F B6) // should be unique
+aobscanmodule(gAssaultCoin,re3.exe,41 B8 2E 01 00 00 48 8B CB E8 ?? ?? ?? ?? 0F B6) // should be unique
+aobscanmodule(gCraftingCoin,re3.exe,41 B8 30 01 00 00 E8 ?? ?? ?? ?? 0F B6) // should be unique
+
+
+registersymbol(gDefenseCoin)
+registersymbol(gAssaultCoin)
+registersymbol(gCraftingCoin)
+
+gDefenseCoin:
+  db 41 B8 31 01 00 00
+
+gAssaultCoin:
+  db 41 B8 31 01 00 00
+
+gCraftingCoin:
+  db 41 B8 31 01 00 00
+
+[DISABLE]
+
+gDefenseCoin:
+  db 41 B8 2D 01 00 00
+
+gAssaultCoin:
+  db 41 B8 2E 01 00 00
+
+gCraftingCoin:
+  db 41 B8 30 01 00 00
+
+unregistersymbol(gDefenseCoin)
+unregistersymbol(gAssaultCoin)
+unregistersymbol(gCraftingCoin)
+{
+// ORIGINAL CODE - INJECTION POINT: "re3.exe"+59F12E
+
+"re3.exe"+59F10E: 75 12                    -  jne re3.exe+59F122
+"re3.exe"+59F110: 45 33 C0                 -  xor r8d,r8d
+"re3.exe"+59F113: 8D 50 38                 -  lea edx,[rax+38]
+"re3.exe"+59F116: 48 8B CB                 -  mov rcx,rbx
+"re3.exe"+59F119: E8 F2 23 CF 01           -  call re3.exe+2291510
+"re3.exe"+59F11E: 32 C9                    -  xor cl,cl
+"re3.exe"+59F120: EB 50                    -  jmp re3.exe+59F172
+"re3.exe"+59F122: 48 8B 15 BF D4 7D 08     -  mov rdx,[re3.exe+8D7C5E8]
+"re3.exe"+59F129: 48 85 D2                 -  test rdx,rdx
+"re3.exe"+59F12C: 74 26                    -  je re3.exe+59F154
+// ---------- INJECTING HERE ----------
+"re3.exe"+59F12E: 41 B8 2D 01 00 00        -  mov r8d,0000012D
+// ---------- DONE INJECTING  ----------
+"re3.exe"+59F134: 48 8B CB                 -  mov rcx,rbx
+"re3.exe"+59F137: E8 C4 4A 05 00           -  call re3.exe+5F3C00
+"re3.exe"+59F13C: 0F B6 D0                 -  movzx edx,al
+"re3.exe"+59F13F: 48 8B 43 50              -  mov rax,[rbx+50]
+"re3.exe"+59F143: 48 8B 48 18              -  mov rcx,[rax+18]
+"re3.exe"+59F147: 48 85 C9                 -  test rcx,rcx
+"re3.exe"+59F14A: 75 08                    -  jne re3.exe+59F154
+"re3.exe"+59F14C: 85 D2                    -  test edx,edx
+"re3.exe"+59F14E: 74 04                    -  je re3.exe+59F154
+"re3.exe"+59F150: B0 01                    -  mov al,01
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17859</ID>
+          <Description>"critical shot mod .6"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+///
+aobscanmodule(registeredLimbChkOnActionTakenAOB,RE3.exe,** ** 02 75 08 ** ** ** ** 00 00 EB 06 ** ** ** ** 00 00)
+registersymbol(registeredLimbChkOnActionTakenAOB)
+///
+aobscanmodule(damageSpecialEffectReadAOB,RE3.exe,8B ** ** ** ** 00 02 00 00 0F 8E ** ** ** ** ** 00 00 02 00)
+registersymbol(damageSpecialEffectReadAOB)
+
+label(bKnifeApplied)
+registersymbol(bKnifeApplied)
+label(dWeakLimbsChance)
+registersymbol(dWeakLimbsChance)
+label(bWeakHead)
+registersymbol(bWeakHead)
+label(bWeakTorso)
+registersymbol(bWeakTorso)
+label(bWeakUpperLimps)
+registersymbol(bWeakUpperLimps)
+label(bWeakLowerLimps)
+registersymbol(bWeakLowerLimps)
+label(bWeakLimbsInCounter)
+registersymbol(bWeakLimbsInCounter)
+label(bWeakLimbsButtonOffset)
+registersymbol(bWeakLimbsButtonOffset)
+label(bWeakLimbsKey)
+registersymbol(bWeakLimbsKey)
+label(bWeakLimbs)
+registersymbol(bWeakLimbs)
+
+alloc(newmem,2048,damageSpecialEffectReadAOB) //"RE3.exe"+C717185)
+label(returnhere)
+label(originalcode_damageSpecialEffectReadAOB)
+registersymbol(originalcode_damageSpecialEffectReadAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rax,bKnifeApplied
+cmp byte ptr [rax],1
+jne end
+
+mov rax,bWeakLimbs
+cmp byte ptr [rax],1
+je doweaklimbs
+
+@@:
+mov rax,bWeakLimbsInCounter
+cmp byte ptr [rax],1
+jne @f
+mov rax,pCounterInfo
+mov rax,[rax+8]
+test rax,rax
+jz @f
+cmp dword ptr [rax],0
+je @f
+cmp dword ptr [rax],BF800000
+jne doweaklimbs
+
+@@:
+test r15,r15
+jz @f
+movsxd rax,dword ptr [r15+44]
+cmp rax,0
+jl @f
+cmp rax,9
+jg @f
+push rcx
+mov rcx,bWeakHead
+mov al,[rcx+rax]
+pop rcx
+test al,al
+jnz doweaklimbs
+
+@@:
+//
+push rcx
+mov rcx,aControllerHotkeyPressed
+mov rax,bWeakLimbsButtonOffset
+movsxd rax,dword ptr [rax]
+mov al,[rcx+rax*4]
+xor al,1
+pop rcx
+test al,al
+jz doweaklimbs
+jmp end
+
+doweaklimbs:
+mov eax,40
+db 89
+readmem(damageSpecialEffectReadAOB+1,3)
+//mov [rbx+rsi*4+20],eax
+test r15,r15
+jz end
+
+push r14
+mov rax,registeredLimbChkOnActionTakenAOB
+movsxd rax,dword ptr [rax+7]
+lea r14,[r14+rax]// 3b0]
+
+//mov rax,damageSpecialEffectReadAOB
+//lea rax,[rax+f]
+//push rbx
+//movsxd rbx,dword ptr [rax-4]
+//lea rax,[rax+rbx]
+//pop rbx
+//movsxd rax,dword ptr [rax+35]
+//
+//mov eax,[r15+rax] //+44]
+mov eax,[r15+44]
+cmp eax,3
+jl doweaklimbsend
+cmp eax,7
+jl @f
+lea r14,[r14+4]
+cmp eax,a
+jge doweaklimbsend
+
+@@:
+mov [r14],eax
+
+doweaklimbsend:
+xor rax,rax
+pop r14
+
+end:
+
+originalcode_damageSpecialEffectReadAOB:
+readmem(damageSpecialEffectReadAOB,9)
+//mov eax,[rbx+rsi*4+20]
+//cmp eax,00000200
+
+exit:
+jmp returnhere
+
+///
+bKnifeApplied:
+dd 0
+dWeakLimbsChance:
+dd #50
+bWeakHead:
+db 0
+bWeakTorso:
+db 0      //torso/waist
+db 0      //?
+bWeakUpperLimps:
+db 1      //arms
+db 1      //elbows
+db 1      //forearms
+db 1      //hands
+bWeakLowerLimps:
+db 1      //thighs
+db 1      //lower legs
+db 1      //ankles/feet
+bWeakLimbsInCounter:
+dd 1
+bWeakLimbsButtonOffset:
+dd a
+bWeakLimbsKey:
+dd 14
+bWeakLimbs:
+dd 0
+///
+
+damageSpecialEffectReadAOB: //"RE3.exe"+C717185:
+jmp newmem
+nop 4
+returnhere:
+
+///*****************************************///
+aobscanmodule(critShotFlagReadOnShotAOB,re3.exe,83 ** ** ** 00 00 01 75 ** 48 ** ** ** ** 00 00 48 ** ** 74 ** 48 ** ** ** 48 ** ** 74)
+registersymbol(critShotFlagReadOnShotAOB)
+
+///
+aobscanmodule(zombieLimbIDReadForCritHeadShotChkAOB,re3.exe,** ** ** ** ** ** 00 00 00 75 ** ** ** ** ** ** 00 00 01 75 ** ** ** ** 75)
+registersymbol(zombieLimbIDReadForCritHeadShotChkAOB)
+///
+
+label(bDoCriticalShot)
+registersymbol(bDoCriticalShot)
+
+alloc(newmem2,2048,critShotFlagReadOnShotAOB) //"re3.exe"+42B621)
+label(returnhere2)
+label(originalcode2_critShotFlagReadOnShotAOB)
+registersymbol(originalcode2_critShotFlagReadOnShotAOB)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rax,bWeakLimbs
+cmp byte ptr [rax],1
+je docritshot2
+
+@@:
+mov rax,bWeakLimbsInCounter
+cmp byte ptr [rax],1
+jne @f
+mov rax,pCounterInfo
+mov rax,[rax+8]
+test rax,rax
+jz @f
+cmp dword ptr [rax],0
+je @f
+cmp dword ptr [rax],BF800000
+jne docritshot2
+
+@@:
+mov rax,[r14+70]
+test rax,rax
+jz @f
+/*
+41 83 BC 24 AC000000 00 - cmp dword ptr [r12+000000AC],00
+*/
+db 48 63 80
+readmem(zombieLimbIDReadForCritHeadShotChkAOB+4,4)
+//movsxd rax,dword ptr [rax+ac]
+cmp rax,0
+jl @f
+cmp rax,9
+jg @f
+push rcx
+mov rcx,bWeakHead
+mov al,[rcx+rax]
+pop rcx
+test al,al
+jnz docritshot2
+
+@@:
+//
+push rcx
+mov rcx,aControllerHotkeyPressed
+mov rax,bWeakLimbsButtonOffset
+movsxd rax,dword ptr [rax]
+mov al,[rcx+rax*4]
+xor al,1
+pop rcx
+test al,al
+jz docritshot2
+
+jmp end2
+
+docritshot2:
+db C7 85
+readmem(critShotFlagReadOnShotAOB+2,5)
+db 00 00 00
+//mov dword ptr [rbp+134],1
+mov rax,bDoCriticalShot
+mov byte ptr [rax],1
+
+cmp dword ptr [rbp+12c],b  //shotgun
+je @f
+{cmp dword ptr [rbp+12c],1f //.44
+je @f}
+jmp end2
+
+@@:
+mov dword ptr [rbp+12c],1 //use critical effect of handgun
+
+end2:
+
+originalcode2_critShotFlagReadOnShotAOB:
+readmem(critShotFlagReadOnShotAOB,7)
+//cmp dword ptr [rbp+00000134],01
+
+exit2:
+jmp returnhere2
+
+///
+bDoCriticalShot:
+dd 0
+///
+
+critShotFlagReadOnShotAOB: //"re3.exe"+42B621:
+jmp newmem2
+nop 2
+returnhere2:
+
+///*****************************************///
+aobscanmodule(critShotFlagReadOnShotAfterSBodyTypeChk1AOB,re3.exe,E9 ** ** ** ** ** ** ** ** ** ** ** 00 00 01 ** ** ** EB)
+registersymbol(critShotFlagReadOnShotAfterSBodyTypeChk1AOB)
+
+alloc(newmem3b,2048,critShotFlagReadOnShotAfterSBodyTypeChk1AOB+7) //"re3.exe"+11ACE58)
+label(returnhere3b)
+label(originalcode3b_critShotFlagReadOnShotAfterSBodyTypeChk1AOB)
+registersymbol(originalcode3b_critShotFlagReadOnShotAfterSBodyTypeChk1AOB)
+label(exit3b)
+
+newmem3b: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rcx,bDoCriticalShot
+cmp byte ptr [rcx],1
+jne end3b
+readmem(critShotFlagReadOnShotAfterSBodyTypeChk1AOB+7,1)
+db C7 86
+readmem(critShotFlagReadOnShotAfterSBodyTypeChk1AOB+a,5)
+db 00 00 00
+//mov dword ptr [r14+134],1
+
+
+cmp dword ptr [r14+12c],b
+je @f
+{cmp dword ptr [r14+12c],1f
+je @f}
+jmp end3b
+
+@@:
+mov dword ptr [r14+12c],1 //wID
+
+end3b:
+mov byte ptr [rcx],0
+
+originalcode3b_critShotFlagReadOnShotAfterSBodyTypeChk1AOB:
+readmem(critShotFlagReadOnShotAfterSBodyTypeChk1AOB+7,8)
+//cmp dword ptr [r14+00000134],01
+
+exit3b:
+jmp returnhere3b
+
+///
+
+critShotFlagReadOnShotAfterSBodyTypeChk1AOB+7: //"re3.exe"+11ACE58:
+jmp newmem3b
+nop 3
+returnhere3b:
+
+///*****************************************///
+//modified from TheyCallMeTim13's lua keylistener script
+//http://fearlessrevolution.com/viewtopic.php?f=4&amp;t=6041&amp;start=60#p62657
+{$lua}
+local function weaklimbskeyLuaThread(thread)
+	local addrw0 = getAddressSafe('bWeakLimbs')
+	local addrwl = getAddressSafe('bWeakLimbsKey')
+	local addrw2 = getAddressSafe('dWeakLimbsChance')
+	while WeakLimbskeyLuaThreadLoop do
+		if addrw0 and addrwl and addrw2 then
+            weaklimbschance = readInteger(addrw2)
+            if weaklimbschance ~= nil then
+                if ( isKeyPressed( readInteger('bWeakLimbsKey') ) or (math.random(1,100) &lt;= weaklimbschance ) ) then
+			        writeBytes(addrw0, 1)
+                else
+                    writeBytes(addrw0, 0)
+                end
+            end
+		else
+			addrw0 = getAddressSafe('bWeakLimbs')
+			addrwl = getAddressSafe('bWeakLimbsKey')
+			addrw2 = getAddressSafe('dWeakLimbsChance')
+		end
+        sleep(300)
+	end
+	thread.terminate()
+--    while WeakLimbskeyLuaThreadLoop do
+--          if ( isKeyPressed(VK_CAPITAL) ) then
+--              writeBytes("bWeakLimbs" ,1)
+--          else
+--              writeBytes("bWeakLimbs" ,0)
+--          end
+--    end
+--    thread.terminate()
+end
+----------------------------------
+if syntaxcheck then return end
+WeakLimbskeyLuaThreadLoop = true
+createThread(weaklimbskeyLuaThread)
+{$asm}
+
+///*****************************************///
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+{$lua}
+if syntaxcheck then return end
+WeakLimbskeyLuaThreadLoop = false
+{$asm}
+
+///*****************************************///
+dealloc(newmem)
+damageSpecialEffectReadAOB: //"RE3.exe"+C717185:
+readmem(originalcode_damageSpecialEffectReadAOB,9)
+//db 8B 44 B3 20 3D 00 02 00 00
+//Alt: mov eax,[rbx+rsi*4+20]
+//Alt: cmp eax,00000200
+unregistersymbol(originalcode_damageSpecialEffectReadAOB)
+
+unregistersymbol(bKnifeApplied)
+unregistersymbol(dWeakLimbsChance)
+unregistersymbol(bWeakHead)
+unregistersymbol(bWeakTorso)
+unregistersymbol(bWeakUpperLimps)
+unregistersymbol(bWeakLowerLimps)
+unregistersymbol(bWeakLimbsInCounter)
+unregistersymbol(bWeakLimbsButtonOffset)
+unregistersymbol(bWeakLimbsKey)
+unregistersymbol(bWeakLimbs)
+
+///*****************************************///
+dealloc(newmem2)
+critShotFlagReadOnShotAOB: //"re3.exe"+42B621:
+readmem(originalcode2_critShotFlagReadOnShotAOB,7)
+//db 83 BD 34 01 00 00 01
+//Alt: cmp dword ptr [rbp+00000134],01
+unregistersymbol(originalcode2_critShotFlagReadOnShotAOB)
+
+unregistersymbol(bDoCriticalShot)
+
+///*****************************************///
+dealloc(newmem3b)
+critShotFlagReadOnShotAfterSBodyTypeChk1AOB+7: //"re3.exe"+11ACE58:
+readmem(originalcode3b_critShotFlagReadOnShotAfterSBodyTypeChk1AOB,8)
+//db 41 83 BE 34 01 00 00 01
+//Alt: cmp dword ptr [r14+00000134],01
+unregistersymbol(originalcode3b_critShotFlagReadOnShotAfterSBodyTypeChk1AOB)
+
+///*****************************************///
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1337092274</ID>
+              <Description>"limb cutter"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bKnifeApplied</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1337092239</ID>
+              <Description>"1. chance trigger (%)"</Description>
+              <Color>008000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>dWeakLimbsChance</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17910</ID>
+              <Description>"2. body parts trigger"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00 00 00 00 00 00 00 00 00 00:disabled
+01 01 01 01 01 01 01 01 01 01:enabled
+*:custom
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>10</ByteLength>
+              <Address>bWeakHead</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17870</ID>
+                  <Description>"head"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:disabled
+1:enabled
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>bWeakHead</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17873</ID>
+                  <Description>"torso"</Description>
+                  <Options moRecursiveSetValue="1"/>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00 00:disabled
+01 01:enabled
+</DropDownList>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>008000</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>2</ByteLength>
+                  <Address>bWeakTorso</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17872</ID>
+                  <Description>"upper limbs"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00 00 00 00:disabled
+01 01 01 01:enabled
+*:custom
+</DropDownList>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>008000</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>4</ByteLength>
+                  <Address>bWeakUpperLimps</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>17908</ID>
+                      <Description>"arms"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+                      <ShowAsHex>1</ShowAsHex>
+                      <Color>00B700</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>17890</ID>
+                      <Description>"elbows"</Description>
+                      <Options moRecursiveSetValue="1"/>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+                      <ShowAsHex>1</ShowAsHex>
+                      <Color>00B700</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>+1</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>17891</ID>
+                      <Description>"forearms"</Description>
+                      <Options moRecursiveSetValue="1"/>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+                      <ShowAsHex>1</ShowAsHex>
+                      <Color>00B700</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>+2</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>17892</ID>
+                      <Description>"hands"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+                      <ShowAsHex>1</ShowAsHex>
+                      <Color>00B700</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>+3</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17871</ID>
+                  <Description>"lower limbs"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00 00 00:disabled
+01 01 01:enabled
+*:custom
+</DropDownList>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>008000</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>3</ByteLength>
+                  <Address>bWeakLowerLimps</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>17893</ID>
+                      <Description>"thighs"</Description>
+                      <Options moRecursiveSetValue="1"/>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+                      <ShowAsHex>1</ShowAsHex>
+                      <Color>00B700</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>+1</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>17894</ID>
+                      <Description>"lower legs"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+                      <ShowAsHex>1</ShowAsHex>
+                      <Color>00B700</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>+1</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>17909</ID>
+                      <Description>"ankles/feet"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+                      <ShowAsHex>1</ShowAsHex>
+                      <Color>00B700</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>+1</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17907</ID>
+              <Description>"3. perfect dodge counter trigger"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:disabled
+1:enabled
+</DropDownList>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bWeakLimbsInCounter</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17860</ID>
+              <Description>"4. key trigger"</Description>
+              <Options moHideChildren="1"/>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+10:SHIFT key
+11:CTRL key
+12:ALT key
+14:CAPS LOCK key
+20:SPACEBAR key
+04:Middle Mouse Button
+05:X1 Mouse Button
+06:X2 Moust Button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bWeakLimbsKey</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17861</ID>
+                  <Description>""</Description>
+                  <Color>008000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>+4</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17862</ID>
+              <Description>"5. controller trigger"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:A button
+01:B button
+02:X button
+03:Y button
+04:Left shoulder button
+05:Right shoulder button
+06:Left trigger
+07:Right trigger
+08:Left thumb stick down
+09:Right thumb stick down
+0a:set a button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bWeakLimbsButtonOffset</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17282</ID>
+          <Description>"perfect dodge mod .6"</Description>
+          <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+define(autoevadekeyiddefault,20)
+
+//aobscanmodule(inEvadeFlagOnHitConnectAOB,RE3.exe,48 ** ** 74 ** 80 ** ** 00 48 ** ** ** ** 0F 95 D0 48 ** ** ** ** C3)
+aobscanmodule(inEvadeFlagOnHitConnectAOB,RE3.exe,48 ** ** 74 ** 80 ** 20 00 48 ** ** ** ** 0F 95 ** 48 ** ** ** ** C3)
+registersymbol(inEvadeFlagOnHitConnectAOB)
+
+label(pAllDamageInfo)
+registersymbol(pAllDamageInfo)
+label(pPlayerDamageInfo)
+registersymbol(pPlayerDamageInfo)
+label(bAutoEvadeButtonOffset)
+registersymbol(bAutoEvadeButtonOffset)
+label(bAutoEvadeKeyID)
+registersymbol(bAutoEvadeKeyID)
+label(bAutoEvade)
+registersymbol(bAutoEvade)
+label(dAutoEvadeChance)
+registersymbol(dAutoEvadeChance)
+label(bAutoEvadeOneHitKill)
+registersymbol(bAutoEvadeOneHitKill)
+label(bReadiedWeaponAutoEvade)
+registersymbol(bReadiedWeaponAutoEvade)
+label(wAutoEvadeMinHealth)
+registersymbol(wAutoEvadeMinHealth)
+label(bFromPlayerEvade)
+registersymbol(bFromPlayerEvade)
+
+alloc(newmem,2048,inEvadeFlagOnHitConnectAOB+5) //"RE3.exe"+CB596DC)
+label(returnhere)
+label(originalcode_inEvadeFlagOnHitConnectAOB)
+registersymbol(originalcode_inEvadeFlagOnHitConnectAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+readmem(inEvadeFlagOnHitConnectAOB+9,5)
+//mov rbx,[rsp+30]
+mov rdi,pAllDamageInfo
+mov [rdi],rbx
+
+mov rdi,pPlayer
+cmp [rdi],rax
+jne end
+
+mov rdi,pPlayerDamageInfo
+mov [rdi],rbx
+
+mov rbx,[rbx+68]
+
+//AttackToEnemy (grenades explode near)
+{mov rdi,0061007400740041
+cmp [rbx+10],rdi
+jne @f
+mov rdi,006f0054006b0063
+cmp [rbx+18],rdi
+jne @f
+mov rdi,006d0065006e0045
+cmp [rbx+10],rdi
+jne @f
+mov byte ptr [rax+61],0
+jmp end}
+
+@@:
+//Param Blast to Pl (barrel blast)
+mov rdi,006c00420020006d
+cmp [rbx+18],rdi
+jne @f
+mov rdi,0020007400730061
+cmp [rbx+20],rdi
+jne @f
+//mov byte ptr [rax+61],0
+jmp end
+
+@@: //Appear (hunter β jump near)
+mov rdi,0065007000700041
+cmp [rbx+10],rdi
+jne @f
+mov rdi,0000000000720061
+cmp [rbx+18],rdi
+jne @f
+//mov byte ptr [rax+61],0
+jmp end
+
+@@: //AttackUserDataToPlayer (nemesis breaks wall in front)
+mov rdi,0061007400740041
+cmp [rbx+10],rdi
+jne @f
+mov rdi,00730055006b0063
+cmp [rbx+18],rdi
+jne @f
+mov rdi,0061004400720065
+cmp [rbx+20],rdi
+jne @f
+mov rdi,006f005400610074
+cmp [rbx+28],rdi
+jne @f
+mov rdi,00790061006c0050
+cmp [rbx+30],rdi
+jne @f
+mov rdi,0000000000720065
+cmp [rbx+38],rdi
+jne @f
+jmp end
+
+@@: //BindVoiceS (nemesis shout)
+mov rdi,0064006e00690042
+cmp [rbx+10],rdi
+jne @f
+mov rdi,00630069006f0056
+cmp [rbx+18],rdi
+jne @f
+//mov byte ptr [rax+61],0
+jmp end
+
+@@: //Quake (nemesis jump near)
+mov rdi,006b006100750051
+cmp [rbx+10],rdi
+jne @f
+mov rdi,0000000000000065
+cmp [rbx+18],rdi
+jne @f
+//mov byte ptr [rax+61],0
+jmp end
+
+@@:
+mov rdi,bAutoEvade
+cmp byte ptr [rdi],1
+je doevade
+
+@@:
+mov rdi,bReadiedWeaponAutoEvade
+cmp byte ptr [rdi],1
+jne @f
+mov rdi,pReadiedWeapon
+mov rdi,[rdi+8]
+test rdi,rdi
+jz @f
+cmp byte ptr [rdi+170],03
+je doevade
+
+@@:
+//
+push rax
+mov rdi,aControllerHotkeyPressed
+mov rax,bAutoEvadeButtonOffset
+movsxd rax,dword ptr [rax]
+mov dil,[rdi+rax*4]
+pop rax
+test dil,dil
+jnz doevade
+//
+
+mov rdi,bAutoEvadeOneHitKill
+cmp byte ptr [rdi],1
+jne checkminhealth
+
+@@: //Feeler (nemesis grab kill)
+mov rdi,006c006500650046
+cmp [rbx+10],rdi
+jne @f
+mov rdi,0000000000720065
+cmp [rbx+18],rdi
+je doevade
+
+@@: //Hold (licker kill)
+mov rdi,0064006c006f0048
+cmp [rbx+10],rdi
+je doevade
+
+@@: //Grap
+mov rdi,0070006100720047
+cmp [rbx+10],rdi
+jne nextonehitkillchka
+//(Grap)Swallow (hunter γ kill)
+mov rdi,006c006100770053
+cmp [rbx+18],rdi
+jne @f
+mov rdi,00000077006f006c
+cmp [rbx+20],rdi
+je doevade
+jmp nextonehitkillchka
+
+@@: //(Grap)HeadHuntBody (hunter β kill)
+mov rdi,0064006100650048
+cmp [rbx+18],rdi
+jne @f
+mov rdi,0074006e00750048
+cmp [rbx+20],rdi
+jne @f
+mov rdi,00790064006f0042
+cmp [rbx+28],rdi
+je doevade
+
+nextonehitkillchka:
+
+checkminhealth:
+mov rdi,wAutoEvadeMinHealth
+mov di,[rdi]
+cmp [rax+58],di
+jg end
+
+{donodamageblast:
+xor rdi,rdi
+mov [rbx+d0],rdi
+//mov byte ptr [rax+61],0
+jmp end}
+
+doevade:
+mov dil,1
+mov [rax+61],dil
+mov rdi,bFromPlayerEvade
+mov byte ptr [rdi],1
+mov word ptr [rdi+1],10
+
+end:
+
+originalcode_inEvadeFlagOnHitConnectAOB:
+readmem(inEvadeFlagOnHitConnectAOB+5,9)
+//cmp byte ptr [rax+61],00
+//mov rbx,[rsp+30]
+
+exit:
+jmp returnhere
+
+///
+pAllDamageInfo:
+dq 0
+pPlayerDamageInfo:
+dq 0
+bAutoEvadeButtonOffset:
+dd a
+bAutoEvadeKeyID:
+dd autoevadekeyiddefault
+bAutoEvade:
+dd 1
+dAutoEvadeChance:
+dd #50
+bAutoEvadeOneHitKill:
+dd 1
+bReadiedWeaponAutoEvade:
+dd 1
+wAutoEvadeMinHealth:
+dd #360
+bFromPlayerEvade:
+dd 0
+///
+
+inEvadeFlagOnHitConnectAOB+5: //"RE3.exe"+CB596DC:
+jmp newmem
+nop 4
+returnhere:
+
+///******************************///
+aobscanmodule(closenessChkOnHitConnectAOB,RE3.exe,E8 CB ** ** ** 0F B6 C8 48 ** ** 50 4C ** ** ** 0F 85 ** ** ** ** 85 C9 0F 84 ** ** ** ** 4D ** ** 10)
+registersymbol(closenessChkOnHitConnectAOB)
+
+alloc(newmem2,2048,closenessChkOnHitConnectAOB+8) //"RE3.exe"+E86825D)
+label(returnhere2)
+label(originalcode2_closenessChkOnHitConnectAOB)
+registersymbol(originalcode2_closenessChkOnHitConnectAOB)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rax,bFromPlayerEvade
+cmp byte ptr [rax],1
+jne @f
+mov byte ptr [rax],0
+mov ecx,1
+
+originalcode2_closenessChkOnHitConnectAOB:
+readmem(closenessChkOnHitConnectAOB+8,8)
+//mov rax,[rdi+50]
+//cmp [rax+18],r13
+
+exit2:
+jmp returnhere2
+
+///
+
+closenessChkOnHitConnectAOB+8: //"RE3.exe"+E86825D:
+jmp newmem2
+nop 3
+returnhere2:
+
+///******************************///
+/*
+aobscanmodule(inEvadeFlagWritesAOB,RE3.exe,48 ** ** 74 ** 44 ** ** ** 48 ** ** ** 4C ** ** ** 75)
+registersymbol(inEvadeFlagWritesAOB)
+
+alloc(newmem3,2048,inEvadeFlagWritesAOB+5) //"RE3.exe"+F2A5805)
+label(returnhere3)
+label(originalcode3_inEvadeFlagWritesAOB)
+registersymbol(originalcode3_inEvadeFlagWritesAOB)
+label(exit3)
+
+newmem3: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rcx
+mov rcx,pPlayer
+cmp [rcx],rax
+jne end3
+mov rcx,bAutoEvade
+cmp byte ptr [rcx],1
+je @f
+//
+push rax
+mov rcx,aControllerHotkeyPressed
+mov rax,bAutoEvadeButtonOffset
+movsxd rax,dword ptr [rax]
+mov cl,[rcx+rax*4]
+pop rax
+test cl,cl
+jnz @f
+//
+mov rcx,wAutoEvadeMinHealth
+mov cx,[rcx]
+cmp [rax+58],cx
+jg end3
+
+@@:
+mov r13l,1
+
+end3:
+pop rcx
+
+originalcode3_inEvadeFlagWritesAOB:
+readmem(inEvadeFlagWritesAOB+5,8)
+//mov [rax+61],r13l
+//mov rax,[rbx+50]
+
+exit3:
+jmp returnhere3
+
+///
+
+inEvadeFlagWritesAOB+5: //"RE3.exe"+F2A5805:
+jmp newmem3
+nop 3
+returnhere3:
+
+///******************************///
+aobscanmodule(analogueInputHandleAOB,RE3.exe,F3 41 0F 10 00 48 ** ** 0F ** ** ** ** 48 ** ** F3 ** 0F ** ** ** F3 0F)
+registersymbol(analogueInputHandleAOB)
+
+alloc(newmem4,2048,analogueInputHandleAOB) //"RE3.exe"+DAE4D9A)
+label(returnhere4)
+label(originalcode4_analogueInputHandleAOB)
+registersymbol(originalcode4_analogueInputHandleAOB)
+label(exit4)
+
+newmem4: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rbx,bFromPlayerEvade
+cmp word ptr [rbx+1],0
+jle @f
+dec word ptr [rbx+1]
+xorps xmm0,xmm0
+movups [r8],xmm0
+movups [r9],xmm0
+readmem(analogueInputHandleAOB+8,1)
+db 11 44
+readmem(analogueInputHandleAOB+b,2)
+//movups [rsp+20],xmm0
+movss xmm6,xmm0
+movss xmm7,xmm0
+
+end4:
+
+originalcode4_analogueInputHandleAOB:
+readmem(analogueInputHandleAOB,5)
+//movss xmm0,[r8]
+
+exit4:
+jmp returnhere4
+
+///
+
+
+analogueInputHandleAOB: //"RE3.exe"+DAE4D9A:
+jmp newmem4
+returnhere4:
+
+///******************************///
+//modified from TheyCallMeTim13's lua keylistener script
+//http://fearlessrevolution.com/viewtopic.php?f=4&amp;t=6041&amp;start=60#p62657
+{$lua}
+local function autoEvadeKeyLuaThread(thread2)
+	local addr10 = getAddressSafe('bAutoEvade')
+	local addr11 = getAddressSafe('bAutoEvadeKeyID')
+	local addr12 = getAddressSafe('dAutoEvadeChance')
+	while AutoEvadeKeyLuaThreadLoop do
+		if addr10 and addr11 and addr12 then
+            evadechance = readInteger(addr12)
+            if evadechance ~= nil then
+                if ( isKeyPressed( readInteger(addr11) ) ) or (math.random(1,100) &lt;= evadechance ) then
+    			    writeBytes(addr10, 1)
+                else
+                    writeBytes(addr10, 0)
+                end
+            end
+		elseif AutoEvadeKeyLuaThreadLoop then
+			addr10 = getAddressSafe('bAutoEvade')
+			addr11 = getAddressSafe('bAutoEvadeKeyID')
+			addr12 = getAddressSafe('dAutoEvadeChance')
+		end
+        sleep(300)
+	end
+	thread2.terminate()
+--    while AutoEvadeKeyLuaThreadLoop do
+--          if ( isKeyPressed(VK_CAPITAL) ) then
+--              writeBytes("bAutoEvade" ,1)
+--          else
+--              writeBytes("bAutoEvade" ,0)
+--          end
+--    end
+--    thread2.terminate()
+end
+----------------------------------
+if syntaxcheck then return end
+AutoEvadeKeyLuaThreadLoop = true
+createThread(autoEvadeKeyLuaThread)
+{$asm}
+
+///******************************///
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+{$lua}
+if syntaxcheck then return end
+AutoEvadeKeyLuaThreadLoop = false
+{$asm}
+
+///******************************///
+dealloc(newmem)
+inEvadeFlagOnHitConnectAOB+5: //"RE3.exe"+CB596DC:
+readmem(originalcode_inEvadeFlagOnHitConnectAOB,9)
+//db 80 78 61 00 48 8B 5C 24 30
+//Alt: cmp byte ptr [rax+61],00
+//Alt: mov rbx,[rsp+30]
+unregistersymbol(originalcode_inEvadeFlagOnHitConnectAOB)
+
+unregistersymbol(pAllDamageInfo)
+unregistersymbol(pPlayerDamageInfo)
+unregistersymbol(bAutoEvadeButtonOffset)
+unregistersymbol(bAutoEvadeKeyID)
+unregistersymbol(bAutoEvade)
+unregistersymbol(dAutoEvadeChance)
+unregistersymbol(bAutoEvadeOneHitKill)
+unregistersymbol(bReadiedWeaponAutoEvade)
+unregistersymbol(dAutoEvadeMinHealth)
+unregistersymbol(bFromPlayerEvade)
+
+///******************************///
+dealloc(newmem2)
+closenessChkOnHitConnectAOB+8: //"RE3.exe"+E86825D:
+readmem(originalcode2_closenessChkOnHitConnectAOB,8)
+//db 48 8B 47 50 4C 39 68 18
+//Alt: mov rax,[rdi+50]
+//Alt: cmp [rax+18],r13
+unregistersymbol(originalcode2_closenessChkOnHitConnectAOB)
+
+///******************************///
+/*
+dealloc(newmem)
+inEvadeFlagWritesAOB+5: //"RE3.exe"+F2A5805:
+readmem(originalcode3_inEvadeFlagWritesAOB,8)
+//db 44 88 68 61 48 8B 43 50
+//Alt: mov [rax+61],r13l
+//Alt: mov rax,[rbx+50]
+unregistersymbol(originalcode3_inEvadeFlagWritesAOB)
+
+///******************************///
+dealloc(newmem4)
+analogueInputHandleAOB: //"RE3.exe"+DAE4D9A:
+readmem(originalcode4_analogueInputHandleAOB,5)
+//db F3 41 0F 10 00
+//Alt: movss xmm0,[r8]
+unregistersymbol(originalcode4_analogueInputHandleAOB)
+
+///******************************///
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>17726</ID>
+              <Description>"1. chance trigger (%)"</Description>
+              <Color>008000</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>dAutoEvadeChance</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17730</ID>
+              <Description>"2. health status trigger"</Description>
+              <Options moHideChildren="1"/>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">800:caution
+360:danger
+0:disabled
+</DropDownList>
+              <Color>008000</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>wAutoEvadeMinHealth</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17731</ID>
+                  <Description>""</Description>
+                  <Color>008000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>+4</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>17732</ID>
+                      <Description>""</Description>
+                      <Color>008000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>+4</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1337092304</ID>
+              <Description>"3. one hit kill trigger"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bAutoEvadeOneHitKill</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1337092306</ID>
+              <Description>"4. aiming trigger"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+01:enabled
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bReadiedWeaponAutoEvade</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17727</ID>
+              <Description>"5. key trigger"</Description>
+              <Options moHideChildren="1"/>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:disabled
+10:SHIFT key
+11:CTRL key
+12:ALT key
+14:CAPS LOCK key
+20:SPACEBAR key
+04:Middle Mouse Button
+05:X1 Mouse Button
+06:X2 Moust Button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bAutoEvadeKeyID</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17728</ID>
+                  <Description>""</Description>
+                  <Color>008000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>+4</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>16336</ID>
+              <Description>"6. controller trigger"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:A button
+01:B button
+02:X button
+03:Y button
+04:Left shoulder button
+05:Right shoulder button
+06:Left trigger
+07:Right trigger
+08:Left thumb stick down
+09:Right thumb stick down
+0a:set a button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bAutoEvadeButtonOffset</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17932</ID>
+          <Description>"parasite puke mod"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(parasiteHandlingAOB,RE3.exe,80 ** ** ** 00 00 00 0F 84 ** ** ** ** ** ** ** 0F 84 ** ** ** ** 80 ** ** ** 00 00 00 0F 95 ** E9)
+registersymbol(parasiteHandlingAOB)
+
+label(bCureParasite)
+registersymbol(bCureParasite)
+
+alloc(newmem,2048,parasiteHandlingAOB+16) //"re3.exe"+14F0DDC)
+label(returnhere)
+label(originalcode_parasiteHandlingAOB)
+registersymbol(originalcode_parasiteHandlingAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rbp,bCureParasite
+cmp word ptr [rbp],0
+je @f
+mov byte ptr [rbp],0
+jmp exit
+
+originalcode_parasiteHandlingAOB:
+readmem(parasiteHandlingAOB+16,7)
+//cmp byte ptr [rax+000002EA],00
+
+exit:
+jmp returnhere
+
+///
+bCureParasite:
+dd 0
+///
+
+parasiteHandlingAOB+16: //"re3.exe"+14F0DDC:
+jmp newmem
+nop 2
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+parasiteHandlingAOB+16: //"re3.exe"+14F0DDC:
+readmem(originalcode_parasiteHandlingAOB,7)
+//db 80 B8 EA 02 00 00 00
+//Alt: cmp byte ptr [rax+000002EA],00
+unregistersymbol(originalcode_parasiteHandlingAOB)
+
+unregistersymbol(bCureParasite)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>17934</ID>
+              <Description>"method"</Description>
+              <Options moHideChildren="1"/>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:hot-key puke
+1:auto puke
+</DropDownList>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bCureParasite+1</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17935</ID>
+                  <Description>""</Description>
+                  <Color>008000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>-1</Address>
+                  <Hotkeys>
+                    <Hotkey>
+                      <Action>Set Value</Action>
+                      <Keys>
+                        <Key>20</Key>
+                        <Key>4</Key>
+                      </Keys>
+                      <Value>1</Value>
+                      <ID>0</ID>
+                    </Hotkey>
+                  </Hotkeys>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17936</ID>
+              <Description>"CapsLock+MMB to cure (if set to hot-key puke)"</Description>
+              <Color>808080</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>35</ID>
+          <Description>"slow walk keys .2"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+//move float read, 0&lt;&gt;1, r8==11
+define(walkkeyiddefault,14)
+define(walkkey2iddefault,12)
+
+aobscanmodule(someFloatRead1AOB,RE3.exe,E8 ** ** ** ** 48 ** ** ** 5B C3 0F 57 C0 48 ** ** ** 5B C3 F3 ** ** ** ** 48 ** ** ** 5B C3)
+registersymbol(someFloatRead1AOB)
+
+label(pPlayerMoveSpeed)
+registersymbol(pPlayerMoveSpeed)
+label(bWalkKeyID)
+registersymbol(bWalkKeyID)
+label(bWalkKeyPressed)
+registersymbol(bWalkKeyPressed)
+label(bWalkKey2ID)
+registersymbol(bWalkKey2ID)
+label(bWalkKey2Pressed)
+registersymbol(bWalkKey2Pressed)
+
+alloc(newmem,2048,someFloatRead1AOB+14) //"RE3.exe"+19BB829D)
+label(returnhere)
+label(originalcode_someFloatRead1AOB)
+registersymbol(originalcode_someFloatRead1AOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp r8,11
+jne nend
+
+mov rbx,pPlayerMoveSpeed
+mov [rbx],rcx
+
+mov rbx,bWalkKey2Pressed
+cmp byte ptr [rbx],1
+je @f
+mov rbx,bWalkKeyPressed
+cmp byte ptr [rbx],1
+je @f
+jmp nend
+
+@@:
+movss xmm0,[rbx+4]
+jmp exit
+
+nend:
+
+originalcode_someFloatRead1AOB:
+readmem(someFloatRead1AOB+14,5)
+//movss xmm0,[rcx+10]
+
+exit:
+jmp returnhere
+
+///
+pPlayerMoveSpeed:
+dq 0
+bWalkKeyID:
+dd walkkeyiddefault
+bWalkKeyPressed:
+dd 0
+dCustMoveSpeed:
+dd (float)0.73
+bWalkKey2ID:
+dd walkkey2iddefault
+bWalkKey2Pressed:
+dd 0
+dCustMoveSpeed2:
+dd (float)0.5
+///
+
+someFloatRead1AOB+14: //"RE3.exe"+19BB829D:
+jmp newmem
+returnhere:
+
+///*****************************************///
+//modified from TheyCallMeTim13's lua keylistener script
+//http://fearlessrevolution.com/viewtopic.php?f=4&amp;t=6041&amp;start=60#p62657
+{$lua}
+local function walkkeyLuaThread(thread3)
+	local addr2 = getAddressSafe('bWalkKeyPressed')
+	local addr3 = getAddressSafe('bWalkKey2Pressed')
+	while RunWalkkeyLuaThreadLoop do
+        sleep(300)
+		if addr2 then
+            if ( isKeyPressed( readInteger('bWalkKeyID') ) ) then
+			    writeBytes(addr2, 1)
+            else
+                writeBytes(addr2, 0)
+            end
+		else
+			addr2 = getAddressSafe('bWalkKeyPressed')
+		end
+		if addr3 then
+            if ( isKeyPressed( readInteger('bWalkKey2ID') ) ) then
+			    writeBytes(addr3, 1)
+            else
+                writeBytes(addr3, 0)
+            end
+		else
+			addr3 = getAddressSafe('bWalkKey2Pressed')
+		end
+	end
+	thread3.terminate()
+--    while RunWalkkeyLuaThreadLoop do
+--          if ( isKeyPressed(VK_CAPITAL) ) then
+--              writeBytes("bWalkKeyPressed" ,1)
+--          else
+--              writeBytes("bWalkKeyPressed" ,0)
+--          end
+--    end
+--    thread3.terminate()
+end
+----------------------------------
+if syntaxcheck then return end
+RunWalkkeyLuaThreadLoop = true
+createThread(walkkeyLuaThread)
+{$asm}
+
+///*****************************************///
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+{$lua}
+if syntaxcheck then return end
+RunWalkkeyLuaThreadLoop = false
+{$asm}
+
+///*****************************************///
+dealloc(newmem)
+someFloatRead1AOB+14: //"RE3.exe"+19BB829D:
+readmem(originalcode_someFloatRead1AOB,5)
+//db F3 0F 10 41 10
+//Alt: movss xmm0,[rcx+10]
+unregistersymbol(originalcode_someFloatRead1AOB)
+
+unregistersymbol(pPlayerMoveSpeed)
+unregistersymbol(bWalkKeyID)
+unregistersymbol(bWalkKeyPressed)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>13006</ID>
+              <Description>"key 1"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">10:SHIFT key
+11:CTRL key
+12:ALT key
+14:CAPS LOCK key
+04:Middle Mouse Button
+05:X1 Mouse Button
+06:X2 Moust Button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bWalkKeyID</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17743</ID>
+                  <Description>"speed 1"</Description>
+                  <Options moHideChildren="1"/>
+                  <Color>008000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+8</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>13007</ID>
+                      <Description>""</Description>
+                      <Color>008000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>-4</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17740</ID>
+              <Description>"key 2"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">10:SHIFT key
+11:CTRL key
+12:ALT key
+14:CAPS LOCK key
+04:Middle Mouse Button
+05:X1 Mouse Button
+06:X2 Moust Button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bWalkKey2ID</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17744</ID>
+                  <Description>"speed 2"</Description>
+                  <Options moHideChildren="1"/>
+                  <Color>008000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+8</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>17745</ID>
+                      <Description>""</Description>
+                      <Color>008000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>-4</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17258</ID>
+          <Description>"slow motion .2a (speedhack)"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(slowmokeys,1024,RE3.exe)
+
+label(bKeyCombMethod)
+registersymbol(bKeyCombMethod)
+label(dSlowMoKey1)
+registersymbol(dSlowMoKey1)
+label(dSlowMoKey2)
+registersymbol(dSlowMoKey2)
+label(dCustSpeedhackSpeed)
+registersymbol(dCustSpeedhackSpeed)
+
+///
+slowmokeys:
+bKeyCombMethod:
+dd 0    //0: and, 1: or
+dSlowMoKey1:
+dd 05
+dSlowMoKey2:
+dd 02
+dCustSpeedhackSpeed:
+dd (float)0.4
+///
+
+
+{$lua}
+
+lastSpeed=speedhack_getSpeed();
+bSpeedKeyReleased=1;
+combmethod=0;
+local function slowmokeyLuaThread(thread4)
+	while SlowMokeyLuaThreadLoop do
+        sleep(300)
+        addrga = readPointer(getAddress('pSomeGameStatus'))
+        addrgb = getAddressSafe('aControllerHotkeyPressed')
+--        addrga = readPointer(getAddress('pSomeGameStatus'))
+--        addrga = getAddress('pSomeGameStatus')
+--        print(readBytes('bKeyCombMethod'))
+		if ((getAddressSafe('dCustSpeedhackSpeed')) and (getAddressSafe('bKeyCombMethod')) and addrga)then
+            combmethod = readBytes('bKeyCombMethod')
+            if ( ( ( combmethod ==0 and (isKeyPressed(readInteger('dSlowMoKey1'))) and (isKeyPressed(readInteger('dSlowMoKey2'))) ) or ( combmethod==1 and ( (isKeyPressed(readInteger('dSlowMoKey1'))) or (isKeyPressed(readInteger('dSlowMoKey2'))) ) ) or (readBytes(addrgb+0x10) ~= 0) )  and not( readBytes(addrga+0x51)==1 or readBytes(addrga+0x53)==1) ) then
+--            if ( (isKeyPressed(readInteger('dSlowMoKey1'))) and (isKeyPressed(readInteger('dSlowMoKey2'))) ) then
+               if bSpeedKeyReleased == 1 then
+                   if speedhack_getSpeed() ~= readFloat("dCustSpeedhackSpeed") then
+--                      print("pressing: ", lastSpeed)
+                     lastSpeed=speedhack_getSpeed()
+                     speedhack_setSpeed(readFloat("dCustSpeedhackSpeed"))
+                     bSpeedKeyReleased=0
+                   end
+               end
+
+            else
+
+               if bSpeedKeyReleased == 0 then
+                 bSpeedKeyReleased=1
+--                 print(lastSpeed)
+                 if speedhack_getSpeed() ~= lastSpeed then
+                   speedhack_setSpeed(lastSpeed)
+                 end
+               end
+
+            end
+		end
+	end
+	thread4.terminate()
+end
+----------------------------------
+if syntaxcheck then return end
+SlowMokeyLuaThreadLoop = true
+createThread(slowmokeyLuaThread)
+{$asm}
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+{$lua}
+if syntaxcheck then return end
+SlowMokeyLuaThreadLoop = false
+{$asm}
+
+///*****************************************///
+dealloc(newmem)
+unregistersymbol(bKeyCombMethod)
+unregistersymbol(dSlowMoKey1)
+unregistersymbol(dSlowMoKey2)
+unregistersymbol(dCustSpeedhackSpeed)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>17841</ID>
+              <Description>"hold Left Trigger OR the following keyboard/mouse"</Description>
+              <Color>808080</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17259</ID>
+              <Description>"key 1"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">10:SHIFT key
+11:CTRL key
+12:ALT key
+14:CAPS LOCK key
+02:Right Mouse Button
+04:Middle Mouse Button
+05:X1 Mouse Button
+06:X2 Moust Button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>dSlowMoKey1</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>16232</ID>
+              <Description>"and/or?"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:and
+1:or
+</DropDownList>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bKeyCombMethod</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17260</ID>
+              <Description>"key 2"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">10:SHIFT key
+11:CTRL key
+12:ALT key
+14:CAPS LOCK key
+02:Right Mouse Button
+04:Middle Mouse Button
+05:X1 Mouse Button
+06:X2 Moust Button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>dSlowMoKey2</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17261</ID>
+              <Description>"slow motion speed"</Description>
+              <Color>008000</Color>
+              <VariableType>Float</VariableType>
+              <Address>dCustSpeedhackSpeed</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17263</ID>
+          <Description>"universal item key .2"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+define(universalitemkeyiddefault,14)
+
+aobscanmodule(itemIDChkOnWObjectInteractViaInvClickAOB,RE3.exe,EB 02 ** ** 39 50 10 74 ** 48)
+registersymbol(itemIDChkOnWObjectInteractViaInvClickAOB)
+
+label(bUniversalItemButtonOffset)
+registersymbol(bUniversalItemButtonOffset)
+label(bUniversalItemKeyID)
+registersymbol(bUniversalItemKeyID)
+label(bUniversalItemKeyPressed)
+registersymbol(bUniversalItemKeyPressed)
+
+alloc(newmem,2048,itemIDChkOnWObjectInteractViaInvClickAOB+4) //"RE3.exe"+13C8841F)
+label(returnhere)
+label(originalcode_itemIDChkOnWObjectInteractViaInvClickAOB)
+registersymbol(originalcode_itemIDChkOnWObjectInteractViaInvClickAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rcx
+mov rcx,bUniversalItemKeyPressed
+cmp byte ptr [rcx],1
+je @f
+//
+push rax
+mov rcx,aControllerHotkeyPressed
+mov rax,bUniversalItemButtonOffset
+movsxd rax,dword ptr [rax]
+mov cl,[rcx+rax*4]
+xor cl,1
+pop rax
+test cl,cl
+jz @f
+//
+
+readmem(itemIDChkOnWObjectInteractViaInvClickAOB+4,3)
+//cmp [rax+10],edx
+@@:
+pop rcx
+reassemble(itemIDChkOnWObjectInteractViaInvClickAOB+7)
+//je RE3.exe+13C88457
+jmp exit
+
+originalcode_itemIDChkOnWObjectInteractViaInvClickAOB:
+readmem(itemIDChkOnWObjectInteractViaInvClickAOB+4,5)
+//cmp [rax+10],edx
+//je RE3.exe+13C88457
+
+exit:
+jmp returnhere
+
+///
+bUniversalItemButtonOffset:
+dd a
+bUniversalItemKeyID:
+dd universalitemkeyiddefault
+bUniversalItemKeyPressed:
+dd 0
+///
+
+itemIDChkOnWObjectInteractViaInvClickAOB+4: //"RE3.exe"+13C8841F:
+jmp newmem
+returnhere:
+
+///*****************************************///
+//item id chk on use with world object interact
+aobscanmodule(itemIDChkOnWObjectInteractViaInvUseAOB,RE3.exe,74 0E 48 ** ** ** 48 ** ** 74 05 8B ** ** EB 02 ** ** 39 ** ** 74 ** 48)
+registersymbol(itemIDChkOnWObjectInteractViaInvUseAOB)
+
+alloc(newmem2,2048,itemIDChkOnWObjectInteractViaInvUseAOB+12) //"RE3.exe"+13C88EE7)
+label(returnhere2)
+label(originalcode2_itemIDChkOnWObjectInteractViaInvUseAOB)
+registersymbol(originalcode2_itemIDChkOnWObjectInteractViaInvUseAOB)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rbx
+mov rbx,bUniversalItemKeyPressed
+cmp byte ptr [rbx],1
+je @f
+//
+push rax
+mov rbx,aControllerHotkeyPressed
+mov rax,bUniversalItemButtonOffset
+movsxd rax,dword ptr [rax]
+mov bl,[rbx+rax*4]
+xor bl,1
+pop rax
+test bl,bl
+jz @f
+//
+
+readmem(itemIDChkOnWObjectInteractViaInvUseAOB+12,3)
+//cmp [rax+10],ecx
+@@:
+pop rbx
+reassemble(itemIDChkOnWObjectInteractViaInvUseAOB+15)
+//je RE3.exe+13C88F21
+jmp exit2
+
+originalcode2_itemIDChkOnWObjectInteractViaInvUseAOB:
+readmem(itemIDChkOnWObjectInteractViaInvUseAOB+12,5)
+//cmp [rax+10],ecx
+//je RE3.exe+13C88F21
+
+exit2:
+jmp returnhere2
+
+///
+
+itemIDChkOnWObjectInteractViaInvUseAOB+12: //"re2.exe"+E9A0D77:
+jmp newmem2
+returnhere2:
+
+///*****************************************///
+//modified from TheyCallMeTim13's lua keylistener script
+//http://fearlessrevolution.com/viewtopic.php?f=4&amp;t=6041&amp;start=60#p62657
+{$lua}
+local function universalitemkeyLuaThread(thread5)
+	local addr = getAddressSafe('bUniversalItemKeyPressed')
+	while UniversalItemkeyLuaThreadLoop do
+		if addr then
+            if ( isKeyPressed( readInteger('bUniversalItemKeyID') ) ) then
+			    writeBytes(addr, 1)
+            else
+                writeBytes(addr, 0)
+            end
+		else
+			addr = getAddressSafe('bUniversalItemKeyPressed')
+		end
+        sleep(200)
+	end
+	thread5.terminate()
+--    while UniversalItemkeyLuaThreadLoop do
+--          if ( isKeyPressed(VK_CAPITAL) ) then
+--              writeBytes("bUniversalItemKeyPressed" ,1)
+--          else
+--              writeBytes("bUniversalItemKeyPressed" ,0)
+--          end
+--    end
+--    thread5.terminate()
+end
+----------------------------------
+if syntaxcheck then return end
+UniversalItemkeyLuaThreadLoop = true
+createThread(universalitemkeyLuaThread)
+{$asm}
+
+///*****************************************///
+
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+{$lua}
+if syntaxcheck then return end
+UniversalItemkeyLuaThreadLoop = false
+{$asm}
+
+///*****************************************///
+dealloc(newmem)
+itemIDChkOnWObjectInteractViaInvClickAOB+4: //"RE3.exe"+13C8841F:
+readmem(originalcode_itemIDChkOnWObjectInteractViaInvClickAOB,5)
+//db 39 50 10 74 33
+//Alt: cmp [rax+10],edx
+//Alt: RE3.exe+13C88457
+unregistersymbol(originalcode_itemIDChkOnWObjectInteractViaInvClickAOB)
+
+unregistersymbol(bUniversalItemButtonOffset)
+unregistersymbol(bUniversalItemKeyID)
+unregistersymbol(bUniversalItemKeyPressed)
+
+///*****************************************///
+dealloc(newmem2)
+itemIDChkOnWObjectInteractViaInvUseAOB+12: //"RE3.exe"+13C88EE7:
+readmem(originalcode2_itemIDChkOnWObjectInteractViaInvUseAOB,5)
+//db 39 48 10 74 35
+//Alt: cmp [rax+10],ecx
+//Alt: je RE3.exe+13C88F21
+unregistersymbol(originalcode2_itemIDChkOnWObjectInteractViaInvUseAOB)
+
+///*****************************************///
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>13019</ID>
+              <Description>"key"</Description>
+              <Options moHideChildren="1"/>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">10:SHIFT key
+11:CTRL key
+12:ALT key
+14:CAPS LOCK key
+04:Middle Mouse Button
+05:X1 Mouse Button
+06:X2 Moust Button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bUniversalItemKeyID</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>13020</ID>
+                  <Description>""</Description>
+                  <Color>008000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>+4</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>13021</ID>
+                      <Description>""</Description>
+                      <Color>008000</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>+4</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17846</ID>
+              <Description>"controller"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00:A button
+01:B button
+02:X button
+03:Y button
+04:Left shoulder button
+05:Right shoulder button
+06:Left trigger
+07:Right trigger
+08:Left thumb stick down
+09:Right thumb stick down
+0a:set a button
+</DropDownList>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>008000</Color>
+              <VariableType>Byte</VariableType>
+              <Address>bUniversalItemButtonOffset</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17271</ID>
+          <Description>"hide weapon upgrade appearance"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(weaponUpgradeFlagsReadForAppearanceAOB,RE3.exe,48 ** ** ** ** 00 00 45 ** ** 8B ** ** ** 00 00 48 ** ** 74)
+registersymbol(weaponUpgradeFlagsReadForAppearanceAOB)
+
+label(bG19Appearance)
+registersymbol(bG19Appearance)
+label(bM3Appearance)
+registersymbol(bM3Appearance)
+label(bCQBRAppearance)
+registersymbol(bCQBRAppearance)
+
+alloc(newmem,2048,weaponUpgradeFlagsReadForAppearanceAOB+a) //"RE3.exe"+EF7D546)
+label(returnhere)
+label(originalcode_weaponUpgradeFlagsReadForAppearanceAOB)
+registersymbol(originalcode_weaponUpgradeFlagsReadForAppearanceAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+readmem(weaponUpgradeFlagsReadForAppearanceAOB+a,6)
+//mov ebp,[rdi+14c]
+
+db 48 8D 87
+readmem(weaponUpgradeFlagsReadForAppearanceAOB+c,4)
+//lea rax,[rdi+14c]
+
+push rbx
+
+mov rbx,bG19Appearance
+cmp word ptr [rax-4],1 //G19
+je @f
+mov rbx,bM3Appearance
+cmp word ptr [rax-4],b //M3
+je @f
+mov rbx,bCQBRAppearance
+cmp word ptr [rax-4],15 //CQBR Assault Rifle
+je @f
+cmp word ptr [rax-4],16 //CQBR Assault Rifle (Infinite)
+je @f
+jmp end
+
+@@:
+mov al,[rbx]
+movzx eax,al
+not eax
+and ebp,eax
+
+end:
+pop rbx
+jmp exit
+
+originalcode_weaponUpgradeFlagsReadForAppearanceAOB:
+readmem(weaponUpgradeFlagsReadForAppearanceAOB+a,6)
+//mov ebp,[rdi+0000014C]
+
+exit:
+jmp returnhere
+
+///
+bG19Appearance:
+db 2
+bM3Appearance:
+db 2
+bCQBRAppearance:
+db 2
+///
+
+weaponUpgradeFlagsReadForAppearanceAOB+a: //"RE3.exe"+EF7D546:
+jmp newmem
+nop
+returnhere:
+
+///**********************************///
+aobscanmodule(weaponUpgradeFlagsConstReadForAppearanceAOB,RE3.exe,8B ** ** ** 00 00 83 ** ** 48 ** ** ** ** 48 ** ** ** ** C3 8B ** ** ** 00 00 48)
+registersymbol(weaponUpgradeFlagsConstReadForAppearanceAOB)
+
+alloc(newmem2,2048,weaponUpgradeFlagsConstReadForAppearanceAOB+14) //"RE3.exe"+12B911F4)
+label(returnhere2)
+label(originalcode2_weaponUpgradeFlagsConstReadForAppearanceAOB)
+registersymbol(originalcode2_weaponUpgradeFlagsConstReadForAppearanceAOB)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+readmem(weaponUpgradeFlagsConstReadForAppearanceAOB+14,6)
+//mov eax,[rbx+14c]
+db 48 8D 9B
+readmem(weaponUpgradeFlagsConstReadForAppearanceAOB+16,4)
+//lea rbx,[rbx+14c]
+
+
+
+mov rdi,bG19Appearance
+cmp word ptr [rbx-4],1 //G19
+je @f
+mov rdi,bM3Appearance
+cmp word ptr [rbx-4],b //M3
+je @f
+mov rdi,bCQBRAppearance
+cmp word ptr [rbx-4],15 //CQBR Assault Rifle
+je @f
+cmp word ptr [rbx-4],16 //CQBR Assault Rifle (Infinite)
+je @f
+jmp end2
+
+@@:
+mov bl,[rdi]
+movzx ebx,bl
+not ebx
+and eax,ebx
+
+end2:
+jmp exit2
+
+originalcode2_weaponUpgradeFlagsConstReadForAppearanceAOB:
+readmem(weaponUpgradeFlagsConstReadForAppearanceAOB+14,6)
+//mov eax,[rbx+0000014C]
+
+exit2:
+jmp returnhere2
+
+///
+
+weaponUpgradeFlagsConstReadForAppearanceAOB+14: //"RE3.exe"+12B911F4:
+jmp newmem2
+nop
+returnhere2:
+
+///**********************************///
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+weaponUpgradeFlagsReadForAppearanceAOB+a: //"RE3.exe"+EF7D546:
+readmem(originalcode_weaponUpgradeFlagsReadForAppearanceAOB,6)
+//db 8B AF 4C 01 00 00
+//Alt: mov ebp,[rdi+0000014C]
+unregistersymbol(originalcode_weaponUpgradeFlagsReadForAppearanceAOB)
+
+unregistersymbol(bG19Appearance)
+unregistersymbol(bM3Appearance)
+unregistersymbol(bCQBRAppearance)
+
+///**********************************///
+dealloc(newmem2)
+weaponUpgradeFlagsConstReadForAppearanceAOB+14: //"RE3.exe"+12B911F4:
+readmem(originalcode2_weaponUpgradeFlagsConstReadForAppearanceAOB,6)
+//db 8B 83 4C 01 00 00
+//Alt: mov eax,[rbx+0000014C]
+unregistersymbol(originalcode2_weaponUpgradeFlagsConstReadForAppearanceAOB)
+
+///**********************************///
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>13410</ID>
+              <Description>"[G19]"</Description>
+              <Color>000080</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>bG19Appearance</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>13411</ID>
+                  <Description>"Moderator"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>0</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13412</ID>
+                  <Description>"Dot Sight"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>1</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13975</ID>
+                  <Description>"Extended Magazine"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>2</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17920</ID>
+              <Description>"M3"</Description>
+              <Color>000080</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>bM3Appearance</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17921</ID>
+                  <Description>"Semi-Auto Barrel"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>0</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17922</ID>
+                  <Description>"Tactical Stock"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>1</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17923</ID>
+                  <Description>"Shell Holder"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>2</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1337092240</ID>
+              <Description>"CQBR Assult Rifle"</Description>
+              <Color>000080</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>bCQBRAppearance</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>1337092241</ID>
+                  <Description>"Tactical Grip"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>0</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1337092242</ID>
+                  <Description>"AR Scope"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>1</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1337092243</ID>
+                  <Description>"Dual Magazine"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:as is
+1:hide
+</DropDownList>
+                  <Color>008000</Color>
+                  <VariableType>Binary</VariableType>
+                  <BitStart>2</BitStart>
+                  <BitLength>1</BitLength>
+                  <ShowAsBinary>0</ShowAsBinary>
+                  <Address>+0</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17272</ID>
+          <Description>"highlighted item"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+//aobscanmodule(itemIDReadOnHighlightedInInvAOB,RE3.exe,48 ** ** 75 ** 85 ** 75 ** 39 ** ** 75 ** 83)
+aobscanmodule(itemIDReadOnHighlightedInInvAOB,RE3.exe,48 ** ** 75 ** 85 D2 75 ** 39 53 ** 75 ** 83)
+registersymbol(itemIDReadOnHighlightedInInvAOB)
+
+///
+aobscanmodule(notHightlightItemInInvReadCallerAOB,RE3.exe,C3 48 ** ** E8 ** ** ** ** 0F ** ** 48 ** ** ** 48 ** ** ** 00 75 ** 85 ** 0F 85 ** ** ** ** 48 ** ** 48 ** ** E8)
+registersymbol(notHightlightItemInInvReadCallerAOB)
+///
+
+label(pHighlightedItem)
+registersymbol(pHighlightedItem)
+
+alloc(newmem,2048,itemIDReadOnHighlightedInInvAOB+9) //"RE3.exe"+CE14112)
+label(returnhere)
+label(originalcode_itemIDReadOnHighlightedInInvAOB)
+registersymbol(originalcode_itemIDReadOnHighlightedInInvAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rax,notHightlightItemInInvReadCallerAOB //"RE3.exe"+FB653AE
+lea rax,[rax+9]
+cmp [rsp+28],rax
+je @f
+
+mov rax,pHighlightedItem
+mov [rax],rbx
+
+@@:
+readmem(itemIDReadOnHighlightedInInvAOB+9,3)
+reassemble(itemIDReadOnHighlightedInInvAOB+c)
+jmp exit
+
+originalcode_itemIDReadOnHighlightedInInvAOB:
+readmem(itemIDReadOnHighlightedInInvAOB+9,5)
+//cmp [rbx+10],edx
+//jne RE3.exe+CE1412B
+
+exit:
+jmp returnhere
+
+///
+pHighlightedItem:
+///
+
+itemIDReadOnHighlightedInInvAOB+9: //"RE3.exe"+CE14112:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+itemIDReadOnHighlightedInInvAOB+9: //"RE3.exe"+CE14112:
+readmem(originalcode_itemIDReadOnHighlightedInInvAOB,5)
+//db 39 53 10 75 14
+//Alt: cmp [rbx+10],edx
+//Alt: jne RE3.exe+CE1412B
+unregistersymbol(originalcode_itemIDReadOnHighlightedInInvAOB)
+
+unregistersymbol(pHighlightedItem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>13026</ID>
+              <Description>""</Description>
+              <Color>FFFFFF</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>pHighlightedItem</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>13130</ID>
+                  <Description>"item id"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00000000:-is weapon
+00000001:First Aid Spray
+00000002:Green Herb
+00000003:Red Herb
+00000005:Mixed Herb (G+G)
+00000006:Mixed Herb (G+R)
+00000009:Mixed Herb (G+G+G)
+00000016:Green Herb
+00000017:Red Herb
+00000018:Blue Herb
+0000001F:Handgun Ammo
+00000020:Shotgun Shells
+00000021:Assault Rifle  Ammo
+00000022:MAG Ammo
+00000024:MineGrenadeAmmo
+00000025:NormalGrenadeAmmo
+00000026:AcidGrenadeAmmo
+00000027:FlameGrenadeAmmo
+0000004C:Moderator (G19 Suppressor)
+0000004D:Dot Sight (Handgun)
+0000004E:Extended Magazine (Handgun
+0000005B:Semi-Auto Barrel (Shotgun)
+0000005D:Shell Holder (Shotgun)
+0000005C:Tactical Stock (Shotgun)
+00000060:Scope (Assault Rifle)
+00000061:Assault Rifle Dual Mag
+00000062:Tactical Grib (Assault Rifle)
+00000065:Extended Barrel (MAG)
+0000013A:Supply Case (Acid Rounds)
+0000013B:Supply Case (Flame Rounds)
+0000013C:Supply Case (Extended Barrel MAG)
+00000137:Supply Case (Extended Magazine G19)
+00000138:Supply Case (Moderator G19)
+00000139:Supply Case (Shotgun Shells)
+0000003F:Explosive A
+00000040:Explosive B
+0000003D:Gunpowder
+0000003E:High-Grade Gunpowder
+00000097:Lock Pick
+00000098:Bolt Cutter
+0000012E:Assault Coin
+0000012D:Defence Coin
+0000012F:Recovery Coin
+00000130:Crafting Comapanion
+00000131:S.T.A.R.S Combat Manual
+000000A1:Battery
+000000A2:Safety Deposit Key
+000000A4:Brad's ID Card
+000000A5:Electronic Gadget
+000000A6:Detonator(R.P.D)
+000000BA:Battery Pack
+000000B5:Fire Hose
+000000BB:Green Jewel
+000000BC:Blue Jewel
+000000BD:Red Jewel
+000000B6:Alley Key
+000000B9:Case (Lockpick)
+000000C0:Fancy Box 1 (Green Jewel)
+000000C1:Fancy Box 2 (Blue Jewel)
+000000C2:Fancy Box 3 (Red Jewel)
+000000D4:Tape Player (Tape Inserted)
+000000D5:AudioCassette Tape
+000000D6:Tape Player (Empty)
+000000D7:Vaccine Sample (For Jill)
+000000D3:Hospital ID Card
+000000DA:Locker Room Key (Hospital Key)
+000000E0:Fuse 1
+000000DF:Fuse 2
+000000DE:Fuse 3
+000000EA:Antigen Sample
+000000EB:Adjuvant Sample
+000000EC:Vaccine Base
+000000E9:Vaccine (LAB)
+000000E8:Override Key (Lab)
+</DropDownList>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>+10</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13131</ID>
+                  <Description>"weapon id"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">FFFFFFFF:-not weapon
+00000001:Handgun - G19
+00000002:G18 Handgun (Burst Model)
+00000003:Handgun - G18
+00000004:Samurai Edge
+00000007:MUP Handgun (Infinite)
+0000000B:Shotgun - M3
+00000015:CQBR Assault Rifle
+00000016:CQBR AR (Infinite)
+0000001F:.44 Lightning Hawk
+00000020:RAI-DEN
+0000002A:MGL Grenade Launcher
+0000002D:Rocket Launcher
+0000002E:Combat Knife
+0000002F:Survival Knife
+00000030:HOT DOGGER (Dagger)
+00000031:Rocket Launcher (Infinite)
+00000041:Hand Grenade
+00000042:Flash Grenade
+</DropDownList>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>+14</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13074</ID>
+                  <Description>"upgrade"</Description>
+                  <DropDownList DisplayValueAsItem="1">00000000:Nothing
+00000001:Upgrade 1
+00000002:Upgrade 2
+00000003:Upgrade 1 + 2
+</DropDownList>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>+18</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>13143</ID>
+                      <Description>"1"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Binary</VariableType>
+                      <BitStart>0</BitStart>
+                      <BitLength>1</BitLength>
+                      <ShowAsBinary>0</ShowAsBinary>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>13144</ID>
+                      <Description>"2"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Binary</VariableType>
+                      <BitStart>1</BitStart>
+                      <BitLength>1</BitLength>
+                      <ShowAsBinary>0</ShowAsBinary>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>13145</ID>
+                      <Description>"3"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Binary</VariableType>
+                      <BitStart>2</BitStart>
+                      <BitLength>1</BitLength>
+                      <ShowAsBinary>0</ShowAsBinary>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>13146</ID>
+                      <Description>"4"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Binary</VariableType>
+                      <BitStart>3</BitStart>
+                      <BitLength>1</BitLength>
+                      <ShowAsBinary>0</ShowAsBinary>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>13147</ID>
+                      <Description>"5"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Binary</VariableType>
+                      <BitStart>4</BitStart>
+                      <BitLength>1</BitLength>
+                      <ShowAsBinary>0</ShowAsBinary>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>13150</ID>
+                      <Description>"6"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Binary</VariableType>
+                      <BitStart>5</BitStart>
+                      <BitLength>1</BitLength>
+                      <ShowAsBinary>0</ShowAsBinary>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>13149</ID>
+                      <Description>"7"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Binary</VariableType>
+                      <BitStart>6</BitStart>
+                      <BitLength>1</BitLength>
+                      <ShowAsBinary>0</ShowAsBinary>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>13148</ID>
+                      <Description>"8"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Binary</VariableType>
+                      <BitStart>7</BitStart>
+                      <BitLength>1</BitLength>
+                      <ShowAsBinary>0</ShowAsBinary>
+                      <Address>+0</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13132</ID>
+                  <Description>"ammo type"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">00000000:N/A
+0000001F:Handgun Ammo
+00000020:Shotgun Shells
+00000021:Assault Rifle Ammo
+00000022:MAG Ammo
+00000024:MineGrenadeAmmo
+00000025:GrenadeAmmo
+00000026:AcidGrenadeAmmo
+00000027:FireGrenadeAmmo
+</DropDownList>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>+1C</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13133</ID>
+                  <Description>"quantity / durabiliy"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>+20</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17822</ID>
+          <Description>"follow cam mod"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(currentYDistanceBaseWriteAOB,RE3.exe,F3 0F ** ** ** C6 ** ** 01 48 ** ** ** 48 ** ** ** 48 ** ** 0F 85 ** ** ** ** 4C)
+registersymbol(currentYDistanceBaseWriteAOB)
+
+label(dCustomZoom)
+registersymbol(dCustomZoom)
+
+alloc(newmem,2048,currentYDistanceBaseWriteAOB) //"RE3.exe"+18730C12)
+label(returnhere)
+label(originalcode_currentYDistanceBaseWriteAOB)
+registersymbol(originalcode_currentYDistanceBaseWriteAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rax,pReadiedWeapon
+mov rax,[rax]
+test rax,rax
+jz end
+cmp dword ptr [rax],0
+jne @f
+//cmp dword ptr [rax],2e
+//je @f
+//cmp dword ptr [rax],2f
+//je @f
+//mov eax,(float)1.5
+//movd xmm0,eax
+mov rax,dCustomZoom
+movss xmm0,[rax]
+jmp end
+
+@@:
+mov rax,dCustomZoom
+addss xmm0,[rax+4]
+
+end:
+
+originalcode_currentYDistanceBaseWriteAOB:
+readmem(currentYDistanceBaseWriteAOB,5)
+//movss [rbx+34],xmm0
+
+exit:
+jmp returnhere
+
+///
+dCustomZoom:
+dd (float)1.55
+dd 0
+///
+
+currentYDistanceBaseWriteAOB: //"RE3.exe"+18730C12:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+currentYDistanceBaseWriteAOB: //"RE3.exe"+18730C12:
+readmem(originalcode_currentYDistanceBaseWriteAOB,5)
+//db F3 0F 11 43 34
+//Alt: movss [rbx+34],xmm0
+unregistersymbol(originalcode_currentYDistanceBaseWriteAOB)
+
+unregistersymbol(dCustomZoom)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>17823</ID>
+              <Description>"y"</Description>
+              <Color>008000</Color>
+              <VariableType>Float</VariableType>
+              <Address>dCustomZoom</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17828</ID>
+                  <Description>"aiming offset (+/-)"</Description>
+                  <Options moHideChildren="1"/>
+                  <Color>008000</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+4</Address>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>17829</ID>
+                      <Description>""</Description>
+                      <Color>008000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>-4</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17911</ID>
+          <Description>"game play time mod"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+luaCall(lua_aobscan("tGPTW1AOB","re3.exe","48 8D 04 2A 48 89 41 18",2))
+luaCall(lua_aobscan("tGPTW2AOB","re3.exe","48 8D 04 2A 48 89 41 18",3))
+
+define(qmaxgameplaytime_default,#7183) //1:59:43
+
+label(qTimeLoop)
+registersymbol(qTimeLoop)
+label(pGameTime)
+registersymbol(pGameTime)
+label(qMaxGamePlayTime)
+registersymbol(qMaxGamePlayTime)
+
+alloc(newmem,2048,tGPTW1AOB) //"re3.exe"+1BA368E)
+label(returnhere)
+label(originalcode_tGPTW1AOB)
+registersymbol(originalcode_tGPTW1AOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rbx
+mov rbx,pGameTime
+mov [rbx],rcx
+mov rbx,qMaxGamePlayTime
+mov rbx,[rbx]
+imul rbx,rbx,#1000000
+lea rax,[rdx+rbp]
+sub rax,[rcx+20]
+sub rax,[rcx+30]
+cmp rax,rbx
+jbe @f
+mov rax,rbx
+add rax,[rcx+20]
+add rax,[rcx+30]
+mov rdx,qTimeLoop
+mov rdx,[rdx]
+imul rdx,rdx,#1000000
+sub rax,rdx
+mov rdx,rax
+xor rbp,rbp
+
+end:
+pop rbx
+
+originalcode_tGPTW1AOB:
+readmem(tGPTW1AOB,8)
+//lea rax,[rdx+rbp]
+//mov [rcx+18],rax
+
+exit:
+jmp returnhere
+
+///
+qTimeLoop:
+dq #300
+pGameTime:
+dq 0
+qMaxGamePlayTime:
+dq qmaxgameplaytime_default
+///
+
+tGPTW1AOB: //"re3.exe"+1BA368E:
+jmp newmem
+nop 3
+returnhere:
+
+///**************************************///
+alloc(newmem2,2048,tGPTW2AOB) //"re3.exe"+1BA3877)
+label(returnhere2)
+label(originalcode2_tGPTW2AOB)
+registersymbol(originalcode2_tGPTW2AOB)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rbx
+//mov rbx,pGameTime
+//mov [rbx],rcx
+mov rbx,qMaxGamePlayTime
+mov rbx,[rbx]
+imul rbx,rbx,#1000000
+lea rax,[rdx+rbp]
+sub rax,[rcx+20]
+sub rax,[rcx+30]
+cmp rax,rbx
+jbe @f
+mov rax,rbx
+add rax,[rcx+20]
+add rax,[rcx+30]
+mov rdx,qTimeLoop
+mov rdx,[rdx]
+imul rdx,rdx,#1000000
+sub rax,rdx
+mov rdx,rax
+xor rbp,rbp
+
+end2:
+pop rbx
+
+originalcode2_tGPTW2AOB:
+readmem(tGPTW2AOB,8)
+//lea rax,[rdx+rbp]
+//mov [rcx+18],rax
+
+exit2:
+jmp returnhere2
+
+///
+
+tGPTW2AOB: //"re3.exe"+1BA3877:
+jmp newmem2
+nop 3
+returnhere2:
+
+///**************************************///
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+totalGameTimeWriteAOB+7: //"RE3.exe"+1521DB38:
+readmem(originalcode_totalGameTimeWriteAOB,8)
+//db 48 8D 04 2A 48 89 41 18
+//Alt: lea rax,[rdx+rbp]
+//Alt: mov [rcx+18],rax
+unregistersymbol(originalcode_totalGameTimeWriteAOB)
+
+unregistersymbol(qTimeLoop)
+unregistersymbol(pGameTime)
+unregistersymbol(qMaxGamePlayTime)
+
+///****************************************************///
+dealloc(newmem2)
+totalGameTime2WriteAOB+7: //"RE3.exe"+1521D913:
+readmem(originalcode2_totalGameTime2WriteAOB,8)
+//db 48 8D 04 2A 48 89 41 18
+//Alt: lea rax,[rdx+rbp]
+//Alt: mov [rcx+18],rax
+unregistersymbol(originalcode2_totalGameTime2WriteAOB)
+
+///****************************************************///
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>13180</ID>
+              <Description>"stop at:"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>808080</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>qMaxGamePlayTime</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>13181</ID>
+                  <Description>"hour"</Description>
+                  <Color>008000</Color>
+                  <VariableType>Custom</VariableType>
+                  <CustomType>RE3_Hrs</CustomType>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13182</ID>
+                  <Description>"minute"</Description>
+                  <Color>008000</Color>
+                  <VariableType>Custom</VariableType>
+                  <CustomType>RE3_Mins</CustomType>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13183</ID>
+                  <Description>"second"</Description>
+                  <Color>008000</Color>
+                  <VariableType>Custom</VariableType>
+                  <CustomType>RE3_Secs</CustomType>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13184</ID>
+                  <Description>"total in secs"</Description>
+                  <Color>008000</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>+0</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17912</ID>
+              <Description>"time loop (mins)"</Description>
+              <Color>008000</Color>
+              <VariableType>Custom</VariableType>
+              <CustomType>RE3_Mins</CustomType>
+              <Address>qTimeLoop</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17913</ID>
+                  <Description>"hrs"</Description>
+                  <Color>008000</Color>
+                  <VariableType>Custom</VariableType>
+                  <CustomType>RE3_Hrs</CustomType>
+                  <Address>+0</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13185</ID>
+              <Description>""</Description>
+              <Options moHideChildren="1"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>13186</ID>
+                  <Description>"total"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>8 Bytes</VariableType>
+                  <Address>pGameTime</Address>
+                  <Offsets>
+                    <Offset>18</Offset>
+                  </Offsets>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>13187</ID>
+                      <Description>"cut-scene"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>8 Bytes</VariableType>
+                      <Address>+8</Address>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>13188</ID>
+                          <Description>"pause"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>+10</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17715</ID>
+          <Description>"zombie full fps"</Description>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript Async="1">[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+//aobscanmodule(zombieFrameSkipAOB,RE3demo.exe,48 ** ** ** ** 48 ** ** ** ** 56 48 ** ** ** 48 ** ** 50 ** ** ** 48 ** ** 48 ** ** 48 ** ** ** 00 0F 85 ** ** 00 00 48 ** ** ** ** 8B ** ** 44 39 C7)
+aobscanmodule(zombieFrameSkipAOB,RE3.exe,48 ** ** ** ** 48 ** ** ** ** 56 48 ** ** ** 48 ** ** 50 ** ** ** 48 ** ** 48 ** ** 48 ** ** ** 00 0F 85 ** ** 00 00 48 ** ** ** ** 8B ** ** ** ** ** 0F 8F)
+registersymbol(zombieFrameSkipAOB)
+
+alloc(newmem,2048,zombieFrameSkipAOB) //"RE3.exe"+1B5C640)
+label(returnhere)
+label(originalcode_zombieFrameSkipAOB)
+registersymbol(originalcode_zombieFrameSkipAOB)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+xor r8d,r8d
+
+originalcode_zombieFrameSkipAOB:
+readmem(zombieFrameSkipAOB,5)
+//mov [rsp+10],rbx
+
+exit:
+jmp returnhere
+
+///
+
+zombieFrameSkipAOB: //"RE3.exe"+1B5C640:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+zombieFrameSkipAOB: //"RE3.exe"+1B5C640:
+readmem(originalcode_zombieFrameSkipAOB,5)
+//db 48 89 5C 24 10
+//Alt: mov [rsp+10],rbx
+unregistersymbol(originalcode_zombieFrameSkipAOB)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13022</ID>
+          <Description>""</Description>
+          <Options moHideChildren="1"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>13014</ID>
+              <Description>"health"</Description>
+              <Color>0000FF</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pPlayer</Address>
+              <Offsets>
+                <Offset>58</Offset>
+              </Offsets>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Set Value</Action>
+                  <Keys>
+                    <Key>20</Key>
+                    <Key>4</Key>
+                  </Keys>
+                  <Value>(health max)</Value>
+                  <ID>0</ID>
+                </Hotkey>
+              </Hotkeys>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>13015</ID>
+                  <Description>"health max"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>-4</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13058</ID>
+                  <Description>"god (auto reset)"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>+4</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13059</ID>
+                  <Description>"god"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>+5</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17927</ID>
+              <Description>"p"</Description>
+              <Color>0000FF</Color>
+              <VariableType>Byte</VariableType>
+              <Address>pPlayer+8</Address>
+              <Offsets>
+                <Offset>2e9</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17928</ID>
+              <Description>"p c"</Description>
+              <Color>0000FF</Color>
+              <VariableType>Byte</VariableType>
+              <Address>pPlayer+8</Address>
+              <Offsets>
+                <Offset>2ea</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17929</ID>
+              <Description>"?"</Description>
+              <Color>0000FF</Color>
+              <VariableType>Byte</VariableType>
+              <Address>pPlayer+8</Address>
+              <Offsets>
+                <Offset>314</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17930</ID>
+              <Description>"?"</Description>
+              <Color>0000FF</Color>
+              <VariableType>Byte</VariableType>
+              <Address>pPlayer+8</Address>
+              <Offsets>
+                <Offset>318</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17931</ID>
+              <Description>"?"</Description>
+              <Color>0000FF</Color>
+              <VariableType>Byte</VariableType>
+              <Address>pPlayer+8</Address>
+              <Offsets>
+                <Offset>31a</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17857</ID>
+              <Description>"max inv slots"</Description>
+              <Color>0000FF</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pPlayer</Address>
+              <Offsets>
+                <Offset>90</Offset>
+                <Offset>18</Offset>
+              </Offsets>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Set Value</Action>
+                  <Keys>
+                    <Key>18</Key>
+                    <Key>4</Key>
+                  </Keys>
+                  <Value>20</Value>
+                  <ID>0</ID>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13016</ID>
+              <Description>"current clip"</Description>
+              <Color>8080FF</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pAmmo</Address>
+              <Offsets>
+                <Offset>20</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>13017</ID>
+                  <Description>"clip max"</Description>
+                  <Color>808080</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>dAmmoClipMax</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>13018</ID>
+                  <Description>""</Description>
+                  <Color>808080</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>pAmmo+8</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17895</ID>
+              <Description>""</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>000080</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>pReadiedWeapon+8</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17896</ID>
+                  <Description>""</Description>
+                  <DropDownList ReadOnly="1" DisplayValueAsItem="1">01:running
+03:aimming
+07:dodging
+0b:perfect dodging
+</DropDownList>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+168</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17901</ID>
+                  <Description>"action"</Description>
+                  <DropDownList ReadOnly="1" DisplayValueAsItem="1">01:running
+03:aimming
+07:dodging
+0b:perfect dodging
+</DropDownList>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>0000FF</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>+170</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17900</ID>
+                  <Description>"readied waepon id"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>+1d0</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17898</ID>
+              <Description>""</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>000080</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>pPlayer</Address>
+              <Offsets>
+                <Offset>0</Offset>
+                <Offset>98</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17899</ID>
+                  <Description>"aim"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+128</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13498</ID>
+              <Description>"x +-"</Description>
+              <Options moRecursiveSetValue="1"/>
+              <Color>0000FF</Color>
+              <VariableType>Float</VariableType>
+              <Address>pPlayerBase</Address>
+              <Offsets>
+                <Offset>30</Offset>
+                <Offset>18</Offset>
+                <Offset>10</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>14876</ID>
+                  <Description>""</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+80</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13499</ID>
+              <Description>"z +-"</Description>
+              <Options moRecursiveSetValue="1"/>
+              <Color>0000FF</Color>
+              <VariableType>Float</VariableType>
+              <Address>pPlayerBase</Address>
+              <Offsets>
+                <Offset>34</Offset>
+                <Offset>18</Offset>
+                <Offset>10</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>14877</ID>
+                  <Description>""</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+80</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13500</ID>
+              <Description>"y -+"</Description>
+              <Options moRecursiveSetValue="1"/>
+              <Color>0000FF</Color>
+              <VariableType>Float</VariableType>
+              <Address>pPlayerBase</Address>
+              <Offsets>
+                <Offset>38</Offset>
+                <Offset>18</Offset>
+                <Offset>10</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>14878</ID>
+                  <Description>""</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+80</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>17830</ID>
+              <Description>"[size]"</Description>
+              <Options moRecursiveSetValue="1"/>
+              <Color>000080</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>pPlayerBase</Address>
+              <Offsets>
+                <Offset>50</Offset>
+                <Offset>18</Offset>
+                <Offset>10</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>17831</ID>
+                  <Description>""</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17832</ID>
+                  <Description>""</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+4</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>17833</ID>
+                  <Description>""</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>+8</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13748</ID>
+              <Description>""</Description>
+              <Options moHideChildren="1"/>
+              <Color>000080</Color>
+              <VariableType>Array of byte</VariableType>
+              <ByteLength>0</ByteLength>
+              <Address>pPlayer+8</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>14262</ID>
+                  <Description>""</Description>
+                  <Options moHideChildren="1"/>
+                  <Color>000080</Color>
+                  <VariableType>Array of byte</VariableType>
+                  <ByteLength>0</ByteLength>
+                  <Address>+1b0</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                  </Offsets>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>14263</ID>
+                      <Description>""</Description>
+                      <Options moHideChildren="1"/>
+                      <Color>000080</Color>
+                      <VariableType>Array of byte</VariableType>
+                      <ByteLength>0</ByteLength>
+                      <Address>+20</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                      </Offsets>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>14264</ID>
+                          <Description>"wet flag"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+98</Address>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>14265</ID>
+                          <Description>"wet amount"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>+60</Address>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17733</ID>
+          <Description>"some hot-keys:"</Description>
+          <Color>808080</Color>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17734</ID>
+          <Description>"CapsLock+MMB :: heal to full health"</Description>
+          <Color>808080</Color>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17735</ID>
+          <Description>"Alt+MMB :: set max inventory slots to 20"</Description>
+          <Color>808080</Color>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Code :mov eax,[r8+7C]</Description>
+      <AddressString>RE3.exe+5892C3</AddressString>
+      <Before>
+        <Byte>40</Byte>
+        <Byte>78</Byte>
+        <Byte>89</Byte>
+        <Byte>42</Byte>
+        <Byte>78</Byte>
+      </Before>
+      <Actual>
+        <Byte>41</Byte>
+        <Byte>8B</Byte>
+        <Byte>40</Byte>
+        <Byte>7C</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>42</Byte>
+        <Byte>7C</Byte>
+        <Byte>41</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :mov eax,[r8+7C]</Description>
+      <AddressString>RE3.exe+654B0F</AddressString>
+      <Before>
+        <Byte>40</Byte>
+        <Byte>78</Byte>
+        <Byte>89</Byte>
+        <Byte>42</Byte>
+        <Byte>78</Byte>
+      </Before>
+      <Actual>
+        <Byte>41</Byte>
+        <Byte>8B</Byte>
+        <Byte>40</Byte>
+        <Byte>7C</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>42</Byte>
+        <Byte>7C</Byte>
+        <Byte>41</Byte>
+        <Byte>8B</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :movss [rsi+50],xmm0</Description>
+      <AddressString>RE3.exe+20265DD</AddressString>
+      <Before>
+        <Byte>84</Byte>
+        <Byte>93</Byte>
+        <Byte>19</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>46</Byte>
+        <Byte>50</Byte>
+      </Actual>
+      <After>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>4E</Byte>
+        <Byte>54</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :movss [rax+50],xmm3</Description>
+      <AddressString>RE3.exe+160A6887</AddressString>
+      <Before>
+        <Byte>48</Byte>
+        <Byte>85</Byte>
+        <Byte>C0</Byte>
+        <Byte>74</Byte>
+        <Byte>24</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>58</Byte>
+        <Byte>50</Byte>
+      </Actual>
+      <After>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>60</Byte>
+        <Byte>54</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :call RE3.exe+2365A0</Description>
+      <AddressString>RE3.exe+18B50458</AddressString>
+      <Before>
+        <Byte>4F</Byte>
+        <Byte>50</Byte>
+        <Byte>48</Byte>
+        <Byte>89</Byte>
+        <Byte>F1</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>43</Byte>
+        <Byte>61</Byte>
+        <Byte>6E</Byte>
+        <Byte>E7</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>9C</Byte>
+        <Byte>24</Byte>
+        <Byte>40</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :mov eax,[rdi+0000008C]</Description>
+      <AddressString>RE3.exe+1331BC99</AddressString>
+      <Before>
+        <Byte>85</Byte>
+        <Byte>AC</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>87</Byte>
+        <Byte>8C</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>89</Byte>
+        <Byte>86</Byte>
+        <Byte>8C</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :cmp qword ptr [rax+18],00</Description>
+      <AddressString>RE3.exe+E86ECB8</AddressString>
+      <Before>
+        <Byte>D1</Byte>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>43</Byte>
+        <Byte>50</Byte>
+      </Before>
+      <Actual>
+        <Byte>48</Byte>
+        <Byte>83</Byte>
+        <Byte>78</Byte>
+        <Byte>18</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>0F</Byte>
+        <Byte>85</Byte>
+        <Byte>3F</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :mov esi,[rdi+000003F4]</Description>
+      <AddressString>RE3.exe+C7138E5</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>43</Byte>
+        <Byte>50</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>B7</Byte>
+        <Byte>F4</Byte>
+        <Byte>03</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>83</Byte>
+        <Byte>78</Byte>
+        <Byte>18</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :mov rax,[rcx+50]</Description>
+      <AddressString>RE3.exe+142D2C1C</AddressString>
+      <Before>
+        <Byte>83</Byte>
+        <Byte>75</Byte>
+        <Byte>0B</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>41</Byte>
+        <Byte>50</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>92</Byte>
+        <Byte>A8</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :mov eax,[rdx]</Description>
+      <AddressString>re3.exe+9D66A0</AddressString>
+      <Before>
+        <Byte>4D</Byte>
+        <Byte>85</Byte>
+        <Byte>C9</Byte>
+        <Byte>74</Byte>
+        <Byte>21</Byte>
+      </Before>
+      <Actual>
+        <Byte>8B</Byte>
+        <Byte>02</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8D</Byte>
+        <Byte>52</Byte>
+        <Byte>04</Byte>
+        <Byte>48</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :mov rax,[r12+50]</Description>
+      <AddressString>re3.exe+9D67AA</AddressString>
+      <Before>
+        <Byte>E8</Byte>
+        <Byte>96</Byte>
+        <Byte>EF</Byte>
+        <Byte>09</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>49</Byte>
+        <Byte>8B</Byte>
+        <Byte>44</Byte>
+        <Byte>24</Byte>
+        <Byte>50</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>83</Byte>
+        <Byte>78</Byte>
+        <Byte>18</Byte>
+        <Byte>00</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :mov [rdi+54],ebp</Description>
+      <AddressString>re3.exe+A2E576</AddressString>
+      <Before>
+        <Byte>85</Byte>
+        <Byte>81</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>6F</Byte>
+        <Byte>54</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>43</Byte>
+        <Byte>50</Byte>
+        <Byte>48</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry>
+      <Description>Code :mov [rsp+10],rbx</Description>
+      <AddressString>re3.exe+1B5C640</AddressString>
+      <Before>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+        <Byte>CC</Byte>
+      </Before>
+      <Actual>
+        <Byte>48</Byte>
+        <Byte>89</Byte>
+        <Byte>5C</Byte>
+        <Byte>24</Byte>
+        <Byte>10</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>89</Byte>
+        <Byte>6C</Byte>
+        <Byte>24</Byte>
+        <Byte>18</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <Comments>https://fearlessrevolution.com/viewtopic.php?f=4&amp;t=11883
+https://www.patreon.com/Cielos
+</Comments>
+  <LuaScript>---
+----------------------------------------------
+registerCustomTypeAutoAssembler([[
+alloc(ConvertRoutine,1024)
+alloc(ConvertBackRoutine,1024)
+alloc(TypeName,256)
+alloc(ByteSize,4)
+alloc(UsesFloat,1)
+alloc(CallMethod,1)
+
+TypeName:
+db 'RE3_Hrs',0
+
+ByteSize:
+dd 4
+
+UsesFloat:
+db 0 //Change to 1 if this custom type should be treated as a float
+
+CallMethod:
+db 1 //Remove or change to 0 for legacy call mechanism
+
+//The convert routine should hold a routine that converts the data to an integer (in eax)
+//function declared as: cdecl int ConvertRoutine(unsigned char *input, PTR_UINT address);
+//Note: Keep in mind that this routine can be called by multiple threads at the same time.
+ConvertRoutine:
+//jmp dllname.functionname
+[64-bit]
+//or manual:
+//parameters: (64-bit)
+//rcx=address of input
+//rdx=address
+mov eax,[rcx] //eax now contains the bytes 'input' pointed to
+xor edx,edx
+mov ecx,#3600
+div ecx
+
+ret
+[/64-bit]
+
+[32-bit]
+//jmp dllname.functionname
+//or manual:
+//parameters: (32-bit)
+push ebp
+mov ebp,esp
+//[ebp+8]=address of input
+//[ebp+c]=address
+//example:
+mov eax,[ebp+8] //place the address that contains the bytes into eax
+mov eax,[eax] //place the bytes into eax so it's handled as a normal 4 byte value
+
+pop ebp
+ret
+[/32-bit]
+
+//The convert back routine should hold a routine that converts the given integer back to a row of bytes (e.g when the user wats to write a new value)
+//function declared as: cdecl void ConvertBackRoutine(int i, PTR_UINT address, unsigned char *output);
+ConvertBackRoutine:
+//jmp dllname.functionname
+//or manual:
+[64-bit]
+//parameters: (64-bit)
+//ecx=input
+//rdx=address
+//r8=address of output
+//example:
+imul ecx,ecx,#3600
+
+mov eax,[r8]
+xor edx,edx
+mov ebx,#3600
+div ebx
+add ecx,edx
+
+mov [r8],ecx //place the integer at the 4 bytes pointed to by r8
+
+ret
+[/64-bit]
+
+[32-bit]
+//parameters: (32-bit)
+push ebp
+mov ebp,esp
+//[ebp+8]=input
+//[ebp+c]=address
+//[ebp+10]=address of output
+//example:
+push eax
+push ebx
+mov eax,[ebp+8] //load the value into eax
+mov ebx,[ebp+10] //load the output address into ebx
+mov [ebx],eax //write the value into the address
+pop ebx
+pop eax
+
+pop ebp
+ret
+[/32-bit]
+
+]])
+
+---
+----------------------------------------------
+registerCustomTypeAutoAssembler([[
+alloc(ConvertRoutine,1024)
+alloc(ConvertBackRoutine,1024)
+alloc(TypeName,256)
+alloc(ByteSize,4)
+alloc(UsesFloat,1)
+alloc(CallMethod,1)
+
+TypeName:
+db 'RE3_Mins',0
+
+ByteSize:
+dd 4
+
+UsesFloat:
+db 0 //Change to 1 if this custom type should be treated as a float
+
+CallMethod:
+db 1 //Remove or change to 0 for legacy call mechanism
+
+//The convert routine should hold a routine that converts the data to an integer (in eax)
+//function declared as: cdecl int ConvertRoutine(unsigned char *input, PTR_UINT address);
+//Note: Keep in mind that this routine can be called by multiple threads at the same time.
+ConvertRoutine:
+//jmp dllname.functionname
+[64-bit]
+//or manual:
+//parameters: (64-bit)
+//rcx=address of input
+//rdx=address
+mov eax,[rcx] //eax now contains the bytes 'input' pointed to
+xor edx,edx
+mov ecx,#3600
+div ecx
+mov eax,edx
+xor edx,edx
+mov ecx,#60
+div ecx
+
+ret
+[/64-bit]
+
+[32-bit]
+//jmp dllname.functionname
+//or manual:
+//parameters: (32-bit)
+push ebp
+mov ebp,esp
+//[ebp+8]=address of input
+//[ebp+c]=address
+//example:
+mov eax,[ebp+8] //place the address that contains the bytes into eax
+mov eax,[eax] //place the bytes into eax so it's handled as a normal 4 byte value
+
+pop ebp
+ret
+[/32-bit]
+
+//The convert back routine should hold a routine that converts the given integer back to a row of bytes (e.g when the user wats to write a new value)
+//function declared as: cdecl void ConvertBackRoutine(int i, PTR_UINT address, unsigned char *output);
+ConvertBackRoutine:
+//jmp dllname.functionname
+//or manual:
+[64-bit]
+//parameters: (64-bit)
+//ecx=input
+//rdx=address
+//r8=address of output
+//example:
+imul ecx,ecx,#60
+
+mov eax,[r8]
+xor edx,edx
+mov ebx,#3600
+div ebx
+imul eax,eax,#3600
+add ecx,eax
+
+mov eax,edx
+xor edx,edx
+mov ebx,#60
+div ebx
+add ecx,edx
+
+mov [r8],ecx //place the integer at the 4 bytes pointed to by r8
+
+ret
+[/64-bit]
+
+[32-bit]
+//parameters: (32-bit)
+push ebp
+mov ebp,esp
+//[ebp+8]=input
+//[ebp+c]=address
+//[ebp+10]=address of output
+//example:
+push eax
+push ebx
+mov eax,[ebp+8] //load the value into eax
+mov ebx,[ebp+10] //load the output address into ebx
+mov [ebx],eax //write the value into the address
+pop ebx
+pop eax
+
+pop ebp
+ret
+[/32-bit]
+
+]])
+
+---
+----------------------------------------------
+registerCustomTypeAutoAssembler([[
+alloc(ConvertRoutine,1024)
+alloc(ConvertBackRoutine,1024)
+alloc(TypeName,256)
+alloc(ByteSize,4)
+alloc(UsesFloat,1)
+alloc(CallMethod,1)
+
+TypeName:
+db 'RE3_Secs',0
+
+ByteSize:
+dd 4
+
+UsesFloat:
+db 0 //Change to 1 if this custom type should be treated as a float
+
+CallMethod:
+db 1 //Remove or change to 0 for legacy call mechanism
+
+//The convert routine should hold a routine that converts the data to an integer (in eax)
+//function declared as: cdecl int ConvertRoutine(unsigned char *input, PTR_UINT address);
+//Note: Keep in mind that this routine can be called by multiple threads at the same time.
+ConvertRoutine:
+//jmp dllname.functionname
+[64-bit]
+//or manual:
+//parameters: (64-bit)
+//rcx=address of input
+//rdx=address
+mov eax,[rcx] //eax now contains the bytes 'input' pointed to
+xor edx,edx
+mov ecx,#3600
+div ecx
+mov eax,edx
+xor edx,edx
+mov ecx,#60
+div ecx
+mov eax,edx
+
+ret
+[/64-bit]
+
+[32-bit]
+//jmp dllname.functionname
+//or manual:
+//parameters: (32-bit)
+push ebp
+mov ebp,esp
+//[ebp+8]=address of input
+//[ebp+c]=address
+//example:
+mov eax,[ebp+8] //place the address that contains the bytes into eax
+mov eax,[eax] //place the bytes into eax so it's handled as a normal 4 byte value
+
+pop ebp
+ret
+[/32-bit]
+
+//The convert back routine should hold a routine that converts the given integer back to a row of bytes (e.g when the user wats to write a new value)
+//function declared as: cdecl void ConvertBackRoutine(int i, PTR_UINT address, unsigned char *output);
+ConvertBackRoutine:
+//jmp dllname.functionname
+//or manual:
+[64-bit]
+//parameters: (64-bit)
+//ecx=input
+//rdx=address
+//r8=address of output
+//example:
+
+mov eax,[r8]
+xor edx,edx
+mov ebx,#60
+div ebx
+imul eax,eax,#60
+add ecx,eax
+
+mov [r8],ecx //place the integer at the 4 bytes pointed to by r8
+
+ret
+[/64-bit]
+
+[32-bit]
+//parameters: (32-bit)
+push ebp
+mov ebp,esp
+//[ebp+8]=input
+//[ebp+c]=address
+//[ebp+10]=address of output
+//example:
+push eax
+push ebx
+mov eax,[ebp+8] //load the value into eax
+mov ebx,[ebp+10] //load the output address into ebx
+mov [ebx],eax //write the value into the address
+pop ebx
+pop eax
+
+pop ebp
+ret
+[/32-bit]
+
+]])
+
+---
+----------------------------------------------
+
+--vng21092's aobscan lua script
+function lua_aobscan(name,module,bytes,index)
+  index = index - 1
+  if(module == "") then
+    local resultSet = AOBScan(bytes)
+      if(resultSet == nil) then
+        unregisterSymbol(name)
+        print(name.." not found")
+      else
+        unregisterSymbol(name)
+        registerSymbol(name,resultSet[index])
+        resultSet.destroy()
+      end
+  else
+    if(getModuleSize(module) == nil) then
+      print("Module "..module.." not found")
+    else
+      local memScanner = createMemScan()
+      local memFoundList = createFoundList(memScanner)
+      memScanner.firstScan(
+        soExactValue,vtByteArray,rtRounded,bytes,nil,
+        getAddress(module),(getAddress(module)+getModuleSize(module)),"",
+        fsmNotAligned,"",true,false,false,false)
+      memScanner.waitTillDone()
+      memFoundList.initialize()
+        if(memFoundList.Count == 0) then
+          unregisterSymbol(name)
+          print(name.." in module "..module.." not found")
+        else
+          unregisterSymbol(name)
+          registerSymbol(name,memFoundList.Address[index])
+        end
+      memScanner.destroy()
+      memFoundList.destroy()
+    end
+  end
+end
+
+-- adapted from SunBeam's lua to patch the anti-cheat
+-- using the auto-attach template from CE wiki
+function aobscanex( aob, p, a, n, s, e, pb )
+  local p, a, n, s, e = p or '*X*W', a or fsmNotAligned, n or '0', s or 0x0, e or 0xffffffffffffffff
+  local ms = pb and createMemScan( pb ) or createMemScan()
+  local fl = createFoundList( ms )
+  ms.firstScan( soExactValue, vtByteArray, nil, aob, nil, s, e, p, a, n, true, false, false, false )
+  ms.waitTillDone()
+  fl.initialize()
+  local result = nil
+  if fl ~= nil and fl.getCount() &gt; 0 then
+    result = createStringlist()
+    for i = 1, fl.getCount() do result.add( fl.getAddress( i - 1 ) ) end
+  end
+  fl.destroy()
+  ms.destroy()
+  return result
+end
+
+local addr = 0
+
+PROCESS_NAME = 'RE3.exe'
+--------
+-------- Auto Attach
+--------
+local autoAttachTimer = nil ---- variable to hold timer object
+local autoAttachTimerInterval = 1000 ---- Timer intervals are in milliseconds
+local autoAttachTimerTicks = 0 ---- variable to count number of times the timer has run
+local autoAttachTimerTickMax = 0 ---- 5000 ---- Set to zero to disable ticks max
+local function autoAttachTimer_tick(timer) ---- Timer tick call back
+     ---- Destroy timer if max ticks is reached
+     if autoAttachTimerTickMax &gt; 0 and autoAttachTimerTicks &gt;= autoAttachTimerTickMax then
+          timer.destroy()
+     end
+     ---- Check if process is running
+     if getProcessIDFromProcessName(PROCESS_NAME) ~= nil then
+          timer.destroy() ---- Destroy timer
+          openProcess(PROCESS_NAME) ---- Open the process
+     end
+     autoAttachTimerTicks = autoAttachTimerTicks + 1 ---- Increase ticks
+end
+autoAttachTimer = createTimer(getMainForm()) ---- Create timer with the main form as it's parent
+autoAttachTimer.Interval = autoAttachTimerInterval ---- Set timer interval
+autoAttachTimer.OnTimer = autoAttachTimer_tick ---- Set timer tick call back
+</LuaScript>
+</CheatTable>
