@@ -25,10 +25,10 @@ label(ohk_flag)
 registersymbol(ohk_flag)
 
 newmem:
-  cmp [r9+D8], 0
+  cmp [r9+D8], 0 //判断是否是player还是enemy, 0就是enemy
   je code
-  mov eax, [r9+54]
-  mov [r9+58], eax
+  mov eax, [r9+54] //得到player的最大health数值
+  mov [r9+58], eax //放回player
   jmp return
 
 code:
@@ -39,8 +39,8 @@ code:
   jmp return
 
 kill_enemy:
-  xor eax, eax
-  mov [r9+58], eax
+  xor eax, eax //eax是enemy的生命值，xor eax， eax就是清零
+  mov [r9+58], eax //设置到enemy的当前生命值。
   jmp return
 
 ohk_flag:
