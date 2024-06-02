@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"No description"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>1443E545D</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>76</ID>
+      <Description>"No description"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>143A7C8E9</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>81</ID>
+      <Description>"No description"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>hometeam</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>77</ID>
+      <Description>"No description"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>myteam</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>79</ID>
+      <Description>"myteam"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aob_myteam,fmWinter.exe,48 8B 06 48 89 F1 FF 50 38 83 F8 01 75 0E) // should be unique
+alloc(newmem_myteam,$1000,aob_myteam)
+label(myteam_code)
+label(return_myteam)
+label(mycoach)
+label(myteam)
+label(myclub)
+label(nation)
+label(myNationTeam)
+label(myNationClub)
+label(MATCH_PLAYER)
+registersymbol(aob_myteam,newmem_myteam,mycoach,myteam,myclub,myNationTeam,myNationClub,MATCH_PLAYER)
+
+newmem_myteam:
+  mov [mycoach],rsi
+  mov rax,[rsi+C8]
+  cmp eax,04000000
+  jna @F
+  mov rax,[rax+10]
+  mov [myteam],rax
+  mov rax,[rax+30]
+  mov [myclub],rax
+  jmp nation
+@@:
+  mov qword ptr [myteam],0
+  mov qword ptr [myclub],0
+nation:
+  mov rax,[rsi+D0]
+  cmp rax,04000000
+  jna @F
+  mov rax,[rax+10]
+  cmp rax,04000000
+  jna @F
+  cmp [rax+8],rsi
+  jne @F
+  mov rax,[rax+10]
+  cmp rax,04000000
+  jna @F
+  mov [myNationTeam],rax
+  mov rax,[rax+30]
+  mov [myNationClub],rax
+  jmp myteam_code
+@@:
+  mov qword ptr [myNationTeam],0
+  mov qword ptr [myNationClub],0
+
+myteam_code:
+  mov rax,[rsi]
+  mov rcx,rsi
+  jmp return_myteam
+newmem_myteam+800:
+mycoach:
+  dq 0
+myteam:
+  dq 0
+myclub:
+  dq 0
+myNationTeam:
+  dq 0
+myNationClub:
+  dq 0
+MATCH_PLAYER:
+  dq 0
+aob_myteam:
+  jmp newmem_myteam
+  nop
+return_myteam:
+
+[DISABLE]
+aob_myteam:
+  db 48 8B 06 48 89 F1
+unregistersymbol(aob_myteam,newmem_myteam,mycoach,myteam,myclub,myNationTeam,myNationClub,MATCH_PLAYER)
+dealloc(newmem_myteam)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>80</ID>
+      <Description>"on_match"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Football Manager 2023
+  Version: 
+  Date   : 2023-11-24
+  Author : Administrator
+
+  This script does blah blah blah
+}
+
+
+[ENABLE]
+aobscanmodule(aob_matchAttr,fmWinter.exe,3C 0F 8D 3C 89) // should be unique
+alloc(newmem_matchAttr,$1000,aob_matchAttr)
+label(code)
+label(return)
+label(ismyteam)
+label(jishu)
+label(jingshen)
+label(shenti)
+label(zero)
+label(hide)
+label(jiabei)
+label(tineng)
+label(zhuangtai)
+label(twenty)
+label(natclub)
+label(hometeam)
+label(mtplayer)
+registersymbol(aob_matchAttr,newmem_matchAttr,tineng,zhuangtai,natclub,hometeam,mtplayer)
+
+newmem_matchAttr:
+  push r8
+  push r9
+  cmp al,0F
+  jb code
+  cmp [newmem_matchAttr+800],0
+  je code
+  cmp [mtplayer],0
+  je @F
+  mov r8,[mtplayer]
+  cmp r8,[r15]
+  jne code
+@@:
+  cmp [r15+6C],1
+  ja code
+  mov r8,[r15+68]
+  cmp r8d,00600000
+  jna code
+  cmp [r8+34],1
+  jne code
+  cmp [r8+30],40000000
+  jna code
+  cmp [r8+30],50000000
+  ja code
+  mov r9,[r8+30]
+  mov r9d,[r9+C]
+  cmp r9d,268
+  je @F
+  cmp r9d,350
+  je @F
+  jmp code
+
+@@:
+  cmp [hometeam],0
+  je @F
+  cmp [r8+CC],1
+  ja code
+  mov r8,[r8+C8]
+  cmp r8,10000000
+  jna @F
+  mov r8,[r8+10]
+  cmp r8,[hometeam]
+  je ismyteam
+  {cmp [r15+674],1
+  ja code
+  mov r9,[r15+670]
+  cmp r9d,00600000
+  jna code
+  mov r9,[r9]
+  cmp r9d,04000000
+  jna code
+  mov r9,[r9+30]
+  cmp r9,[myclub]
+  je ismyteam}
+@@:
+  cmp [natclub],0
+  je code
+  {mov r8,[r15+68]
+  sub r8d,r9d
+  cmp [r8-8+12C],0
+  jne code
+  mov r9,[r8-8+128]
+  cmp r9,04000000
+  jna code
+  mov r9,[r9+30]
+  cmp r9,[natclub]
+  jne code}
+  cmp [r15+674],1
+  ja code
+  mov r9,[r15+670]
+  cmp r9d,00600000
+  jna code
+  cmp [r9+4],1
+  ja code
+  mov r9,[r9]
+  cmp r9d,04000000
+  jna code
+  mov r9,[r9+30]
+  cmp r9,[natclub]
+  jne code
+ismyteam:
+  cmp [mtplayer],0
+  jne @F
+  mov r9,[r15]
+  mov [mtplayer],r9
+@@:
+  cmp byte ptr [r15+82A],14 //DL
+  je jiabei
+  //cmp byte ptr [r15+82B],14 //DC
+  //je jiabei
+  cmp byte ptr [r15+82C],14 //DR
+  je jiabei
+  cmp byte ptr [r15+82D],14 //DMC
+  je jiabei
+  cmp byte ptr [r15+82F],14 //MC
+  jne code
+
+jiabei:
+  mov r9w,[zhuangtai]
+  mov word ptr [r15+76C],r9w //比赛状态
+  cmp [tineng],1
+  jne @F
+  //mov [r15+6E0],#1000000 //体力
+  //mov word ptr [r15+76A],#10000 //体能
+  mov word ptr [r15+76E],#10000 //比赛状态
+  //mov word ptr [r15+770],#0 //疲劳
+  mov byte ptr [r15+B5A],#20 //士气
+@@:
+  //cmp al,1A //手控球
+  //je menjiang
+  //cmp al,1B //制空范围
+  //je menjiang
+  //cmp al,1C //拦截传中
+  //je menjiang
+  //cmp al,1D //指挥防守
+  //je menjiang
+  //cmp al,1E //大脚开球
+  //je menjiang
+  //cmp al,1F //手抛球
+  //je menjiang
+  cmp al,22 //一对一
+  je jishu
+  cmp al,24 //反应
+  je jishu
+  cmp al,2E //神经指数
+  je zero
+  cmp al,F //传中
+  je jishu
+  cmp al,10 //盘带【闪退】
+  je twenty
+  cmp al,11 //射门
+  je jishu
+  //cmp al,12 //头球
+  //je jishu
+  cmp al,13 //远射
+  je jishu
+  cmp al,14 //盯人
+  je jishu
+  cmp al,16 //传球
+  je jishu
+  //cmp al,17 //点球
+  //je jishu
+  cmp al,18 //抢断
+  je jishu
+  cmp al,25 //停球
+  je jishu
+  cmp al,26 //技术
+  je jishu
+  cmp al,2A //角球
+  je jishu
+  //cmp al,2D //界外球
+  //je jishu
+  //cmp al,32 //任意球
+  //je jishu
+  cmp al,15 //无球跑动
+  je jingshen
+  cmp al,19 //视野【闪退】
+  je twenty
+  cmp al,20 //预判
+  je jingshen
+  cmp al,21 //决断
+  je jingshen
+  cmp al,23 //防守站位
+  je jingshen
+  cmp al,29 //想象力
+  je twenty
+  cmp al,2B //团队合作
+  je jingshen
+  cmp al,2C //工作投入
+  je jingshen
+  cmp al,37 //领导力
+  je jingshen
+  cmp al,3A //勇敢
+  je jingshen
+  cmp al,3C //侵略性
+  je jingshen
+  cmp al,42 //意志力
+  je jingshen
+  cmp al,43 //镇定
+  je jingshen
+  cmp al,44 //集中
+  je jingshen
+  cmp al,31 //爆发力
+  je shenti
+  cmp al,33 //强壮
+  je shenti
+  cmp al,34 //耐力
+  je shenti
+  cmp al,35 //速度
+  je shenti
+  //cmp al,36 //弹跳
+  //je shenti
+  cmp al,39 //平衡
+  je shenti
+  cmp al,3D //灵活【闪退】
+  je twenty
+  cmp al,41 //体质
+  je shenti
+  cmp al,27 //左脚
+  je hide
+  cmp al,28 //右脚
+  je hide
+  cmp al,3B //稳定性
+  je hide
+  cmp al,3E //大赛发挥
+  je hide
+  cmp al,40 //多样性
+  je hide
+  cmp al,2F //出击倾向
+  je code
+  cmp al,30 //拳击球倾向
+  je code
+  cmp al,38 //肮脏动作
+  je code
+  cmp al,3F //受伤倾向
+  je zero
+  jmp code
+
+jishu:
+  imul ecx, 5
+  jmp code
+jingshen:
+  imul ecx, 5
+  jmp code
+shenti:
+  imul ecx, 2
+  jmp code
+hide:
+  imul ecx, 2
+  jmp code
+twenty:
+  mov ecx,#100
+  jmp code
+zero:
+  xor ecx,ecx
+  jmp code
+
+code:
+  pop r9
+  pop r8
+  cmp al,0F
+  lea edi,[rcx+rcx*4]
+  jmp return
+
+newmem_matchAttr+800:
+  dd 1
+tineng:
+  dd 1
+zhuangtai:
+  dd #10000
+hometeam:
+  dq 76473740
+natclub:
+  dq 0
+mtplayer:
+  dq 0
+
+aob_matchAttr:
+  jmp newmem_matchAttr
+return:
+
+
+
+[DISABLE]
+
+
+aob_matchAttr:
+  db 3C 0F 8D 3C 89
+
+
+unregistersymbol(aob_matchAttr, newmem_matchAttr,tineng,zhuangtai,hometeam,natclub,mtplayer)
+dealloc(newmem_matchAttr)
+
+{
+// ORIGINAL CODE - INJECTION POINT: fmWinter.exe+43E5465
+
+fmWinter.exe+43E5448: 56                       - push rsi
+fmWinter.exe+43E5449: 57                       - push rdi
+fmWinter.exe+43E544A: 55                       - push rbp
+fmWinter.exe+43E544B: 53                       - push rbx
+fmWinter.exe+43E544C: 48 83 EC 38              - sub rsp,38
+fmWinter.exe+43E5450: 4C 89 C6                 - mov rsi,r8
+fmWinter.exe+43E5453: 41 89 D6                 - mov r14d,edx
+fmWinter.exe+43E5456: 49 89 CF                 - mov r15,rcx
+fmWinter.exe+43E5459: 48 0F BE C2              - movsx rax,dl
+fmWinter.exe+43E545D: 0F BE 8C 01 28 08 00 00  - movsx ecx,byte ptr [rcx+rax+00000828]
+// ---------- INJECTING HERE ----------
+fmWinter.exe+43E5465: 3C 0F                    - cmp al,0F
+// ---------- DONE INJECTING  ----------
+fmWinter.exe+43E5467: 8D 3C 89                 - lea edi,[rcx+rcx*4]
+fmWinter.exe+43E546A: 0F 43 F9                 - cmovae edi,ecx
+fmWinter.exe+43E546D: 49 0F BA E0 23           - bt r8,23
+fmWinter.exe+43E5472: 72 40                    - jb fmWinter.exe+43E54B4
+fmWinter.exe+43E5474: 41 8D 46 D9              - lea eax,[r14-27]
+fmWinter.exe+43E5478: 3C 02                    - cmp al,02
+fmWinter.exe+43E547A: 0F 82 79 06 00 00        - jb fmWinter.exe+43E5AF9
+fmWinter.exe+43E5480: 45 31 ED                 - xor r13d,r13d
+fmWinter.exe+43E5483: 41 80 FE 0F              - cmp r14b,0F
+fmWinter.exe+43E5487: 73 46                    - jae fmWinter.exe+43E54CF
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>82</ID>
+      <Description>"dc_dm_mc"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Football Manager 2023
+  Version: 
+  Date   : 2023-11-24
+  Author : Administrator
+
+  This script does blah blah blah
+}
+
+
+[ENABLE]
+aobscanmodule(aob_matchAttr,fmWinter.exe,3C 0F 8D 3C 89) // should be unique
+alloc(newmem_matchAttr,$1000,aob_matchAttr)
+label(code)
+label(return)
+label(ismyteam)
+label(jishu)
+label(jingshen)
+label(shenti)
+label(zero)
+label(hide)
+label(jiabei)
+label(tineng)
+label(zhuangtai)
+label(twenty)
+label(natclub)
+label(hometeam)
+label(mtplayer)
+registersymbol(aob_matchAttr,newmem_matchAttr,tineng,zhuangtai,natclub,hometeam,mtplayer)
+
+newmem_matchAttr:
+  push r8
+  push r9
+  cmp al,0F
+  jb code
+  cmp [newmem_matchAttr+800],0
+  je code
+  cmp [mtplayer],0
+  je @F
+  mov r8,[mtplayer]
+  cmp r8,[r15]
+  jne code
+@@:
+  cmp [r15+6C],1
+  ja code
+  mov r8,[r15+68]
+  cmp r8d,00600000
+  jna code
+  cmp [r8+34],1
+  jne code
+  cmp [r8+30],40000000
+  jna code
+  cmp [r8+30],50000000
+  ja code
+  mov r9,[r8+30]
+  mov r9d,[r9+C]
+  cmp r9d,268
+  je @F
+  cmp r9d,350
+  je @F
+  jmp code
+
+@@:
+  cmp [hometeam],0
+  je @F
+  cmp [r8+CC],1
+  ja code
+  mov r8,[r8+C8]
+  cmp r8,10000000
+  jna @F
+  mov r8,[r8+10]
+  cmp r8,[hometeam]
+  je ismyteam
+  {cmp [r15+674],1
+  ja code
+  mov r9,[r15+670]
+  cmp r9d,00600000
+  jna code
+  mov r9,[r9]
+  cmp r9d,04000000
+  jna code
+  mov r9,[r9+30]
+  cmp r9,[myclub]
+  je ismyteam}
+@@:
+  cmp [natclub],0
+  je code
+  {mov r8,[r15+68]
+  sub r8d,r9d
+  cmp [r8-8+12C],0
+  jne code
+  mov r9,[r8-8+128]
+  cmp r9,04000000
+  jna code
+  mov r9,[r9+30]
+  cmp r9,[natclub]
+  jne code}
+  cmp [r15+674],1
+  ja code
+  mov r9,[r15+670]
+  cmp r9d,00600000
+  jna code
+  cmp [r9+4],1
+  ja code
+  mov r9,[r9]
+  cmp r9d,04000000
+  jna code
+  mov r9,[r9+30]
+  cmp r9,[natclub]
+  jne code
+ismyteam:
+  cmp [mtplayer],0
+  jne @F
+  mov r9,[r15]
+  mov [mtplayer],r9
+@@:
+  //cmp byte ptr [r15+82B],14 //DC
+  //je jiabei
+    cmp byte ptr [r15+82A],14 //DL
+  je jiabei
+   // cmp byte ptr [r15+82C],14 //DR
+  //je jiabei
+  //cmp byte ptr [r15+82D],14 //DM
+  //je jiabei
+  cmp byte ptr [r15+82F],14 //MC
+  je jiabei
+  jmp code
+
+jiabei:
+  mov r9w,[zhuangtai]
+  mov word ptr [r15+76C],r9w //比赛状态
+  cmp [tineng],1
+  jne @F
+  //mov [r15+6E0],#1000000 //体力
+  //mov word ptr [r15+76A],#10000 //体能
+  mov word ptr [r15+76E],#10000 //比赛状态
+  mov word ptr [r15+770],#0 //疲劳
+  mov byte ptr [r15+B5A],#20 //士气
+@@:
+  //cmp al,1A //手控球
+  //je menjiang
+  //cmp al,1B //制空范围
+  //je menjiang
+  //cmp al,1C //拦截传中
+  //je menjiang
+  //cmp al,1D //指挥防守
+  //je menjiang
+  //cmp al,1E //大脚开球
+  //je menjiang
+  //cmp al,1F //手抛球
+  //je menjiang
+  cmp al,22 //一对一
+  je jishu
+  cmp al,24 //反应
+  je jishu
+  cmp al,2E //神经指数
+  je zero
+  cmp al,F //传中
+  je jishu
+  cmp al,10 //盘带【闪退】
+  je twenty
+  cmp al,11 //射门
+  je jishu
+  cmp al,12 //头球
+  je code
+  cmp al,13 //远射
+  je jishu
+  cmp al,14 //盯人
+  je jishu
+  cmp al,16 //传球
+  je jishu
+  cmp al,17 //点球
+  je code
+  cmp al,18 //抢断
+  je jishu
+  cmp al,25 //停球
+  je jishu
+  cmp al,26 //技术
+  je jishu
+  cmp al,2A //角球
+  je code
+  cmp al,2D //界外球
+  je jishu
+  cmp al,32 //任意球
+  je code
+  cmp al,15 //无球跑动
+  je jingshen
+  cmp al,19 //视野【闪退】
+  je twenty
+  cmp al,20 //预判
+  je jingshen
+  cmp al,21 //决断
+  je jingshen
+  cmp al,23 //防守站位
+  je jingshen
+  cmp al,29 //想象力
+  je twenty
+  cmp al,2B //团队合作
+  je jingshen
+  cmp al,2C //工作投入
+  je jingshen
+  cmp al,37 //领导力
+  je jingshen
+  cmp al,3A //勇敢
+  je jingshen
+  cmp al,3C //侵略性
+  je jingshen
+  cmp al,42 //意志力
+  je jingshen
+  cmp al,43 //镇定
+  je jingshen
+  cmp al,44 //集中
+  je jingshen
+  cmp al,31 //爆发力
+  je shenti
+  cmp al,33 //强壮
+  je shenti
+  cmp al,34 //耐力
+  je shenti
+  cmp al,35 //速度
+  je shenti
+  cmp al,36 //弹跳
+  je code
+  cmp al,39 //平衡
+  je shenti
+  cmp al,3D //灵活【闪退】
+  je twenty
+  cmp al,41 //体质
+  je shenti
+  cmp al,27 //左脚
+  je hide
+  cmp al,28 //右脚
+  je hide
+  cmp al,3B //稳定性
+  je hide
+  cmp al,3E //大赛发挥
+  je hide
+  cmp al,40 //多样性
+  je hide
+  cmp al,2F //出击倾向
+  je code
+  cmp al,30 //拳击球倾向
+  je code
+  cmp al,38 //肮脏动作
+  je code
+  cmp al,3F //受伤倾向
+  je zero
+  jmp code
+
+jishu:
+  mov ecx, 7D
+  jmp code
+jingshen:
+  mov ecx, 7D
+  jmp code
+shenti:
+  mov ecx, 7D
+  jmp code
+hide:
+  mov ecx, 7D
+  jmp code
+twenty:
+  mov ecx,#100
+  jmp code
+zero:
+  xor ecx,ecx
+  jmp code
+
+code:
+  pop r9
+  pop r8
+  cmp al,0F
+  lea edi,[rcx+rcx*4]
+  jmp return
+
+newmem_matchAttr+800:
+  dd 1
+tineng:
+  dd 1
+zhuangtai:
+  dd #10000
+hometeam:
+  dq 5BC860B0
+natclub:
+  dq 0
+mtplayer:
+  dq 0
+
+aob_matchAttr:
+  jmp newmem_matchAttr
+return:
+
+
+
+[DISABLE]
+
+
+aob_matchAttr:
+  db 3C 0F 8D 3C 89
+
+
+unregistersymbol(aob_matchAttr, newmem_matchAttr,tineng,zhuangtai,hometeam,natclub,mtplayer)
+dealloc(newmem_matchAttr)
+
+{
+// ORIGINAL CODE - INJECTION POINT: fmWinter.exe+43E5465
+
+fmWinter.exe+43E5448: 56                       - push rsi
+fmWinter.exe+43E5449: 57                       - push rdi
+fmWinter.exe+43E544A: 55                       - push rbp
+fmWinter.exe+43E544B: 53                       - push rbx
+fmWinter.exe+43E544C: 48 83 EC 38              - sub rsp,38
+fmWinter.exe+43E5450: 4C 89 C6                 - mov rsi,r8
+fmWinter.exe+43E5453: 41 89 D6                 - mov r14d,edx
+fmWinter.exe+43E5456: 49 89 CF                 - mov r15,rcx
+fmWinter.exe+43E5459: 48 0F BE C2              - movsx rax,dl
+fmWinter.exe+43E545D: 0F BE 8C 01 28 08 00 00  - movsx ecx,byte ptr [rcx+rax+00000828]
+// ---------- INJECTING HERE ----------
+fmWinter.exe+43E5465: 3C 0F                    - cmp al,0F
+// ---------- DONE INJECTING  ----------
+fmWinter.exe+43E5467: 8D 3C 89                 - lea edi,[rcx+rcx*4]
+fmWinter.exe+43E546A: 0F 43 F9                 - cmovae edi,ecx
+fmWinter.exe+43E546D: 49 0F BA E0 23           - bt r8,23
+fmWinter.exe+43E5472: 72 40                    - jb fmWinter.exe+43E54B4
+fmWinter.exe+43E5474: 41 8D 46 D9              - lea eax,[r14-27]
+fmWinter.exe+43E5478: 3C 02                    - cmp al,02
+fmWinter.exe+43E547A: 0F 82 79 06 00 00        - jb fmWinter.exe+43E5AF9
+fmWinter.exe+43E5480: 45 31 ED                 - xor r13d,r13d
+fmWinter.exe+43E5483: 41 80 FE 0F              - cmp r14b,0F
+fmWinter.exe+43E5487: 73 46                    - jae fmWinter.exe+43E54CF
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
