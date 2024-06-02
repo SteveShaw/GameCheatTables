@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Auto Assemble script"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : re3.exe
+  Version: 
+  Date   : 2024-06-02
+  Author : Administrator
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(OHK,re3.exe,8B 00 41 89 41 58) // should be unique
+alloc(newmem,$1000,OHK)
+
+label(code)
+label(return)
+label(kill_enemy)
+label(ohk_flag)
+registersymbol(ohk_flag)
+
+newmem:
+  cmp [r9+D8], 0
+  je code
+  mov eax, [r9+54]
+  mov [r9+58], eax
+  jmp return
+
+code:
+  cmp [ohk_flag], 1
+  je kill_enemy
+  mov eax,[rax]
+  mov [r9+58],eax
+  jmp return
+
+kill_enemy:
+  xor eax, eax
+  mov [r9+58], eax
+  jmp return
+
+ohk_flag:
+  dd 1
+
+OHK:
+  jmp newmem
+  nop
+return:
+registersymbol(OHK)
+
+[DISABLE]
+
+OHK:
+  db 8B 00 41 89 41 58
+
+unregistersymbol(OHK)
+unregistersymbol(ohk_flag)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: re3.exe+1F0126E
+
+re3.exe+1F0124B: 99                       - cdq 
+re3.exe+1F0124C: C7 44 24 10 00 00 00 00  - mov [rsp+10],00000000
+re3.exe+1F01254: 33 C2                    - xor eax,edx
+re3.exe+1F01256: 2B C2                    - sub eax,edx
+re3.exe+1F01258: 48 8D 54 24 10           - lea rdx,[rsp+10]
+re3.exe+1F0125D: 2B C8                    - sub ecx,eax
+re3.exe+1F0125F: 48 8D 44 24 08           - lea rax,[rsp+08]
+re3.exe+1F01264: 85 C9                    - test ecx,ecx
+re3.exe+1F01266: 89 4C 24 08              - mov [rsp+08],ecx
+re3.exe+1F0126A: 48 0F 4E C2              - cmovle rax,rdx
+// ---------- INJECTING HERE ----------
+re3.exe+1F0126E: 8B 00                    - mov eax,[rax]
+// ---------- DONE INJECTING  ----------
+re3.exe+1F01270: 41 89 41 58              - mov [r9+58],eax
+re3.exe+1F01274: C3                       - ret 
+re3.exe+1F01275: CC                       - int 3 
+re3.exe+1F01276: CC                       - int 3 
+re3.exe+1F01277: CC                       - int 3 
+re3.exe+1F01278: CC                       - int 3 
+re3.exe+1F01279: CC                       - int 3 
+re3.exe+1F0127A: CC                       - int 3 
+re3.exe+1F0127B: CC                       - int 3 
+re3.exe+1F0127C: CC                       - int 3 
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
